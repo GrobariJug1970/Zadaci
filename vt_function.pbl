@@ -1,0 +1,1180 @@
+vt_function.pbl -> dw_testers_report_back_summary_back
+
+SELECT COUNT(DISTINCT informix.v_tester_licence.tstcl_tst_id) AS testers_no
+FROM informix.v_tester_licence
+WHERE (informix.v_tester_licence.tstcl_dt_lic_iss <=:ra_date_to) AND
+(informix.v_tester_licence.tstcl_lic_issd = "Y") AND
+((informix.v_tester_licence.tstcl_dt_lic_term IS NULL ) OR
+(informix.v_tester_licence.tstcl_dt_lic_term > :ra_date_from)) AND
+((informix.v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) 
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql code 18.01.2020
+
+SELECT COUNT(DISTINCT v_tester_licence.tstcl_tst_id) AS testers_no
+FROM v_tester_licence
+WHERE (v_tester_licence.tstcl_dt_lic_iss <=:ra_date_to) AND
+(v_tester_licence.tstcl_lic_issd = 'Y') AND
+((v_tester_licence.tstcl_dt_lic_term IS NULL ) OR
+(v_tester_licence.tstcl_dt_lic_term > :ra_date_from)) AND
+((v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) 
+		
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_adress1
+
+select address_1
+INTO :ls_address1
+from v_location where loc_id = :al_loc_id ;		
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_adress2
+
+select address_2
+INTO :ls_address2
+from v_location where loc_id = :al_loc_id ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_calc_lane_pay  line 0010
+
+SELECT lane_dur_days, lane_renew_amnt //Select system parameters
+INTO :ll_dur_days, :ld_lane_amount
+FROM v_system_par;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_calc_lane_pay  line 0017
+
+SELECT Trim(contla_add_ind), contla_start_date, contla_end_date // Get lane contract details
+INTO :ls_entry_type, :ld_contla_start_date, :ld_contla_end_date
+FROM v_cont_lane
+WHERE contla_lane_id = :al_lane_id AND
+contla_cont_id = :al_contract_id AND
+Trim(contla_term_ind) = "N" AND
+contla_id IN (SELECT MIN(contla_id) FROM v_cont_lane
+WHERE contla_lane_id = :al_lane_id AND
+contla_cont_id = :al_contract_id AND
+Trim(contla_term_ind) = "N");
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql code 18.01.2020
+
+SELECT Trim(contla_add_ind), contla_start_date, contla_end_date // Get lane contract details
+INTO :ls_entry_type, :ld_contla_start_date, :ld_contla_end_date
+FROM v_cont_lane
+WHERE contla_lane_id = :al_lane_id AND
+contla_cont_id = :al_contract_id AND
+Trim(contla_term_ind) = 'N' AND
+contla_id IN (SELECT MIN(contla_id) FROM v_cont_lane
+WHERE contla_lane_id = :al_lane_id AND
+contla_cont_id = :al_contract_id AND
+Trim(contla_term_ind) = 'N');
+								  
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_calc_lane_pay  line 0033
+
+SELECT count(*) //Check if any valid payments have been made for the concerned lane.
+INTO :ll_count
+FROM v_lane_renewal
+WHERE ren_lane_id = :al_lane_id AND
+Trim(ren_term_ind) = "N";
+
+//////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT count(*) //Check if any valid payments have been made for the concerned lane.
+INTO :ll_count
+FROM v_lane_renewal
+WHERE ren_lane_id = :al_lane_id AND
+Trim(ren_term_ind) = 'N';
+		
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_calc_lane_pay  line 0048
+
+SELECT Max(ren_end_date) //Get latest end date of payed lanes
+INTO :ld_max_date
+FROM v_lane_renewal
+WHERE ren_cont_id = :al_contract_id AND
+Trim(ren_term_ind) = "N";
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT Max(ren_end_date) //Get latest end date of payed lanes
+INTO :ld_max_date
+FROM v_lane_renewal
+WHERE ren_cont_id = :al_contract_id AND
+Trim(ren_term_ind) = 'N';
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_calc_lane_pay  line 0102
+
+SELECT ren_cont_id, ren_start_date, ren_end_date //Check if last valid payment has been made on the current contract.
+INTO :ll_payed_cont_id, :ld_pay_start, :ld_pay_end
+FROM v_lane_renewal
+WHERE ren_lane_id = :al_lane_id AND
+Trim(ren_term_ind) = "N" AND
+Trim(ren_last_ind) = "Y";
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT ren_cont_id, ren_start_date, ren_end_date //Check if last valid payment has been made on the current contract.
+INTO :ll_payed_cont_id, :ld_pay_start, :ld_pay_end
+FROM v_lane_renewal
+WHERE ren_lane_id = :al_lane_id AND
+Trim(ren_term_ind) = 'N' AND
+Trim(ren_last_ind) = 'Y';
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_calc_lane_pay  line 0114
+
+SELECT Max(ren_end_date) //Get latest end date of payed lanes
+INTO :ld_max_date
+FROM v_lane_renewal
+WHERE ren_cont_id = :al_contract_id AND
+Trim(ren_term_ind) = "N";
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT Max(ren_end_date) //Get latest end date of payed lanes
+INTO :ld_max_date
+FROM v_lane_renewal
+WHERE ren_cont_id = :al_contract_id AND
+Trim(ren_term_ind) = 'N';
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_cert_hist_class
+
+SELECT class_desc
+FROM v_cert_class,v_class
+WHERE (v_cert_class.certclass_class_id=v_class.class_id) AND
+(v_cert_class.certclass_term_ind="N") AND
+(v_cert_class.certclass_cert_id=:al_cert_id);
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT class_desc
+FROM v_cert_class,v_class
+WHERE (v_cert_class.certclass_class_id=v_class.class_id) AND
+(v_cert_class.certclass_term_ind='N') AND
+(v_cert_class.certclass_cert_id=:al_cert_id);
+	
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_certificate_no line 0025
+
+SELECT TODAY 
+INTO :ld_today 
+FROM v_system_par;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT convert(date, getdate()) INTO :ld_today FROM v_system_par;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_certificate_no line 0034
+
+SELECT oper_sta_cert_no,oper_sta_cert_year,sta_cert_cat,oper_cert_cat
+INTO :ll_cert_no,:ll_cert_year,:ls_sta_cert_cat,:ls_opr_cert_cat
+FROM v_system_par;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_certificate_no
+
+UPDATE v_system_par
+SET  oper_sta_cert_no=:ll_cert_no,
+oper_sta_cert_year=:ll_cert_year;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_check_renewal
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_lane_renewal
+WHERE ( ren_lane_id = :ra_lane_id ) AND
+( Trim(ren_last_ind)="Y" ) AND
+( :ld_today <= ren_end_date ) AND
+( Trim(ren_term_ind) = "N" ) ;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_lane_renewal
+WHERE ( ren_lane_id = :ra_lane_id ) AND
+( Trim(ren_last_ind)="Y" ) AND
+( :ld_today <= ren_end_date ) AND
+( Trim(ren_term_ind) = "N" ) ;
+		
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_compare_cont_cert    line 0008
+
+SELECT DISTINCT contla_class_id
+FROM v_cont_lane
+WHERE contla_cont_id = :ra_cont_id AND
+contla_term_ind = "N" ;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT DISTINCT contla_class_id
+FROM v_cont_lane
+WHERE contla_cont_id = :ra_cont_id AND
+contla_term_ind = 'N' ;
+		
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_compare_cont_cert    line 0026
+
+SELECT certif_id
+INTO :ll_certif_id
+FROM v_certificate
+WHERE certif_cont_id = :ra_cont_id AND
+certif_last_ind = "Y" ;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT certif_id
+INTO :ll_certif_id
+FROM v_certificate
+WHERE certif_cont_id = :ra_cont_id AND
+certif_last_ind = 'Y' ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_compare_cont_cert    line 0051
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_cert_class
+WHERE certclass_class_id = :ll_class_id AND
+certclass_cert_id = :ll_certif_id AND
+certclass_term_ind = "N" ;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_cert_class
+WHERE certclass_class_id = :ll_class_id AND
+certclass_cert_id = :ll_certif_id AND
+certclass_term_ind = 'N' ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_compare_cont_cert    line 0068
+
+SELECT COUNT(*)
+INTO :li_count_cert
+FROM v_cert_class
+WHERE certclass_cert_id = :ll_certif_id AND
+certclass_term_ind = "N" ;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT COUNT(*)
+INTO :li_count_cert
+FROM v_cert_class
+WHERE certclass_cert_id = :ll_certif_id AND
+certclass_term_ind = "N" ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_compare_cont_cert    line 0081
+
+SELECT COUNT( DISTINCT contla_class_id )
+INTO :li_count_cont
+FROM v_cont_lane
+WHERE contla_cont_id  = :ra_cont_id AND
+contla_term_ind = "N" ;
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT COUNT( DISTINCT contla_class_id )
+INTO :li_count_cont
+FROM v_cont_lane
+WHERE contla_cont_id  = :ra_cont_id AND
+contla_term_ind = 'N' ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_cont_class
+
+SELECT class_desc
+FROM v_cert_class,v_class
+WHERE (v_cert_class.certclass_class_id=v_class.class_id) AND
+(v_cert_class.certclass_cert_id=:al_cert_id);
+		
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_contract_signatory
+
+SELECT per_surname, per_name
+INTO :ls_surname, :ls_name
+FROM v_person,v_cont_official
+WHERE v_cont_official.cont_off_per_id = v_person.per_id AND
+v_cont_official.cont_off_cont_id = :ra_cont_id AND
+cont_off_type_ind = "S" ;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT per_surname, per_name
+INTO :ls_surname, :ls_name
+FROM v_person,v_cont_official
+WHERE v_cont_official.cont_off_per_id = v_person.per_id AND
+v_cont_official.cont_off_cont_id = :ra_cont_id AND
+cont_off_type_ind = 'S';
+		
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_create_cont_cert   line 0012
+
+SELECT certif_id
+INTO :ll_old_certif_id
+FROM v_certificate
+WHERE certif_cont_id = :ra_cont_id AND
+certif_last_ind = "Y" ;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT certif_id
+INTO :ll_old_certif_id
+FROM v_certificate
+WHERE certif_cont_id = :ra_cont_id AND
+certif_last_ind = 'Y' ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_create_cont_cert   line 0052
+
+SELECT certclass_class_id, certclass_start_dt, certclass_end_dt, certclass_term_ind
+FROM v_cert_class
+WHERE certclass_cert_id = :ll_old_certif_id ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_create_cont_cert   line 0089
+
+SELECT certclass_class_id
+FROM v_cert_class
+WHERE certclass_cert_id = :ll_certif_id AND
+certclass_term_ind = "N" ;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT certclass_class_id
+FROM v_cert_class
+WHERE certclass_cert_id = :ll_certif_id AND
+certclass_term_ind = 'N' ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_create_cont_cert   line 0114
+
+SELECT COUNT(*) 
+INTO :li_count
+FROM v_cont_lane
+WHERE contla_class_id = :ll_certclass_class_id AND
+contla_term_ind = "N" AND
+contla_cont_id = :ra_cont_id ;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT COUNT(*) 
+INTO :li_count
+FROM v_cont_lane
+WHERE contla_class_id = :ll_certclass_class_id AND
+contla_term_ind = 'N' AND
+contla_cont_id = :ra_cont_id ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_create_cont_cert   line 0152
+
+SELECT DISTINCT (contla_class_id)
+FROM v_cont_lane
+WHERE contla_cont_id = :ra_cont_id AND
+contla_term_ind = "N" ;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT DISTINCT (contla_class_id)
+FROM v_cont_lane
+WHERE contla_cont_id = :ra_cont_id AND
+contla_term_ind = 'N' ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_create_cont_cert   line 0171
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_cert_class
+WHERE certclass_cert_id = :ll_certif_id AND
+certclass_class_id = :ll_certclass_class_id AND
+certclass_term_ind = "N" ;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_cert_class
+WHERE certclass_cert_id = :ll_certif_id AND
+certclass_class_id = :ll_certclass_class_id AND
+certclass_term_ind = 'N' ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_create_cont_cert   line 0037
+
+INSERT INTO v_certificate
+(certif_cont_id,certif_last_ind,certif_start_date, certif_prev_id)
+VALUES (:ra_cont_id,"Y",:ra_date,:ll_old_certif_id) ;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+INSERT INTO v_certificate
+(certif_cont_id,certif_last_ind,certif_start_date, certif_prev_id)
+VALUES (:ra_cont_id,'Y',:ra_date,:ll_old_certif_id) ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_create_cont_cert   line 0069
+
+INSERT INTO v_cert_class
+(certclass_cert_id,certclass_class_id, certclass_start_dt, certclass_end_dt, certclass_term_ind)
+VALUES(:ll_certif_id,:ll_certclass_class_id,:ld_certclass_start_dt, :ld_certclass_end_dt, :lc_certclass_term_ind) ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_create_cont_cert   line 00187
+
+INSERT INTO	v_cert_class
+( certclass_cert_id, certclass_class_id, certclass_start_dt, certclass_end_dt, certclass_term_ind )
+VALUES (:ll_certif_id, :ll_certclass_class_id, :ra_date, :ra_end_date, "N") ;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+INSERT INTO	v_cert_class
+( certclass_cert_id, certclass_class_id, certclass_start_dt, certclass_end_dt, certclass_term_ind )
+VALUES (:ll_certif_id, :ll_certclass_class_id, :ra_date, :ra_end_date, 'N') ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_create_cont_cert   line 0025
+
+UPDATE v_certificate
+SET certif_last_ind = "N",
+certif_end_date = :ra_date
+WHERE certif_id = :ll_old_certif_id ;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 18.01.2020
+
+UPDATE v_certificate
+SET 	certif_last_ind = 'N',
+certif_end_date = :ra_date
+WHERE certif_id = :ll_old_certif_id ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_create_cont_cert   line 0130
+
+UPDATE v_cert_class
+SET certclass_end_dt = :ra_date,
+certclass_term_ind = "Y"
+WHERE certclass_cert_id = :ll_certif_id AND
+certclass_class_id = :ll_certclass_class_id ;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+UPDATE v_cert_class
+SET certclass_end_dt = :ra_date,
+certclass_term_ind = 'Y'
+WHERE certclass_cert_id = :ll_certif_id AND
+certclass_class_id = :ll_certclass_class_id ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_ddlb_load   
+
+ls_sql = "SELECT " + as_ColumnCode + ", " + as_ColumnDesc + " FROM " + as_TableName
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_ddlb_load_con
+
+ls_sql = "SELECT " + as_ColumnCode + ", " + as_ColumnDesc
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_ddlb_load_date1_date2
+
+ls_sql = "SELECT " + as_ColumnCode + ", " + as_ColumnDesc + ", " + as_ColumnDesc2 + " FROM " + as_TableName
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_ddlb_load_selected_items
+
+ls_sql = "SELECT " + as_ColumnCode + ", " + as_ColumnDesc + " FROM " + as_TableName + ", " + as_TableName_2 
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_disp_app_class
+
+SELECT v_class.class_desc
+FROM v_class, v_app_lane
+WHERE v_app_lane.app_lane_app_id = :ra_app_id AND
+v_app_lane.app_lane_class_id = v_class.class_id ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_disp_class_for_lane
+
+SELECT v_class.class_desc
+FROM v_app_lane, v_class
+WHERE v_app_lane.app_lane_class_id = v_class.class_id AND
+v_app_lane.app_lane_lane_id = :ra_lane_id AND
+v_app_lane.app_lane_app_id = :ra_app_id ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_disp_cont_class
+
+SELECT v_class.class_desc
+FROM v_class, v_cont_lane
+WHERE v_cont_lane.contla_cont_id = :ra_cont_id AND
+v_cont_lane.contla_class_id = v_class.class_id AND
+v_cont_lane.contla_lane_id = :ra_lane_id AND 
+v_cont_lane.contla_term_ind = "N" ;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT v_class.class_desc
+FROM v_class, v_cont_lane
+WHERE v_cont_lane.contla_cont_id = :ra_cont_id AND
+v_cont_lane.contla_class_id = v_class.class_id AND
+v_cont_lane.contla_lane_id = :ra_lane_id AND 
+v_cont_lane.contla_term_ind = 'N' ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_disp_cont_class_all
+
+SELECT DISTINCT v_class.class_desc
+FROM v_class, v_cont_lane
+WHERE v_cont_lane.contla_cont_id = :ra_cont_id AND
+v_cont_lane.contla_class_id = v_class.class_id AND
+v_cont_lane.contla_term_ind = "N" ;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT DISTINCT v_class.class_desc
+FROM v_class, v_cont_lane
+WHERE v_cont_lane.contla_cont_id = :ra_cont_id AND
+v_cont_lane.contla_class_id = v_class.class_id AND
+v_cont_lane.contla_term_ind = 'N' ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_find_classes 
+
+SELECT class_desc
+FROM v_cont_lane,v_class
+WHERE v_cont_lane.contla_cont_id = :ra_cont_id AND
+v_cont_lane.contla_class_id = v_class.class_id AND
+contla_term_ind = "N" ;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT class_desc
+FROM v_cont_lane,v_class
+WHERE v_cont_lane.contla_cont_id = :ra_cont_id AND
+v_cont_lane.contla_class_id = v_class.class_id AND
+contla_term_ind = 'N' ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_find_unpaid_lanes
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_lane_renewal,
+v_lane,
+v_testing_station,
+v_contract,
+v_cont_lane
+WHERE v_lane_renewal.ren_lane_id = v_lane.lane_id AND 
+v_lane.lane_stat_id = v_testing_station.stat_id AND 
+v_contract.cont_stat_id = v_testing_station.stat_id AND 
+v_cont_lane.contla_cont_id = v_contract.cont_id AND
+v_cont_lane.contla_lane_id = v_lane.lane_id AND
+v_lane_renewal.ren_last_ind="Y" AND 
+v_lane_renewal.ren_term_ind="N" AND 
+v_contract.cont_last_ind="Y" AND 
+v_contract.cont_term_ind="N" AND 
+v_contract.cont_signed_ind="Y" AND
+v_contract.cont_end_date > TODAY AND
+v_cont_lane.contla_term_ind="N" AND 
+v_contract.cont_end_date > v_lane_renewal.ren_end_date AND
+v_lane_renewal.ren_end_date <= :ad_date AND
+(v_lane_renewal.ren_lttr_date Is Null);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_lane_renewal,
+v_lane,
+v_testing_station,
+v_contract,
+v_cont_lane
+WHERE v_lane_renewal.ren_lane_id = v_lane.lane_id AND 
+v_lane.lane_stat_id = v_testing_station.stat_id AND 
+v_contract.cont_stat_id = v_testing_station.stat_id AND 
+v_cont_lane.contla_cont_id = v_contract.cont_id AND
+v_cont_lane.contla_lane_id = v_lane.lane_id AND
+v_lane_renewal.ren_last_ind='Y' AND 
+v_lane_renewal.ren_term_ind='N' AND 
+v_contract.cont_last_ind='Y' AND 
+v_contract.cont_term_ind='N' AND 
+v_contract.cont_signed_ind='Y' AND
+v_contract.cont_end_date > convert(date, getdate()) AND
+v_cont_lane.contla_term_ind='N' AND 
+v_contract.cont_end_date > v_lane_renewal.ren_end_date AND
+v_lane_renewal.ren_end_date <= :ad_date AND
+(v_lane_renewal.ren_lttr_date Is Null);
+		
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_full_address 
+
+SELECT address_1,address_2,post_code,town,long_name
+INTO   :ls_address_1,:ls_address_2,:ls_post_code,:ls_town,:ls_long_name
+FROM	 v_location,OUTER(v_town, OUTER v_country)
+WHERE  (informix.v_location.loc_id =:al_loc_id) AND
+(informix.v_location.loc_town_id=informix.v_town.town_id) AND
+(informix.v_town.town_ctry_id=informix.v_country.ctry_id);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020  na kraju outer
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_full_address_cont 
+
+SELECT address_1,address_2,post_code,town,long_name
+INTO   :ls_address_1,:ls_address_2,:ls_post_code,:ls_town,:ls_long_name
+FROM	 v_location,OUTER(v_town, OUTER v_country)
+WHERE  (informix.v_location.loc_id =:al_loc_id) AND
+(informix.v_location.loc_town_id=informix.v_town.town_id) AND
+(informix.v_town.town_ctry_id=informix.v_country.ctry_id);
+		 
+///////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020   outer
+		 
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_guar_ren_date 
+
+SELECT 	guar_notice_days
+INTO :ll_days_prior
+FROM v_system_par;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_guar_standard 
+
+SELECT 	guar_amount
+INTO :lde_stn_amount
+FROM v_system_par;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_lane_exp_date 
+
+SELECT 	Distinct v_lane_renewal.ren_end_date
+
+FROM v_lane_renewal,
+v_lane,
+v_testing_station,
+v_contract,
+v_cont_lane
+WHERE (v_testing_station.stat_id=:al_stat_id) AND 
+v_lane_renewal.ren_last_ind = "Y" AND 
+v_lane_renewal.ren_term_ind = "N" AND 
+v_contract.cont_last_ind = "Y" AND 
+v_contract.cont_term_ind = "N" AND 
+v_contract.cont_signed_ind = "Y" AND
+v_cont_lane.contla_term_ind="N" AND  
+v_lane_renewal.ren_end_date <= :ld_expiry_date AND 
+v_lane_renewal.ren_lane_id = v_lane.lane_id AND 
+v_lane.lane_stat_id = v_testing_station.stat_id AND 
+v_contract.cont_stat_id = v_testing_station.stat_id AND 
+v_contract.cont_id = v_cont_lane.contla_cont_id AND 
+v_cont_lane.contla_lane_id = v_lane.lane_id ;
+			
+///////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT 	Distinct v_lane_renewal.ren_end_date
+
+FROM v_lane_renewal,
+v_lane,
+v_testing_station,
+v_contract,
+v_cont_lane
+WHERE(v_testing_station.stat_id=:al_stat_id) AND 
+v_lane_renewal.ren_last_ind = 'Y' AND 
+v_lane_renewal.ren_term_ind = 'N' AND 
+v_contract.cont_last_ind = 'Y' AND 
+v_contract.cont_term_ind = 'N' AND 
+v_contract.cont_signed_ind = 'Y' AND
+v_cont_lane.contla_term_ind='N' AND  
+v_lane_renewal.ren_end_date <= :ld_expiry_date AND 
+v_lane_renewal.ren_lane_id = v_lane.lane_id AND 
+v_lane.lane_stat_id = v_testing_station.stat_id AND 
+v_contract.cont_stat_id = v_testing_station.stat_id AND 
+v_contract.cont_id = v_cont_lane.contla_cont_id AND 
+v_cont_lane.contla_lane_id = v_lane.lane_id ;
+			
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_lane_ren_date 
+
+SELECT 	lane_notice_days
+INTO :ll_days_prior
+FROM v_system_par;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_lb_load 
+
+ls_sql = "SELECT " + as_ColumnCode + ", " + as_ColumnDesc + " FROM " + as_TableName
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_lb_load_3tables 
+
+ls_sql = "SELECT " + "distinct(" + as_ColumnCode + "), " + as_ColumnDesc + ", " + as_ColumnDesc2 + " FROM " + as_TableName + ',' + as_TableName2 + ',' + as_TableName3
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_lb_load_avail_testers
+
+ls_sql = "SELECT " + as_ColumnCode + ", " + as_ColumnDesc + ", " + as_ColumnDesc2 + ", " + as_ColumnDesc3 + ", " + as_Columndesc4 + " FROM " + as_TableName + ',' + as_TableName2 + ',' + as_TableName3
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_lb_load_classes 
+
+ls_sql = "SELECT " + as_ColumnCode + ", " + as_ColumnDesc + " FROM " + as_TableName
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_lb_load_operators
+
+ls_sql = "SELECT " + as_ColumnCode + ", " + as_ColumnDesc + ", " + as_ColumnDesc2 + ", " + as_ColumnDesc3 + ", " + as_ColumnDesc4 + " FROM " + as_TableName + ',' + as_TableName2 + ',' + as_TableName3
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_lb_load_table1_table2
+
+ls_sql = "SELECT " + as_ColumnCode + ", " + as_ColumnDesc + " FROM " + as_TableName1 + ',' +  as_TableName2
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_location
+
+select town, post_code, long_name 
+INTO :ls_town,:ls_postcode,:ls_country
+from v_location, v_town, v_country
+where (loc_id = :al_loc_id)  and (loc_town_id = town_id) and (ctry_id = town_ctry_id);
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_next_renewal
+
+SELECT ren_end_date
+INTO :ld_date
+FROM v_lane_renewal
+WHERE ( ren_lane_id = :ra_lane_id ) AND
+( ren_cont_id = :ra_cont_id ) AND
+( ren_last_ind = "Y" ) AND
+( ren_term_ind = "N" ) ;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT ren_end_date
+INTO :ld_date
+FROM v_lane_renewal
+WHERE ( ren_lane_id = :ra_lane_id ) AND
+( ren_cont_id = :ra_cont_id ) AND
+( ren_last_ind = 'Y' ) AND
+( ren_term_ind = 'N' ) ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_oper_file_no
+
+SELECT oper_file_no
+INTO :ls_oper_file_no
+FROM v_operator
+WHERE oper_id = :al_oper_id;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_oper_idno   line 0005
+
+Select oper_org_ind 
+INTO :lc_oper_org_ind
+FROM v_operator
+Where oper_id = :al_oper_id ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_oper_idno   line 0018
+
+SELECT per_idno 
+INTO :ls_idno
+FROM v_person,v_operator
+WHERE v_operator.oper_per_id = v_person.per_id AND
+v_operator.oper_id = :al_oper_id ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_oper_name   line 0007
+
+Select oper_org_ind,oper_org_name 
+INTO :lc_oper_org_ind,:ls_oper_name
+FROM v_operator
+Where oper_id = :al_oper_id ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_oper_name   line 0019
+
+SELECT per_name,per_surname 
+INTO :ls_per_name,:ls_per_surname
+FROM v_person,v_operator
+WHERE v_operator.oper_per_id = v_person.per_id AND
+v_operator.oper_id = :al_oper_id ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_pen_doc_maint   line 0028
+
+SELECT app_id,oper_org_ind
+FROM v_application,v_operator
+WHERE oper_org_ind = :ac_operator_type AND
+app_oper_id = oper_id AND
+app_stat_ind = "P" AND 
+app_withdrawn = "N" ;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT app_id,oper_org_ind
+FROM v_application,v_operator
+WHERE oper_org_ind = :ac_operator_type AND
+app_oper_id = oper_id AND
+app_stat_ind = 'P' AND 
+app_withdrawn = 'N' ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_pen_doc_maint   line 0088
+
+DELETE FROM v_app_pend_doc
+WHERE (app_doc_pendoc_id = :al_pen_doc_id) AND
+(app_doc_app_id IN (	SELECT app_id
+FROM v_application,v_operator
+WHERE oper_org_ind = :ac_operator_type AND
+app_oper_id = oper_id AND
+app_stat_ind = "P" AND 
+app_withdrawn = "N"));
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+DELETE FROM v_app_pend_doc
+WHERE (app_doc_pendoc_id = :al_pen_doc_id) AND
+(app_doc_app_id IN (	SELECT app_id
+FROM v_application,v_operator
+WHERE oper_org_ind = :ac_operator_type AND
+app_oper_id = oper_id AND
+app_stat_ind = 'P' AND 
+app_withdrawn = 'N'));
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_pen_doc_maint  
+
+INSERT INTO v_app_pend_doc
+(app_doc_app_id, app_doc_pendoc_id, app_doc_ind)
+VALUES ( :ll_app_id, :al_pen_doc_id, "N") ;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+INSERT INTO v_app_pend_doc
+(app_doc_app_id, app_doc_pendoc_id, app_doc_ind)
+VALUES ( :ll_app_id, :al_pen_doc_id, 'N') ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_postcode
+
+select post_code
+INTO :ls_postcode
+from v_location where loc_id = :al_loc_id ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_pre_delete
+
+ls_sql = "SELECT COUNT(*) FROM " + as_table_name +& 
+" WHERE " + as_primary_key_name + "=" + String(al_primary_id )
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_rec_lan_no 
+
+SELECT COUNT(*) 
+INTO :ll_count
+FROM v_lane_renewal
+WHERE ren_rec_id = :al_rec_id;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_selected_class 
+
+SELECT class_desc
+INTO :ls_class_desc
+FROM v_class
+WHERE v_class.class_id = :al_class_id ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_station_name
+
+SELECT stat_name
+INTO :ls_station
+FROM v_testing_station
+WHERE stat_id = :al_stat_id ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_test_val_err
+
+INSERT INTO v_test_error (v_test_error.tst_err_vtst_id, v_test_error.tst_ret_err_code)
+VALUES (:al_test_id,:al_error_code);
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_tester_lic
+
+SELECT Trim(tst_lic_no)
+INTO :ls_lic_no
+FROM v_tester
+WHERE tst_id = :al_tst_id;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_today
+
+SELECT TODAY
+INTO :ld_date
+FROM v_system_par ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_user_name
+
+SELECT informix.users.first_name,  
+informix.users.last_name 
+INTO 	:ls_name,:ls_surname 
+FROM 	informix. users 
+WHERE	informix.users.user_id = :as_user_id;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT users.first_name,  
+users.last_name 
+INTO 	:ls_name,:ls_surname 
+FROM 	 users 
+WHERE	users.user_id = :as_user_id;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0043
+
+SELECT stat_name
+FROM v_testing_station;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0068
+
+SELECT COUNT(*)
+INTO :li_records
+FROM vrt_station
+WHERE Upper(Trim(station_name)) = :ls_station;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0090
+
+SELECT stat_name
+INTO  :ls_stat_vrts
+FROM v_testing_station
+WHERE stat_id = :al_stat_id;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0100
+
+SELECT st_class_vera_id
+INTO :ls_vera_class_id
+FROM v_st_class
+WHERE st_class_id = :al_class_id;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0122
+
+SELECT link_vvrn.veh_id
+INTO :ll_system_no
+FROM link_vvrn,
+vrn 
+WHERE vrn.vrn_id = link_vvrn.vrn_id AND 
+vrn.vrn = :as_reg_no AND
+(date_started <= :ad_date) AND
+(date_ended Is Null OR date_ended >= :ad_date);
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0143
+
+SELECT COUNT(*)
+INTO :li_count
+FROM vehicle
+WHERE veh_id =:as_reg_no;
+		
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0169
+
+SELECT vrt_class
+INTO :ls_reg_class_id
+FROM vvrt_class
+WHERE veh_id = :ll_system_no AND
+(date_started <= :ad_date) AND
+(date_ended Is Null OR date_ended >= :ad_date);
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0209
+
+SELECT cert_cat_des
+INTO :ls_cert_cat
+FROM v_cert_cat
+WHERE cert_cat_des = :ls_cat;
+	
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0223
+
+SELECT Upper(station_name)
+INTO :ls_station_name
+FROM vrt_certif,
+vrt_cert_bk,
+vrt_station
+WHERE vrt_certif.cert_bk_id = vrt_cert_bk.cert_bk_id AND
+vrt_certif_no = :ll_number AND
+station_no = station_id AND
+oa_res_cancel Is Null AND
+sale_date <= :ad_date ;
+				
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0254
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_test
+WHERE vtst_certno = :as_cert_no AND
+vtst_id <> :al_test_id;
+						
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0285
+
+SELECT Count(*)
+INTO :ll_row_count
+FROM  v_ref_cat
+WHERE ref_cat_des= :ls_cat;
+	
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0299
+
+SELECT  Count(*)
+INTO :ll_row_count
+FROM v_ref_cat
+WHERE :ls_cat In(SELECT ref_cat_des
+FROM v_st_class,
+v_ref_cat
+WHERE st_class_vera_id = :ls_vera_class_id AND
+st_class_id = ref_class_id);
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0318
+
+SELECT st_class_vera_id
+INTO :ls_vera_rec_cat
+FROM v_st_class
+WHERE st_class_id = :al_class_id;
+			
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0326
+
+SELECT Upper(station_name)
+INTO :ls_station_name
+FROM vrt_refusal,
+vrt_refusal_bk,
+vrt_station
+WHERE vrt_refusal.refusal_bk_id = vrt_refusal_bk.refusal_bk_id AND
+vrt_refusal.vrt_refusal_no = :ll_number AND
+vrt_refusal.vrt_class = :ls_vera_ref_cat AND
+station_no = station_id AND
+oa_res_cancel Is Null AND
+sale_date <= :ad_date ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0357
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_test
+WHERE vtst_certno = :as_cert_no AND
+vtst_id <> :al_test_id;
+								
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0392
+
+SELECT Count(*)
+INTO :ll_row_count
+FROM  v_tst_receipt
+WHERE tst_rec_des= :ls_cat;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0406
+
+SELECT  Count(*)
+INTO :ll_row_count
+FROM v_tst_receipt
+WHERE :ls_cat In(SELECT tst_rec_des
+FROM v_st_class,
+v_tst_receipt
+WHERE st_class_vera_id = :ls_vera_class_id AND
+st_class_id = tst_rec_class_id);
+								  
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0424
+
+SELECT st_class_vera_id
+INTO :ls_vera_rec_cat
+FROM v_st_class
+WHERE st_class_id = :al_class_id;
+		
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0432
+
+SELECT Upper(station_name)
+INTO :ls_station_name
+FROM vrt_receipt,
+vrt_rec_bk,
+vrt_station
+WHERE vrt_receipt.rec_bk_id = vrt_rec_bk.rec_bk_id AND
+vrt_receipt.vrt_receipt_no = :ll_number AND
+vrt_receipt.vrt_class = :ls_vera_rec_cat AND
+station_no = station_id AND
+oa_res_cancel Is Null AND
+sale_date <= :ad_date ;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0463
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_test
+WHERE vtst_recno = :as_receipt_no AND
+vtst_id <> :al_test_id;
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0494
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_tester_licence
+WHERE tstcl_tst_id = :al_tester_id AND
+tstcl_lic_issd = "Y" AND
+tstcl_dt_lic_iss <= :ad_date AND
+(tstcl_lic_term_ind = "N" OR tstcl_dt_lic_term >= :ad_date) AND
+tstcl_class_id IN (SELECT class_id FROM v_class,v_class_link
+WHERE :al_class_id = link_st_class_id AND link_class_id = class_id);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 New sql code
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_tester_licence
+WHERE tstcl_tst_id = :al_tester_id AND
+tstcl_lic_issd = 'Y' AND
+tstcl_dt_lic_iss <= :ad_date AND
+(tstcl_lic_term_ind = 'N' OR tstcl_dt_lic_term >= :ad_date) AND
+tstcl_class_id IN (SELECT class_id FROM v_class,v_class_link
+WHERE :al_class_id = link_st_class_id AND link_class_id = class_id);
+						   
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_validate_returns   line 0517
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_employ_hist
+WHERE emphis_tst_id = :al_tester_id AND
+emphis_stat_id = :al_stat_id AND
+emphis_start_dt <= :ad_date AND
+(emphis_end_dt Is Null OR emphis_end_dt >= :ad_date);
+
+--------------------------------------------------------------------------------------------------------------		
+vt_function.pbl -> fg_veh_class_desc
+
+SELECT Trim(st_class_desc)
+INTO :ls_class_desc
+FROM v_st_class
+WHERE st_class_id = :ra_class_id ;
+
+
+
+
+
+
+
+

@@ -1,0 +1,168 @@
+vt_letters.pbl -> dw_bnkguar_ren_letter_main
+
+SELECT (informix.v_bank_guarantee.bnkguar_id) bnkguar_id,   
+Trim(informix.v_bank_guarantee.bnkguar_no) bnkguar_no,   
+Trim(informix.v_bank.bank_name) bank_name,   
+Trim(informix.v_bank_branch.bbr_street_name) bbr_street_name,
+Trim(informix.v_bank_branch.bbr_post_code) bbr_post_code, 
+Trim(informix.v_town.town) town, 
+(informix.v_renewal.gren_amnt) gren_amnt,   
+(informix.v_renewal.gren_start_date) gren_start_date,   
+(informix.v_renewal.gren_end_date)gren_end_date,   
+Trim (informix.v_operator.oper_org_name) oper_org_name,
+Trim (informix.v_operator.oper_file_no) oper_file_no,
+Trim (informix.v_person.per_name) per_name,
+Trim (informix.v_person.per_surname) per_surname,
+(informix.v_renewal.gren_id) gren_id,
+(informix.v_renewal.gren_ren_amount) gren_ren_amount,
+(informix.v_renewal.gren_lttr_date) gren_lttr_date,
+(informix.v_bank_guarantee.bnkguar_issue_date) bnkguar_issue_date
+FROM informix.v_bank,   
+informix.v_bank_branch,
+informix.v_town,   
+informix.v_bank_guarantee,   
+informix.v_renewal,
+informix.v_operator,
+OUTER informix.v_person
+WHERE ( informix.v_bank_guarantee.bnkguar_id IN(:al_guar_id)) AND
+( informix.v_bank_guarantee.bnkguar_active_ind="Y") AND
+( informix.v_bank_branch.bbr_bank_id = informix.v_bank.bank_id ) AND  
+( informix.v_bank_branch.bbr_town_id = informix.v_town.town_id) AND
+( informix.v_bank_guarantee.bnkguar_bbr_id = informix.v_bank_branch.bbr_id ) AND
+( informix.v_bank_guarantee.bnkguar_oper_id = informix.v_operator.oper_id) AND
+( informix.v_renewal.gren_bnkguar_id = informix.v_bank_guarantee.bnkguar_id ) AND 
+( informix.v_operator.oper_per_id = informix.v_person.per_id) AND
+( informix.v_renewal.gren_latest_ind="Y" ) AND
+( informix.v_renewal.gren_end_date <=:ad_expiry_date)  
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql OUTER na kraju
+
+-------------------------------------------------------------------------------------------------
+vt_letters.pbl -> dw_contract_renewal_letter
+
+SELECT	oper_id, oper_loc_id
+FROM v_operator, OUTER(v_location)
+WHERE oper_id IN (:ra_oper_id) AND
+loc_id = oper_loc_id
+				   
+-------------------------------------------------------------------------------------------------
+vt_letters.pbl -> dw_course_letter
+
+SELECT	informix.v_course_type.crse_type_name,   
+informix.v_provider.provider_name,   
+informix.v_tester.tst_name,   
+informix.v_tester.tst_surname,   
+informix.v_tester.tst_id_no,
+informix.v_session.sess_start_date, 
+informix.v_session.sess_end_date,
+v_provider.provider_loc_id, 
+v_tester.tst_loc_id
+FROM informix.v_course_type,   
+informix.v_provider,   
+informix.v_tester,
+informix.v_session 
+WHERE provider_id = :ra_crse_provider AND 
+crse_type_id = :ra_crse_name AND 
+sess_id = :ra_session AND
+tst_id IN (:ra_tst_ids) 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql
+
+SELECT	v_course_type.crse_type_name,   
+v_provider.provider_name,   
+v_tester.tst_name,   
+v_tester.tst_surname,   
+v_tester.tst_id_no,
+v_session.sess_start_date, 
+v_session.sess_end_date,
+v_provider.provider_loc_id, 
+v_tester.tst_loc_id
+FROM v_course_type,   
+v_provider,   
+v_tester,
+v_session 
+WHERE provider_id = :ra_crse_provider AND 
+crse_type_id = :ra_crse_name AND 
+sess_id = :ra_session AND
+tst_id IN (:ra_tst_ids) 
+				   
+-------------------------------------------------------------------------------------------------
+vt_letters.pbl -> dw_lane_renewal_lttr
+
+SELECT DISTINCT  Trim(v_person.per_name)per_name, 
+Trim(v_person.per_surname)per_surname, 
+Trim(v_person.per_idno)per_idno, 
+Trim(v_operator.oper_file_no)oper_file_no, 
+Trim(v_operator.oper_org_name)oper_org_name, 
+Trim(v_operator.oper_org_ind)oper_org_ind, 
+Trim(v_testing_station.stat_name)stat_name, 
+Trim(v_testing_station.stat_file_no)stat_file_no,
+(v_testing_station.stat_id)stat_id, 
+(v_operator.oper_loc_id)oper_loc_id,
+(v_operator.oper_id)oper_id
+FROM		v_testing_station, 
+			v_contract, 
+			v_operator, 
+OUTER		v_person 
+WHERE(v_testing_station.stat_id IN(:al_station_id)) AND
+(v_contract.cont_last_ind="Y") AND
+(v_contract.cont_term_ind="N") AND
+(v_contract.cont_signed_ind="Y") AND
+v_contract.cont_stat_id = v_testing_station.stat_id AND 
+v_contract.cont_oper_id = v_operator.oper_id AND 
+v_operator.oper_per_id = v_person.per_id ;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql OUTER na kraju
+			
+-------------------------------------------------------------------------------------------------
+vt_letters.pbl -> w_contract_renewal -> open()  line 0010
+
+SELECT TODAY INTO :ld_today FROM v_system_par;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql
+
+SELECT convert(date, getdate()) INTO :ld_today FROM v_system_par;
+
+-------------------------------------------------------------------------------------------------
+vt_letters.pbl -> w_contract_renewal -> cb_search.clicked ()  line 0011
+
+SELECT TODAY INTO :ld_today FROM v_system_par;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql
+
+SELECT convert(date, getdate()) INTO :ld_today FROM v_system_par;
+
+-------------------------------------------------------------------------------------------------
+vt_letters.pbl -> w_contract_renewal -> cb_search.clicked ()  line 0040
+				   
+SELECT count(*)
+INTO :ll_count
+FROM v_operator, v_contract, outer(v_person)
+WHERE	(cont_oper_id  = oper_id) AND 
+(oper_per_id = per_id) AND 
+(month (cont_end_date) =  :li_month) AND 
+(year (cont_end_date) = :li_year);
+
+-------------------------------------------------------------------------------------------------
+vt_letters.pbl -> w_course_criteria -> cb_search.clicked ()  line 0016	
+
+ls_criteria = "(Select tstcl_id from v_tester WHERE tstcl_sess_id = " + ls_session + ")"
+				
+-------------------------------------------------------------------------------------------------
+vt_letters.pbl -> w_course_criteria -> cb_add_all.clicked ()  line 0013	
+
+ls_criteria = "(Select tstcl_id from v_tester WHERE tstcl_sess_id = " + ls_session + ")"
+
+-------------------------------------------------------------------------------------------------
+vt_letters.pbl -> w_course_criteria -> cb_remove_all.clicked ()  line 0013		
+
+ls_criteria = "(Select tstcl_id from v_tester WHERE tstcl_sess_id = " + ls_session + ")"
+
+-------------------------------------------------------------------------------------------------
+vt_letters.pbl -> w_course_criteria -> ddlb_crse_name.selectionchanged () 
+
+SELECT crse_id
+INTO :ll_crse_id
+FROM v_course
+WHERE (crse_provider_id = :ll_code2) and (crse_crse_type_id = :ll_code);
+	

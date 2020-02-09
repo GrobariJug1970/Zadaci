@@ -1,0 +1,101 @@
+vt_rpwin.pbl -> dw_cash_book_admin_detail
+
+SELECT v_receipt.rec_no rec_no,
+v_receipt.rec_dt_issd di,
+v_receipt.rec_payer_ind tt,
+v_book_type.v_book_desc bt, 
+v_book.vrt_class vc, 
+rec_create_user ui, 
+users.first_name || " " || users.last_name un,
+v_receipt.rec_amount qty_r,
+v_book.book_price qty_b 
+FROM v_receipt,users, outer (v_book,v_book_type)
+WHERE (v_receipt.rec_dt_issd >= :ra_from) AND
+(v_receipt.rec_dt_issd <= :ra_to) AND
+(v_receipt.rec_canc_ind = "N") AND
+(v_receipt.rec_create_user = :ra_user_id OR :ra_user_id = "*ALL*") AND 
+(v_receipt.rec_create_user = users.user_id) AND
+(v_receipt.rec_id = v_book.receipt_id) AND
+(v_book.book_type = v_book_type.v_book_type_pk) 
+order by 6,2,1,3,4;
+
+////////////////////////////////////////////////////////////////////////// new sql 28.01.2020 Miljan OUTER - na kraju 
+	 
+----------------------------------------------------------------------------------------------
+vt_rpwin.pbl -> dw_cash_book_super_detail
+
+SELECT informix.v_receipt.rec_id,   
+informix.v_receipt.rec_no,
+informix.v_receipt.rec_dt_issd,
+informix.v_receipt.rec_amount,
+informix.users.first_name,
+informix.users.last_name,
+informix.v_receipt.rec_payer_ind
+FROM informix.v_receipt, informix.users
+WHERE (informix.v_receipt.rec_dt_issd >= :ra_from) AND
+(informix.v_receipt.rec_dt_issd <= :ra_to) AND
+(informix.v_receipt.rec_canc_ind = "N") AND
+(v_receipt.rec_create_user = :ra_user_id OR :ra_user_id = "*ALL*") AND
+(v_receipt.rec_create_user = users.user_id)
+
+////////////////////////////////////////////////////////////////////////// new sql 28.01.2020 Miljan
+
+SELECT v_receipt.rec_id,   
+v_receipt.rec_no,
+v_receipt.rec_dt_issd,
+v_receipt.rec_amount,
+users.first_name,
+users.last_name,
+v_receipt.rec_payer_ind
+FROM v_receipt, users
+WHERE (v_receipt.rec_dt_issd >= :ra_from) AND
+(v_receipt.rec_dt_issd <= :ra_to) AND
+(v_receipt.rec_canc_ind = 'N') AND
+(v_receipt.rec_create_user = :ra_user_id OR :ra_user_id = '*ALL*') AND
+(v_receipt.rec_create_user = users.user_id)
+
+----------------------------------------------------------------------------------------------
+vt_rpwin.pbl -> dw_test_station_summary2_back			
+
+SELECT	DISTINCT (informix.v_testing_station.stat_name) station_name, 
+informix.v_testing_station.stat_id, 
+informix.v_town.town, 
+informix.v_country.long_name, 
+informix.v_contract.cont_id, 
+Trim(informix.v_operator.oper_org_name) oper_org_name, 
+Trim(informix.v_operator.oper_org_ind) oper_org_ind, 
+Trim(informix.v_person.per_surname) per_surname, 
+Trim(informix.v_person.per_name) per_name, 
+Trim(informix.v_person.per_idno) per_idno,
+(informix.v_operator.oper_id) oper_id,
+(informix.v_contract.cont_start_date) cont_start 
+FROM informix.v_testing_station, 
+informix.v_contract, 
+informix.v_location,  
+informix.v_town, 
+informix.v_country, 
+informix.v_operator, 
+OUTER informix.v_person 
+WHERE (v_contract.cont_start_date <= :ra_end_date ) AND 
+(v_contract.cont_end_date > :ra_start_date) AND 
+((v_contract.cont_term_date > :ra_start_date) OR 
+(v_contract.cont_term_date is null )) AND 
+(informix.v_contract.cont_signed_ind="Y") AND
+(v_town.town_id = :ra_town_id OR :ra_town_id = -1 ) AND 
+(v_contract.cont_statloc_id = v_location.loc_id ) AND 
+(v_contract.cont_stat_id = v_testing_station.stat_id ) AND 
+(v_location.loc_town_id = v_town.town_id) AND 
+(v_country.ctry_id = v_town.town_ctry_id) AND 
+(v_contract.cont_oper_id = v_operator.oper_id) AND 
+(v_operator.oper_per_id = v_person.per_id)
+
+////////////////////////////////////////////////////////////////////////// new sql 28.01.2020 Miljan OUTER - na kraju 
+
+----------------------------------------------------------------------------------------------
+vt_rpwin.pbl -> fg_receipt_prices
+
+select receipt_rate_a,receipt_rate_b,receipt_rate_c,receipt_rate_d,
+refusal_rate,certificate_rate
+into :ld_ra,:ld_rb,:ld_rc,:ld_rd,:ld_n,:ld_v
+from vrt_bk_receipt where trim(receipt_no) = :receipt_no;
+

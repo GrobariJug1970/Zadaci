@@ -1,0 +1,19 @@
+vt_anc.pbl ->  uo_dw_no_update -> itemchanged()  line 0025
+
+SELECT next_key_value
+INTO   :ll_KeyValue
+FROM   key_sequences
+WHERE  table_name = :is_PKSequenceName ;
+
+----------------------------------------------------------------------------------------------------------
+vt_anc.pbl ->  uo_dw_no_update -> itemchanged()  line 0036
+
+UPDATE key_sequences
+SET    next_key_value = :ll_NewKeyValue
+WHERE  table_name = :is_PKSequenceName ;
+
+----------------------------------------------------------------------------------------------------------
+vt_anc.pbl ->  w_maintenance_anc -> dw_list.ue_delete_row()    line 0016
+
+ls_sql = "SELECT COUNT(*) FROM " + is_table_name + &
+" WHERE " + is_tprimary_keyname + " = " + String(ll_primary_id) 

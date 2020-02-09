@@ -1,0 +1,1872 @@
+vt_dw1.pbl - > class
+
+SELECT  informix.v_lane.lane_desc ,
+informix.v_class.class_desc
+FROM informix.v_app_lane ,
+informix.v_lane ,
+informix.v_class
+WHERE ( informix.v_lane.lane_id = informix.v_app_lane.app_lane_lane_id ) and
+( informix.v_class.class_id = informix.v_app_lane.app_lane_class_id )   
+
+////////////////////////////////////////////////////////////////////////////////////////  New sql code 15.01.2020   5 min
+
+SELECT  v_lane.lane_desc ,
+v_class.class_desc
+FROM v_app_lane ,
+v_lane , v_class
+WHERE ( v_lane.lane_id = v_app_lane.app_lane_lane_id ) and
+( v_class.class_id = v_app_lane.app_lane_class_id )   
+  
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_about
+
+Nema sql upita
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_addr_gen
+
+SELECT informix.v_location.loc_id,   
+Trim(informix.v_location.address_1) address_1,   
+Trim(informix.v_location.address_2) address_2,   
+informix.v_location.loc_town_id,   
+Trim(informix.v_location.post_code) post_code  
+FROM informix.v_location   
+WHERE informix.v_location.loc_id = :an_loc_id
+
+////////////////////////////////////////////////////////////////////////////////////////  New sql code 15.01.2020   5 min
+
+SELECT v_location.loc_id,   
+Trim(v_location.address_1) address_1,   
+Trim(v_location.address_2) address_2,   
+v_location.loc_town_id,   
+Trim(v_location.post_code) post_code  
+FROM v_location   
+WHERE v_location.loc_id = :an_loc_id
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_addr_gen_ro
+
+SELECT informix.v_location.loc_id,   
+Trim(informix.v_location.address_1) address_1,   
+Trim(informix.v_location.address_2) address_2,   
+informix.v_location.loc_town_id,   
+Trim(informix.v_location.post_code) post_code  
+FROM informix.v_location   
+WHERE informix.v_location.loc_id = :an_loc_id
+
+////////////////////////////////////////////////////////////////////////////////////////  New sql code 15.01.2020   5 min
+
+SELECT v_location.loc_id,   
+Trim(v_location.address_1) address_1,   
+Trim(v_location.address_2) address_2,   
+v_location.loc_town_id,   
+Trim(v_location.post_code) post_code  
+FROM v_location   
+WHERE v_location.loc_id = :an_loc_id
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_addr_gen_sta
+
+SELECT informix.v_location.loc_id,   
+Trim(informix.v_location.address_1) address_1,   
+Trim(informix.v_location.address_2) address_2,   
+informix.v_location.loc_town_id,   
+Trim(informix.v_location.post_code) post_code,
+loc_stat_id,
+loc_active_ind,
+loc_prev_id  
+FROM informix.v_location   
+WHERE informix.v_location.loc_stat_id = :an_stat_id
+
+////////////////////////////////////////////////////////////////////////////////////////  New sql code 15.01.2020   5 min
+
+SELECT v_location.loc_id,   
+Trim(v_location.address_1) address_1,   
+Trim(v_location.address_2) address_2,   
+v_location.loc_town_id,   
+Trim(v_location.post_code) post_code,
+loc_stat_id,
+loc_active_ind,
+loc_prev_id  
+FROM v_location   
+WHERE v_location.loc_stat_id = :an_stat_id
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_address
+
+SELECT informix.v_location.loc_id,   
+informix.v_location.address_1,   
+informix.v_location.address_2,   
+informix.v_location.loc_town_id,   
+informix.v_location.post_code,   
+informix.v_tester.tst_id,   
+informix.v_tester.tst_loc_id   
+FROM informix.v_location,   
+informix.v_tester   
+WHERE ( informix.v_tester.tst_loc_id = informix.v_location.loc_id ) and  
+( v_tester.tst_loc_id = v_location.loc_id) and 
+(tst_id = :ra_tst_id);
+
+////////////////////////////////////////////////////////////////////////////////////////  New sql code 15.01.2020   5 min
+
+SELECT v_location.loc_id,   
+v_location.address_1,   
+v_location.address_2,   
+v_location.loc_town_id,   
+v_location.post_code,   
+v_tester.tst_id,   
+v_tester.tst_loc_id   
+FROM v_location,   
+v_tester   
+WHERE ( v_tester.tst_loc_id = v_location.loc_id ) and  
+( v_tester.tst_loc_id = v_location.loc_id) and 
+(tst_id = :ra_tst_id);
+		
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_app_class_lane
+
+SELECT  informix.v_app_lane.app_lane_class_id ,
+informix.v_app_lane.app_lane_lane_id ,
+informix.v_app_lane.app_lane_id ,
+informix.v_app_lane.app_lane_app_id ,
+informix.v_app_lane.app_lane_rej_ind
+FROM informix.v_app_lane    
+
+////////////////////////////////////////////////////////////////////////////////////////  New sql code 15.01.2020   5 min
+
+SELECT  v_app_lane.app_lane_class_id ,           
+v_app_lane.app_lane_lane_id ,
+v_app_lane.app_lane_id ,
+v_app_lane.app_lane_app_id ,
+v_app_lane.app_lane_rej_ind 
+FROM v_app_lane    
+  
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_app_search
+
+SELECT informix.v_application.app_id,   
+informix.v_application.app_date_made,   
+informix.v_application.app_stat_ind,   
+informix.v_application.app_no,   
+informix.v_application.app_year,
+informix.v_application.app_withdrawn,   
+informix.v_operator.oper_org_name,
+informix.v_operator.oper_file_no,
+informix.v_operator.oper_auth_no,  
+informix.v_person.per_surname,   
+informix.v_person.per_name,   
+informix.v_testing_station.stat_name  
+FROM informix.v_application,   
+informix.v_operator,   
+OUTER informix.v_person,   
+informix.v_testing_station  
+WHERE ( informix.v_operator.oper_id = informix.v_application.app_oper_id ) and  
+( informix.v_person.per_id = informix.v_operator.oper_per_id ) and  
+( informix.v_testing_station.stat_id = informix.v_application.app_stat_id )   
+
+////////////////////////////////////////////////////////////////////////////////////////  New sql code 15.01.2020   5 min 
+
+Treba jos srediti ovo sa full outer join na kraju
+		 
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_app_status_docs
+
+SELECT	informix.v_app_pend_doc.app_doc_date,   
+informix.v_app_pend_doc.app_doc_ind,   
+informix.v_app_pend_doc.app_doc_id,   
+informix.v_pending_docs.pendoc_desc   
+FROM informix.v_app_pend_doc,   
+informix.v_pending_docs  
+WHERE ( informix.v_pending_docs.pendoc_id = informix.v_app_pend_doc.app_doc_pendoc_id ) and
+( informix.v_app_pend_doc.app_doc_app_id = :ra_app_id )
+
+////////////////////////////////////////////////////////////////////////////////////////  New sql code 15.01.2020   5 min 
+
+SELECT	v_app_pend_doc.app_doc_date,   
+v_app_pend_doc.app_doc_ind,   
+v_app_pend_doc.app_doc_id,   
+v_pending_docs.pendoc_desc   
+FROM v_app_pend_doc,   
+v_pending_docs  
+WHERE ( v_pending_docs.pendoc_id = v_app_pend_doc.app_doc_pendoc_id ) and
+( v_app_pend_doc.app_doc_app_id = :ra_app_id )
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_app_status_process			
+
+SELECT	informix.v_app_process.app_proc_date,   
+informix.v_app_process.app_proc_ind,   
+informix.v_app_process.app_proc_id,   
+informix.v_process_pending.process_pend_desc   
+FROM informix.v_app_process,   
+informix.v_process_pending 
+WHERE ( informix.v_app_process.app_proc_pend_id = informix.v_process_pending.process_pend_id ) AND
+( informix.v_app_process.app_proc_app_id = :ra_app_id )
+
+////////////////////////////////////////////////////////////////////////////////////////  New sql code 15.01.2020   5 min 
+
+SELECT	v_app_process.app_proc_date,   
+v_app_process.app_proc_ind,   
+v_app_process.app_proc_id,   
+v_process_pending.process_pend_desc   
+FROM v_app_process,   
+v_process_pending 
+WHERE ( v_app_process.app_proc_pend_id = v_process_pending.process_pend_id ) AND
+( v_app_process.app_proc_app_id = :ra_app_id )
+			
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_application
+
+SELECT informix.v_application.app_id,   
+informix.v_application.app_stat_id,   
+informix.v_application.app_oper_id,   
+informix.v_application.app_date_made,   
+informix.v_application.app_stat_ind,   
+informix.v_application.app_date_accp,   
+informix.v_testing_station.stat_name,   
+informix.v_testing_station.stat_file_no,   
+informix.v_application.app_no,   
+informix.v_application.app_year,   
+informix.v_application.app_rejreas_id,   
+informix.v_application.app_withdrawn,   
+informix.v_application.app_withdrawn_dt,
+informix.v_operator.oper_file_no  
+FROM informix.v_testing_station,   
+informix.v_application,
+informix.v_operator  
+WHERE ( informix.v_application.app_stat_id = informix.v_testing_station.stat_id ) AND  
+( informix.v_application.app_oper_id = v_operator.oper_id )
+
+////////////////////////////////////////////////////////////////////////////////////////  New sql code 15.01.2020   10 min 
+
+SELECT v_application.app_id,   
+v_application.app_stat_id,   
+v_application.app_oper_id,   
+v_application.app_date_made,   
+v_application.app_stat_ind,   
+v_application.app_date_accp,   
+v_testing_station.stat_name,   
+v_testing_station.stat_file_no,   
+v_application.app_no,  
+v_application.app_year,   
+v_application.app_rejreas_id,   
+v_application.app_withdrawn,   
+v_application.app_withdrawn_dt,
+v_operator.oper_file_no  
+FROM v_testing_station,   
+v_application,
+v_operator  
+WHERE ( v_application.app_stat_id = v_testing_station.stat_id ) AND  
+( v_application.app_oper_id = v_operator.oper_id )
+			
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_application_contract_find 
+
+SELECT informix.v_application.app_id,   
+informix.v_testing_station.stat_name,   
+informix.v_operator.oper_file_no,   
+informix.v_testing_station.stat_file_no,   
+informix.v_application.app_no,   
+informix.v_application.app_year,   
+informix.v_application.app_date_made,   
+informix.v_operator.oper_id,
+informix.v_application.app_date_accp  
+FROM informix.v_application,   
+informix.v_testing_station,   
+informix.v_operator  
+WHERE ( informix.v_testing_station.stat_id = informix.v_application.app_stat_id ) and  
+( informix.v_operator.oper_id = informix.v_application.app_oper_id ) and
+( informix.v_application.app_stat_ind = "A" ) and
+( informix.v_application.app_withdrawn = "N" ) and
+( informix.v_application.app_cont_prn_ind = "N" ) and
+( informix.v_operator.oper_file_no MATCHES :ra_oper_file_no ) and
+( informix.v_testing_station.stat_file_no MATCHES :ra_stat_file_no )
+
+////////////////////////////////////////////////////////////////////////////////////////  New sql code 15.01.2020   10 min
+
+SELECT v_application.app_id,   
+v_testing_station.stat_name,   
+v_operator.oper_file_no,   
+v_testing_station.stat_file_no,   
+v_application.app_no,   
+v_application.app_year,   
+v_application.app_date_made,   
+v_operator.oper_id,
+v_application.app_date_accp  
+FROM v_application,   
+v_testing_station,   
+v_operator  
+WHERE ( v_testing_station.stat_id = v_application.app_stat_id ) and  
+( v_operator.oper_id = v_application.app_oper_id ) and
+( v_application.app_stat_ind = 'A' ) and
+( v_application.app_withdrawn = 'N' ) and
+( v_application.app_cont_prn_ind = 'N' ) and
+( v_operator.oper_file_no LIKE :ra_oper_file_no ) and
+( v_testing_station.stat_file_no LIKE :ra_stat_file_no )
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_application_details 
+
+SELECT informix.v_application.app_date_accp,   
+informix.v_application.app_withdrawn,   
+informix.v_application.app_withdrawn_dt,   
+informix.v_application.app_rejreas_id,   
+informix.v_application.app_cont_prn_ind,   
+informix.v_rejreas.rejreas_desc,   
+informix.v_application.app_stat_ind  
+FROM informix.v_application,   
+OUTER(informix.v_rejreas)
+WHERE ( informix.v_rejreas.rejreas_id = informix.v_application.app_rejreas_id ) AND
+( informix.v_application.app_id = :ra_app_id )
+			
+//////////////////////////////////////////////////////////////////////////////////////// New sql code 16.01.2020 na kraju proci sve upite sa outer
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_application_directors 
+
+SELECT v_oper_official.oper_off_per_id,
+v_oper_official.oper_off_app_id,
+v_oper_official.oper_off_type_ind,
+v_oper_official.oper_off_id
+FROM informix.v_oper_official   
+WHERE ( oper_off_app_id = :ra_app_id ) AND (oper_off_type_ind = "D")  
+
+//////////////////////////////////////////////////////////////////////////////////////// New sql code 16.01.2020 5 min 
+
+SELECT v_oper_official.oper_off_per_id,
+v_oper_official.oper_off_app_id,
+v_oper_official.oper_off_type_ind,
+v_oper_official.oper_off_id
+FROM v_oper_official   
+WHERE ( oper_off_app_id = :ra_app_id ) AND (oper_off_type_ind = 'D')  
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_application_find 
+
+SELECT informix.v_application.app_id,   
+informix.v_testing_station.stat_name,   
+informix.v_operator.oper_file_no,   
+informix.v_testing_station.stat_file_no,   
+informix.v_application.app_no,   
+informix.v_application.app_year,   
+informix.v_application.app_date_made,   
+informix.v_operator.oper_id  
+FROM informix.v_application,   
+informix.v_testing_station,   
+informix.v_operator  
+WHERE ( informix.v_testing_station.stat_id = informix.v_application.app_stat_id ) and  
+( informix.v_operator.oper_id = informix.v_application.app_oper_id ) and
+( informix.v_operator.oper_file_no MATCHES :ra_oper_file_no ) and
+( informix.v_testing_station.stat_file_no MATCHES :ra_stat_file_no )
+
+//////////////////////////////////////////////////////////////////////////////////////// New sql code 16.01.2020 5 min
+
+SELECT v_application.app_id,   
+v_testing_station.stat_name,   
+v_operator.oper_file_no,   
+v_testing_station.stat_file_no,   
+v_application.app_no,   
+v_application.app_year,   
+v_application.app_date_made,   
+v_operator.oper_id  
+FROM v_application,   
+v_testing_station,   
+v_operator  
+WHERE ( v_testing_station.stat_id = v_application.app_stat_id ) and  
+( v_operator.oper_id = v_application.app_oper_id ) and
+( v_operator.oper_file_no LIKE :ra_oper_file_no ) and
+( v_testing_station.stat_file_no LIKE :ra_stat_file_no )
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_application_lane 
+
+SELECT DISTINCT informix.v_app_lane.app_lane_lane_id,   
+informix.v_app_lane.app_lane_app_id
+FROM informix.v_app_lane   
+WHERE app_lane_app_id = :ra_app_id
+
+//////////////////////////////////////////////////////////////////////////////////////// New sql code 16.01.2020 5 min
+
+SELECT DISTINCT v_app_lane.app_lane_lane_id,   
+v_app_lane.app_lane_app_id
+FROM v_app_lane   
+WHERE app_lane_app_id = :ra_app_id
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_application_new 
+
+SELECT  informix.v_app_lane.app_lane_lane_id ,
+informix.v_app_lane.app_lane_class_id ,
+informix.v_app_lane.app_lane_app_id ,
+informix.v_app_lane.app_lane_rej_ind ,
+informix.v_app_lane.app_lane_inc_ind ,
+informix.v_app_lane.app_lane_term_ind ,
+informix.v_app_lane.app_lane_id
+FROM informix.v_app_lane    
+
+//////////////////////////////////////////////////////////////////////////////////////// New sql code 16.01.2020 5 min
+
+SELECT  v_app_lane.app_lane_lane_id ,
+v_app_lane.app_lane_class_id ,
+v_app_lane.app_lane_app_id ,
+v_app_lane.app_lane_rej_ind ,
+v_app_lane.app_lane_inc_ind ,
+v_app_lane.app_lane_term_ind ,
+v_app_lane.app_lane_id
+FROM v_app_lane    
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_application_new2 
+
+SELECT informix.v_lane.lane_desc,   
+informix.v_class.class_desc,   
+informix.v_app_lane.app_lane_id  
+FROM informix.v_lane,   
+informix.v_app_lane,   
+informix.v_class  
+WHERE ( informix.v_app_lane.app_lane_lane_id = informix.v_lane.lane_id ) and  
+( informix.v_class.class_id = informix.v_app_lane.app_lane_class_id ) 
+
+//////////////////////////////////////////////////////////////////////////////////////// New sql code 16.01.2020 5 min
+
+SELECT v_lane.lane_desc,   
+v_class.class_desc,   
+v_app_lane.app_lane_id  
+FROM v_lane,   
+v_app_lane,   
+v_class  
+WHERE ( v_app_lane.app_lane_lane_id = v_lane.lane_id ) and  
+( v_class.class_id = v_app_lane.app_lane_class_id )    
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_application_operator
+
+SELECT informix.v_operator.oper_auth_no,   
+informix.v_operator.oper_id,   
+informix.v_operator.oper_file_no,   
+informix.v_operator.oper_reg_no,   
+informix.v_operator.oper_loc_id,   
+informix.v_operator.oper_org_ind,   
+informix.v_operator.oper_per_id,   
+informix.v_location.address_1,   
+informix.v_location.address_2,   
+informix.v_location.area_name,   
+informix.v_location.post_code,   
+informix.v_town.town,   
+informix.v_country.long_name
+FROM informix.v_operator,   
+OUTER(informix.v_location,informix.v_town,informix.v_country)   
+WHERE (v_operator.oper_id = :ra_oper_id ) and
+( informix.v_location.loc_id = informix.v_operator.oper_loc_id ) and  
+( informix.v_town.town_id = informix.v_location.loc_town_id ) and  
+( informix.v_country.ctry_id = informix.v_town.town_ctry_id ) 
+
+//////////////////////////////////////////////////////////////////////////////////////// New sql code 16.01.2020 Na kraju sve ove outere srediti
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_application_signatory	 
+
+SELECT informix.v_person.per_name,   
+informix.v_person.per_surname,   
+informix.v_person.per_idno,   
+informix.v_person.per_dob,
+informix.v_oper_official.oper_off_app_id,
+informix.v_oper_official.oper_off_per_id
+FROM informix.v_person,   
+informix.v_oper_official  
+WHERE ( informix.v_oper_official.oper_off_per_id = informix.v_person.per_id ) AND
+( informix.v_oper_official.oper_off_app_id = :ra_app_id ) AND
+( informix.v_oper_official.oper_off_type_ind = 'S' )
+			
+//////////////////////////////////////////////////////////////////////////////////////// New sql code 16.01.2020    5 min 
+
+SELECT v_person.per_name,   
+v_person.per_surname,   
+v_person.per_idno,   
+v_person.per_dob,
+v_oper_official.oper_off_app_id,
+v_oper_official.oper_off_per_id
+FROM v_person,   
+v_oper_official  
+WHERE ( v_oper_official.oper_off_per_id = v_person.per_id ) AND
+( v_oper_official.oper_off_app_id = :ra_app_id ) AND
+( v_oper_official.oper_off_type_ind = 'S' )
+   
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_application_unreject
+
+SELECT informix.v_application.app_id,   
+informix.v_application.app_date_made,   
+informix.v_application.app_stat_ind,   
+informix.v_application.app_date_accp,   
+informix.v_application.app_no,   
+informix.v_application.app_year,   
+informix.v_application.app_rejreas_id  
+FROM informix.v_application   
+WHERE informix.v_application.app_stat_ind = "R"
+
+//////////////////////////////////////////////////////////////////////////////////////// New sql code 16.01.2020    5 min 
+
+SELECT v_application.app_id,   
+v_application.app_date_made,   
+v_application.app_stat_ind,   
+v_application.app_date_accp,   
+v_application.app_no,   
+v_application.app_year,   
+v_application.app_rejreas_id  
+FROM v_application   
+WHERE v_application.app_stat_ind = 'R'
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_bank
+
+SELECT informix.v_bank.bank_id  
+FROM informix.v_bank   
+
+//////////////////////////////////////////////////////////////////////////////////////// New sql code 16.01.2020    2 min
+
+SELECT v_bank.bank_id  
+FROM v_bank 
+  
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_bank_branch
+
+SELECT informix.v_bank_branch.bbr_id,   
+informix.v_bank_branch.bbr_bank_id   
+FROM informix.v_bank_branch  
+WHERE informix.v_bank_branch.bbr_bank_id = :an_bank_id 
+	
+//////////////////////////////////////////////////////////////////////////////////////// New sql code 16.01.2020    5 min
+
+SELECT v_bank_branch.bbr_id,   
+v_bank_branch.bbr_bank_id   
+FROM v_bank_branch  
+WHERE v_bank_branch.bbr_bank_id = :an_bank_id 
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_bank_guar_list
+
+SELECT informix.v_bank_guarantee.bnkguar_no,   
+Trim(informix.v_bank.bank_name) bank_name,   
+Trim(informix.v_bank_branch.bbr_street_name) bbr_street_name,
+Trim(informix.v_town.town) town,   
+informix.v_bank_branch.bbr_telno,   
+informix.v_bank_branch.bbr_faxno,   
+informix.v_bank_guarantee.bnkguar_id,
+(informix.v_bank_guarantee.bnkguar_active_ind) bnkguar_active_ind,
+(informix.v_renewal.gren_latest_ind) gren_latest_ind,
+(informix.v_renewal.gren_end_date) gren_end_date
+FROM informix.v_bank,   
+informix.v_bank_branch,
+informix.v_bank_guarantee,
+informix.v_town,
+informix.v_renewal  
+WHERE ( informix.v_bank_guarantee.bnkguar_bbr_id = informix.v_bank_branch.bbr_id ) AND
+( informix.v_bank_guarantee.bnkguar_id = informix.v_renewal.gren_bnkguar_id ) AND
+( informix.v_renewal.gren_latest_ind = "Y") AND
+( informix.v_bank_branch.bbr_bank_id = informix.v_bank.bank_id ) AND
+( informix.v_bank_branch.bbr_town_id = informix.v_town.town_id ) AND 
+( informix.v_bank_guarantee.bnkguar_oper_id = :an_oper_id);
+
+//////////////////////////////////////////////////////////////////////////////////////// New sql code 16.01.2020    7 min
+
+SELECT v_bank_guarantee.bnkguar_no,   
+Trim(v_bank.bank_name) bank_name,   
+Trim(v_bank_branch.bbr_street_name) bbr_street_name,
+Trim(v_town.town) town,   
+v_bank_branch.bbr_telno,   
+v_bank_branch.bbr_faxno,   
+v_bank_guarantee.bnkguar_id,
+(v_bank_guarantee.bnkguar_active_ind) bnkguar_active_ind,
+(v_renewal.gren_latest_ind) gren_latest_ind,
+(v_renewal.gren_end_date) gren_end_date
+FROM v_bank,   
+v_bank_branch,
+v_bank_guarantee,
+v_town,
+v_renewal  
+WHERE ( v_bank_guarantee.bnkguar_bbr_id = v_bank_branch.bbr_id ) AND
+( v_bank_guarantee.bnkguar_id = v_renewal.gren_bnkguar_id ) AND
+( v_renewal.gren_latest_ind = 'Y') AND
+( v_bank_branch.bbr_bank_id = v_bank.bank_id ) AND
+( v_bank_branch.bbr_town_id = v_town.town_id ) AND 
+( v_bank_guarantee.bnkguar_oper_id = :an_oper_id);
+          
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_bank_guar_list_v1
+
+SELECT informix.v_bank_guarantee.bnkguar_no,   
+Trim(informix.v_bank.bank_name) bank_name,   
+Trim(informix.v_bank_branch.bbr_street_name) bbr_street_name,
+Trim(informix.v_town.town) town,   
+informix.v_bank_branch.bbr_telno,   
+informix.v_bank_branch.bbr_faxno,   
+informix.v_bank_guarantee.bnkguar_id,
+(informix.v_bank_guarantee.bnkguar_active_ind) bnkguar_active_ind,
+(informix.v_renewal.gren_latest_ind) gren_latest_ind,
+(informix.v_renewal.gren_end_date) gren_end_date
+FROM informix.v_bank,   
+informix.v_bank_branch,
+informix.v_bank_guarantee,
+informix.v_town,
+informix.v_renewal  
+WHERE ( informix.v_bank_guarantee.bnkguar_bbr_id = informix.v_bank_branch.bbr_id ) AND
+( informix.v_bank_guarantee.bnkguar_id = informix.v_renewal.gren_bnkguar_id ) AND
+( informix.v_renewal.gren_latest_ind = "Y") AND
+( informix.v_bank_branch.bbr_bank_id = informix.v_bank.bank_id ) AND
+( informix.v_bank_branch.bbr_town_id = informix.v_town.town_id ) AND 
+( informix.v_bank_guarantee.bnkguar_oper_id = :an_oper_id);
+
+//////////////////////////////////////////////////////////////////////////////////////// New sql code 16.01.2020    7 min
+
+SELECT v_bank_guarantee.bnkguar_no,   
+Trim(v_bank.bank_name) bank_name,   
+Trim( v_bank_branch.bbr_street_name) bbr_street_name,
+Trim(v_town.town) town,   
+v_bank_branch.bbr_telno,   
+v_bank_branch.bbr_faxno,   
+v_bank_guarantee.bnkguar_id,
+(v_bank_guarantee.bnkguar_active_ind) bnkguar_active_ind,
+(v_renewal.gren_latest_ind) gren_latest_ind,
+(v_renewal.gren_end_date) gren_end_date
+FROM v_bank,   
+v_bank_branch,
+v_bank_guarantee,
+v_town,
+v_renewal  
+WHERE ( v_bank_guarantee.bnkguar_bbr_id = v_bank_branch.bbr_id ) AND
+( v_bank_guarantee.bnkguar_id = v_renewal.gren_bnkguar_id ) AND
+( v_renewal.gren_latest_ind = 'Y') AND
+( v_bank_branch.bbr_bank_id = v_bank.bank_id ) AND
+( v_bank_branch.bbr_town_id = v_town.town_id ) AND 
+( v_bank_guarantee.bnkguar_oper_id = :an_oper_id);
+          
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_cert_classes		 
+
+SELECT informix.v_cert_class.certclass_start_dt, 
+informix.v_cert_class.certclass_end_dt, 
+informix.v_class.class_desc,
+informix.v_cert_class.certclass_term_ind
+FROM informix.v_class, 
+informix.v_cert_class 
+WHERE ( informix.v_cert_class.certclass_class_id = informix.v_class.class_id ) and  
+( informix.v_cert_class.certclass_cert_id = :al_cert_id )
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 16.01.2020 5 min
+
+SELECT v_cert_class.certclass_start_dt, 
+v_cert_class.certclass_end_dt, 
+v_class.class_desc,
+v_cert_class.certclass_term_ind
+FROM v_class, 
+v_cert_class 
+WHERE ( v_cert_class.certclass_class_id = v_class.class_id ) and  
+( v_cert_class.certclass_cert_id = :al_cert_id )
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_cert_hist		
+
+SELECT informix.v_certificate.certif_id,   
+informix.v_certificate.certif_start_date,   
+informix.v_certificate.certif_end_date,   
+informix.v_certificate.certif_op_no,   
+informix.v_certificate.certif_sta_no,
+informix.v_certificate.certif_last_ind
+FROM informix.v_certificate
+WHERE (informix.v_certificate.certif_cont_id=:an_cont_id)
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 16.01.2020 5 min
+
+SELECT v_certificate.certif_id,   
+v_certificate.certif_start_date,   
+v_certificate.certif_end_date,   
+v_certificate.certif_op_no,   
+v_certificate.certif_sta_no,
+v_certificate.certif_last_ind
+FROM v_certificate
+WHERE (v_certificate.certif_cont_id=:an_cont_id)
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_class_map_disp	
+
+SELECT informix.v_class_link.link_st_class_id,   
+informix.v_class_link.link_class_id,   
+informix.v_class_link.class_link_id,
+informix.v_st_class.st_class_desc,
+informix.v_class.class_desc
+FROM informix.v_class,   
+informix.v_class_link,   
+informix.v_st_class  
+WHERE ( informix.v_class_link.link_class_id = informix.v_class.class_id ) and  
+( informix.v_st_class.st_class_id = informix.v_class_link.link_st_class_id )    
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 16.01.2020 5 min
+
+SELECT v_class_link.link_st_class_id,   
+v_class_link.link_class_id,   
+v_class_link.class_link_id,
+v_st_class.st_class_desc,
+v_class.class_desc
+FROM v_class,   
+v_class_link,   
+v_st_class  
+WHERE ( v_class_link.link_class_id = v_class.class_id ) and  
+( v_st_class.st_class_id = v_class_link.link_st_class_id )    
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_class_map_maint
+
+SELECT informix.v_class_link.link_st_class_id,   
+informix.v_class_link.link_class_id,   
+informix.v_class_link.class_link_id,
+informix.v_st_class.st_class_desc 
+FROM informix.v_class,   
+informix.v_class_link,   
+informix.v_st_class  
+WHERE ( informix.v_class_link.class_link_id = :al_class_id ) and
+( informix.v_class_link.link_class_id = informix.v_class.class_id ) and  
+( informix.v_st_class.st_class_id = informix.v_class_link.link_st_class_id )    
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 16.01.2020 5 min
+
+SELECT v_class_link.link_st_class_id,   
+v_class_link.link_class_id,   
+v_class_link.class_link_id,
+v_st_class.st_class_desc 
+FROM v_class,   
+v_class_link,   
+v_st_class  
+WHERE ( v_class_link.class_link_id = :al_class_id ) and
+( v_class_link.link_class_id = v_class.class_id ) and  
+( v_st_class.st_class_id = v_class_link.link_st_class_id )    
+
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_contract_appeal 
+
+SELECT informix.v_cont_term.contterm_id,   
+informix.v_cont_term.contterm_dt,
+informix.v_cont_term.contterm_app_dt,
+informix.v_cont_term.contterm_app_outc,   
+informix.v_cont_term.contterm_sent_dt  
+FROM informix.v_cont_term   
+WHERE contterm_id = :ra_cont_id ;
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 16.01.2020 5 min
+
+SELECT v_cont_term.contterm_id,   
+v_cont_term.contterm_dt,
+v_cont_term.contterm_app_dt,
+v_cont_term.contterm_app_outc,   
+v_cont_term.contterm_sent_dt  
+FROM v_cont_term   
+WHERE contterm_id = :ra_cont_id ;
+	
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_contract_classes_terminate
+
+SELECT v_cont_lane.contla_id, 
+v_class.class_desc  
+FROM v_cont_lane,   
+v_class  
+WHERE ( v_class.class_id = v_cont_lane.contla_class_id ) AND
+( v_cont_lane.contla_lane_id = :ra_lane_id ) AND
+( v_cont_lane.contla_cont_id = :ra_cont_id ) AND
+( v_cont_lane.contla_term_ind = "N" )  
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 16.01.2020 1 min
+
+SELECT v_cont_lane.contla_id, 
+v_class.class_desc  
+FROM v_cont_lane,   
+v_class  
+WHERE ( v_class.class_id = v_cont_lane.contla_class_id ) AND
+( v_cont_lane.contla_lane_id = :ra_lane_id ) AND
+( v_cont_lane.contla_cont_id = :ra_cont_id ) AND
+( v_cont_lane.contla_term_ind = 'N' ) 
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_contract_details 
+
+SELECT informix.v_contract.cont_id,   
+informix.v_contract.cont_stat_id,   
+informix.v_contract.cont_oper_id,   
+informix.v_contract.cont_last_ind,   
+informix.v_contract.cont_start_date,   
+informix.v_contract.cont_end_date,   
+informix.v_contract.cont_prev_id,
+informix.v_testing_station.stat_name,  
+informix.v_operator.oper_file_no,
+informix.v_testing_station.stat_file_no,
+(informix.v_contract.cont_term_ind) cont_term_ind,
+informix.v_contract.cont_term_date,
+(informix.v_contract.cont_signed_ind) cont_signed_ind,
+(informix.v_contract.cont_signed_date) cont_signed_date
+FROM informix.v_contract,
+informix.v_testing_station,
+informix.v_operator
+WHERE v_contract.cont_id = :ra_cont_id AND
+v_testing_station.stat_id = v_contract.cont_stat_id AND
+v_operator.oper_id = v_contract.cont_oper_id
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 16.01.2020
+
+SELECT v_contract.cont_id,   
+v_contract.cont_stat_id,   
+v_contract.cont_oper_id,   
+v_contract.cont_last_ind,   
+v_contract.cont_start_date,   
+v_contract.cont_end_date,   
+v_contract.cont_prev_id,
+v_testing_station.stat_name,  
+v_operator.oper_file_no,
+v_testing_station.stat_file_no,
+(v_contract.cont_term_ind) cont_term_ind,
+v_contract.cont_term_date,
+(v_contract.cont_signed_ind) cont_signed_ind,
+(v_contract.cont_signed_date) cont_signed_date
+FROM v_contract,
+v_testing_station,
+v_operator
+WHERE v_contract.cont_id = :ra_cont_id AND
+v_testing_station.stat_id = v_contract.cont_stat_id AND
+v_operator.oper_id = v_contract.cont_oper_id
+			
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_contract_details_for_contract_amend 
+
+SELECT informix.v_contract.cont_id,   
+informix.v_contract.cont_stat_id,   
+informix.v_contract.cont_oper_id,   
+informix.v_contract.cont_start_date,   
+informix.v_contract.cont_end_date,   
+informix.v_testing_station.stat_name,  
+informix.v_operator.oper_file_no,
+informix.v_testing_station.stat_file_no 
+FROM informix.v_contract,
+informix.v_testing_station,
+informix.v_operator
+WHERE v_contract.cont_id = :ra_cont_id AND
+v_testing_station.stat_id = v_contract.cont_stat_id AND
+v_operator.oper_id = v_contract.cont_oper_id
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 16.01.2020
+
+SELECT v_contract.cont_id,   
+v_contract.cont_stat_id,   
+v_contract.cont_oper_id,   
+v_contract.cont_start_date,   
+v_contract.cont_end_date,   
+v_testing_station.stat_name,  
+v_operator.oper_file_no,
+v_testing_station.stat_file_no 
+FROM v_contract,
+v_testing_station,
+v_operator
+WHERE v_contract.cont_id = :ra_cont_id AND
+v_testing_station.stat_id = v_contract.cont_stat_id AND
+v_operator.oper_id = v_contract.cont_oper_id
+			
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_contract_directors
+
+SELECT informix.v_person.per_name,   
+informix.v_person.per_surname,   
+informix.v_person.per_idno,
+informix.v_cont_official.cont_off_term_ind,
+informix.v_cont_official.cont_off_term_date,
+informix.v_cont_official.cont_off_id, 
+informix.v_cont_official.cont_off_per_id, 
+informix.v_cont_official.cont_off_type_ind, 
+informix.v_cont_official.cont_off_cont_id 
+FROM informix.v_cont_official,   
+informix.v_person  
+WHERE ( informix.v_person.per_id = informix.v_cont_official.cont_off_per_id ) AND 
+( informix.v_cont_official.cont_off_cont_id = :ra_cont_id ) AND
+( informix.v_cont_official.cont_off_type_ind = "D" )
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 16.01.2020
+
+SELECT v_person.per_name,   
+v_person.per_surname,   
+v_person.per_idno,
+v_cont_official.cont_off_term_ind,
+v_cont_official.cont_off_term_date,
+v_cont_official.cont_off_id, 
+v_cont_official.cont_off_per_id, 
+v_cont_official.cont_off_type_ind, 
+v_cont_official.cont_off_cont_id 
+FROM v_cont_official,   
+v_person  
+WHERE ( v_person.per_id = v_cont_official.cont_off_per_id ) AND 
+( v_cont_official.cont_off_cont_id = :ra_cont_id ) AND
+( v_cont_official.cont_off_type_ind = 'D' )
+   
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_contract_lane
+
+SELECT informix.v_cont_lane.contla_class_id,   
+informix.v_cont_lane.contla_lane_id,   
+informix.v_cont_lane.contla_start_date, 
+informix.v_cont_lane.contla_end_date,
+informix.v_cont_lane.contla_id,
+informix.v_cont_lane.contla_term_ind 
+FROM informix.v_cont_lane   
+WHERE contla_cont_id = :ra_cont_id
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 16.01.2020
+
+SELECT v_cont_lane.contla_class_id,   
+v_cont_lane.contla_lane_id,   
+v_cont_lane.contla_start_date, 
+v_cont_lane.contla_end_date,
+v_cont_lane.contla_id,
+v_cont_lane.contla_term_ind 
+FROM v_cont_lane   
+WHERE contla_cont_id = :ra_cont_id
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_contract_lanes_history
+
+SELECT informix.v_class.class_desc,   
+informix.v_lane.lane_desc,   
+informix.v_cont_lane.contla_id,   
+informix.v_cont_lane.contla_start_date,   
+informix.v_cont_lane.contla_end_date  
+FROM informix.v_cont_lane,   
+informix.v_class,   
+informix.v_lane  
+WHERE ( informix.v_class.class_id = informix.v_cont_lane.contla_class_id ) and  
+( informix.v_lane.lane_id = informix.v_cont_lane.contla_lane_id ) and
+( v_cont_lane.contla_cont_id = :ra_cont_id )
+			
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 16.01.2020
+
+SELECT v_class.class_desc,   
+v_lane.lane_desc,   
+v_cont_lane.contla_id,   
+v_cont_lane.contla_start_date,   
+v_cont_lane.contla_end_date  
+FROM v_cont_lane,   
+v_class,   
+v_lane  
+WHERE ( v_class.class_id = v_cont_lane.contla_class_id ) and  
+( v_lane.lane_id = v_cont_lane.contla_lane_id ) and
+( v_cont_lane.contla_cont_id = :ra_cont_id )
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_contract_lanes_terminate
+
+SELECT DISTINCT informix.v_lane.lane_desc,
+v_lane.lane_id  
+FROM informix.v_cont_lane,   
+informix.v_lane  
+WHERE ( informix.v_lane.lane_id = informix.v_cont_lane.contla_lane_id ) AND
+( informix.v_cont_lane.contla_cont_id = :ra_cont_id ) AND
+( v_cont_lane.contla_term_ind = "N" )
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 16.01.2020
+
+SELECT DISTINCT v_lane.lane_desc,
+v_lane.lane_id  
+FROM v_cont_lane,   
+v_lane  
+WHERE ( v_lane.lane_id = v_cont_lane.contla_lane_id ) AND
+( v_cont_lane.contla_cont_id = :ra_cont_id ) AND
+( v_cont_lane.contla_term_ind = 'N' )
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_contract_list  
+
+SELECT DISTINCT v_cont_lane.contla_lane_id,   
+v_lane.lane_desc,
+v_cont_lane.contla_cont_id,
+v_cont_lane.contla_term_ind
+FROM informix.v_cont_lane,   
+informix.v_lane   
+WHERE ( informix.v_lane.lane_id = informix.v_cont_lane.contla_lane_id ) and  
+( informix.v_cont_lane.contla_cont_id = :ra_cont_id ) and
+( informix.v_cont_lane.contla_term_ind = "N" )
+			
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 16.01.2020
+
+SELECT DISTINCT v_cont_lane.contla_lane_id,   
+v_lane.lane_desc,
+v_cont_lane.contla_cont_id,
+v_cont_lane.contla_term_ind
+FROM v_cont_lane,   
+v_lane   
+WHERE ( v_lane.lane_id = v_cont_lane.contla_lane_id ) and  
+( v_cont_lane.contla_cont_id = :ra_cont_id ) and
+( v_cont_lane.contla_term_ind = 'N' )
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_contract_pending_reasons
+
+SELECT informix.v_cont_pen_reas.cp_pending_id,   
+informix.v_cont_pen_reas.cp_handed_ind,   
+informix.v_cont_pen_reas.cp_handed_date,   
+informix.v_cont_pen_reas.cp_cont_id,   
+informix.v_cont_pen_reas.cont_pen_id  
+FROM informix.v_cont_pen_reas   
+WHERE v_cont_pen_reas.cp_cont_id = :ra_cont_id ;
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020
+
+SELECT v_cont_pen_reas.cp_pending_id,   
+v_cont_pen_reas.cp_handed_ind,   
+v_cont_pen_reas.cp_handed_date,   
+v_cont_pen_reas.cp_cont_id,   
+v_cont_pen_reas.cont_pen_id  
+FROM v_cont_pen_reas   
+WHERE v_cont_pen_reas.cp_cont_id = :ra_cont_id ;
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_contract_permises_details
+
+SELECT informix.v_location.address_1,   
+informix.v_location.address_2,   
+informix.v_location.area_name,   
+informix.v_location.post_code,   
+informix.v_town.town,   
+informix.v_country.long_name,   
+informix.v_testing_station.stat_name  
+FROM informix.v_testing_station,   
+informix.v_location,   
+informix.v_town,   
+informix.v_country,
+informix.v_contract 
+WHERE ( informix.v_location.loc_id = informix.v_contract.cont_statloc_id ) and  
+( informix.v_town.town_id = informix.v_location.loc_town_id ) and  
+( informix.v_country.ctry_id = informix.v_town.town_ctry_id ) and
+( informix.v_contract.cont_id = :ra_cont_id )
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020
+
+SELECT v_location.address_1,   
+v_location.address_2,   
+v_location.area_name,   
+v_location.post_code,   
+v_town.town,   
+v_country.long_name,   
+v_testing_station.stat_name  
+FROM v_testing_station,   
+v_location,   
+v_town,   
+v_country,
+v_contract 
+WHERE (v_location.loc_id =v_contract.cont_statloc_id ) and  
+(v_town.town_id =v_location.loc_town_id ) and  
+(v_country.ctry_id =v_town.town_ctry_id ) and
+(v_contract.cont_id = :ra_cont_id )
+			
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_contract_signatory
+
+SELECT informix.v_cont_official.cont_off_cont_id,   
+informix.v_cont_official.cont_off_id,   
+informix.v_cont_official.cont_off_type_ind,   
+informix.v_cont_official.cont_off_per_id  
+FROM informix.v_cont_official   
+WHERE v_cont_official.cont_off_cont_id = :ra_cont_id 
+AND v_cont_official.cont_off_type_ind = 'S' ;
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020
+
+SELECT v_cont_official.cont_off_cont_id,   
+v_cont_official.cont_off_id,   
+v_cont_official.cont_off_type_ind,   
+v_cont_official.cont_off_per_id  
+FROM v_cont_official   
+WHERE v_cont_official.cont_off_cont_id = :ra_cont_id 
+AND v_cont_official.cont_off_type_ind = 'S' ;
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_contract_term_hist
+
+SELECT informix.v_cont_term.contterm_dt,   
+informix.v_cont_term.contterm_conf_dt,   
+informix.v_cont_term.contterm_reas,   
+informix.v_cont_term.contterm_app_outc,   
+informix.v_cont_term.contterm_sent_dt,   
+informix.v_cont_term.contterm_app_dt  
+FROM informix.v_cont_term   
+WHERE contterm_cont_id = :ra_cont_id AND
+contterm_conf_ind = "C" ;
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020
+
+SELECT v_cont_term.contterm_dt,   
+v_cont_term.contterm_conf_dt,   
+v_cont_term.contterm_reas,   
+v_cont_term.contterm_app_outc,   
+v_cont_term.contterm_sent_dt,   
+v_cont_term.contterm_app_dt  
+FROM v_cont_term   
+WHERE contterm_cont_id = :ra_cont_id AND
+contterm_conf_ind = 'C' ;
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_contract_operator
+
+SELECT informix.v_operator.oper_auth_no,   
+informix.v_operator.oper_id,   
+informix.v_operator.oper_file_no,   
+informix.v_operator.oper_reg_no,   
+informix.v_operator.oper_loc_id,   
+informix.v_operator.oper_org_ind,   
+informix.v_operator.oper_per_id,   
+informix.v_location.address_1,   
+informix.v_location.address_2,   
+informix.v_location.area_name,   
+informix.v_location.post_code,   
+informix.v_town.town,   
+informix.v_country.long_name
+FROM informix.v_operator,   
+OUTER(informix.v_location,informix.v_town,informix.v_country)   
+WHERE (v_operator.oper_id = :ra_oper_id ) and
+( informix.v_location.loc_id = informix.v_operator.oper_loc_id ) and  
+( informix.v_town.town_id = informix.v_location.loc_town_id ) and  
+( informix.v_country.ctry_id = informix.v_town.town_ctry_id ) 
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020 na kraju sada zavrsimo sve idemo na outer
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_contracts_list  
+
+SELECT informix.v_operator.oper_file_no,   
+informix.v_testing_station.stat_file_no,   
+informix.v_testing_station.stat_name,   
+informix.v_operator.oper_id,   
+informix.v_contract.cont_id,   
+informix.v_contract.cont_start_date,
+informix.v_contract.cont_term_ind,
+informix.v_contract.cont_term_date,
+informix.v_contract.cont_signed_ind  
+FROM informix.v_contract,   
+informix.v_operator,   
+informix.v_testing_station  
+WHERE ( informix.v_operator.oper_id = informix.v_contract.cont_oper_id ) and  
+( informix.v_testing_station.stat_id = informix.v_contract.cont_stat_id ) and
+( informix.v_operator.oper_file_no MATCHES :ra_oper_file_no or :ra_oper_file_no = "-1") and
+( informix.v_testing_station.stat_file_no MATCHES :ra_stat_file_no OR :ra_stat_file_no = "-1") and
+( (informix.v_contract.cont_term_ind = :ra_cont_term_ind) or (:ra_cont_term_ind = 'Y'))  AND
+( (informix.v_contract.cont_signed_ind = :ra_cont_sign) or (informix.v_contract.cont_signed_ind="Y") )
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020
+
+SELECT v_operator.oper_file_no,   
+v_testing_station.stat_file_no,   
+v_testing_station.stat_name,   
+v_operator.oper_id,   
+v_contract.cont_id,   
+v_contract.cont_start_date,
+v_contract.cont_term_ind,
+v_contract.cont_term_date,
+v_contract.cont_signed_ind  
+FROM v_contract,   
+v_operator,   
+v_testing_station  
+WHERE ( v_operator.oper_id = v_contract.cont_oper_id ) and  
+( v_testing_station.stat_id = v_contract.cont_stat_id ) and
+( v_operator.oper_file_no LIKE :ra_oper_file_no or :ra_oper_file_no = '-1') and
+( v_testing_station.stat_file_no LIKE :ra_stat_file_no OR :ra_stat_file_no = '-1') and
+( (v_contract.cont_term_ind = :ra_cont_term_ind) or (:ra_cont_term_ind = 'Y'))  AND
+( (v_contract.cont_signed_ind = :ra_cont_sign) or (v_contract.cont_signed_ind='Y') )
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_guar_can 
+
+SELECT (informix.v_stat_guarantee.stat_guar_id) stat_guar_id,   
+(informix.v_stat_guarantee.stat_guar_gren_id) stat_guar_gren_id,   
+(informix.v_stat_guarantee.stat_guar_stat_id) stat_guar_stat_id,   
+Trim(informix.v_stat_guarantee.stg_active_ind) stg_active_ind,   
+Trim(informix.v_stat_guarantee.stg_can_user) stg_can_user,   
+(informix.v_stat_guarantee.stg_can_date) stg_can_date,   
+Trim(informix.v_stat_guarantee.stg_can_rem) stg_can_rem  
+FROM informix.v_stat_guarantee   
+ WHERE 	( informix.v_stat_guarantee.stat_guar_gren_id = :an_gren_id) 
+ 
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020
+
+SELECT (v_stat_guarantee.stat_guar_id) stat_guar_id,   
+(v_stat_guarantee.stat_guar_gren_id) stat_guar_gren_id,   
+(v_stat_guarantee.stat_guar_stat_id) stat_guar_stat_id,   
+Trim(v_stat_guarantee.stg_active_ind) stg_active_ind,   
+Trim(v_stat_guarantee.stg_can_user) stg_can_user,   
+(v_stat_guarantee.stg_can_date) stg_can_date,   
+Trim(v_stat_guarantee.stg_can_rem) stg_can_rem  
+FROM v_stat_guarantee   
+WHERE 	(v_stat_guarantee.stat_guar_gren_id = :an_gren_id) 
+ 
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_guar_can_disp
+
+SELECT (informix.v_stat_guarantee.stat_guar_id) stat_guar_id,   
+(informix.v_stat_guarantee.stat_guar_gren_id) stat_guar_gren_id,   
+(informix.v_stat_guarantee.stat_guar_stat_id) stat_guar_stat_id,   
+Trim(informix.v_stat_guarantee.stg_active_ind) stg_active_ind,   
+Trim(informix.v_stat_guarantee.stg_can_user) stg_can_user,   
+(informix.v_stat_guarantee.stg_can_date) stg_can_date,   
+Trim(informix.v_stat_guarantee.stg_can_rem) stg_can_rem  
+FROM informix.v_stat_guarantee   
+WHERE 	( informix.v_stat_guarantee.stat_guar_gren_id = :an_gren_id) AND
+( informix.v_stat_guarantee.stat_guar_stat_id = :an_station_id)
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020
+
+SELECT (v_stat_guarantee.stat_guar_id) stat_guar_id,   
+(v_stat_guarantee.stat_guar_gren_id) stat_guar_gren_id,   
+(v_stat_guarantee.stat_guar_stat_id) stat_guar_stat_id,   
+Trim(v_stat_guarantee.stg_active_ind) stg_active_ind,   
+Trim(v_stat_guarantee.stg_can_user) stg_can_user,   
+(v_stat_guarantee.stg_can_date) stg_can_date,   
+Trim(v_stat_guarantee.stg_can_rem) stg_can_rem  
+FROM v_stat_guarantee   
+WHERE 	( v_stat_guarantee.stat_guar_gren_id = :an_gren_id) AND
+( v_stat_guarantee.stat_guar_stat_id = :an_station_id)
+			
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_guar_edit
+
+SELECT 	Trim(informix.v_bank_guarantee.bnkguar_no) bnkguar_no, 
+(informix.v_renewal.gren_amnt) amount, 
+(informix.v_renewal.gren_id) gren_id,
+(informix.v_renewal.gren_stn_amount) gren_stn_amount,
+(informix.v_renewal.gren_end_date) gren_end_date,
+(informix.v_renewal.gren_start_date) gren_start_date,
+(informix.v_bank_branch.bbr_id) bbr_id,
+(informix.v_bank_branch.bbr_bank_id) bbr_bank_id
+FROM informix.v_bank_branch, 
+informix.v_bank_guarantee, 
+informix.v_renewal 
+WHERE (informix.v_renewal.gren_id=:an_renewal_id) AND  
+(informix.v_bank_guarantee.bnkguar_bbr_id=informix.v_bank_branch.bbr_id) AND 
+(informix.v_bank_guarantee.bnkguar_id=informix.v_renewal.gren_bnkguar_id) AND  
+(informix.v_renewal.gren_latest_ind="Y"); 
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020
+
+SELECT 	Trim(v_bank_guarantee.bnkguar_no) bnkguar_no, 
+(v_renewal.gren_amnt) amount, 
+(v_renewal.gren_id) gren_id,
+(v_renewal.gren_stn_amount) gren_stn_amount,
+(v_renewal.gren_end_date) gren_end_date,
+(v_renewal.gren_start_date) gren_start_date,
+(v_bank_branch.bbr_id) bbr_id,
+(v_bank_branch.bbr_bank_id) bbr_bank_id
+FROM v_bank_branch, 
+v_bank_guarantee, 
+v_renewal 
+WHERE (v_renewal.gren_id=:an_renewal_id) AND  
+(v_bank_guarantee.bnkguar_bbr_id=v_bank_branch.bbr_id) AND 
+(v_bank_guarantee.bnkguar_id=v_renewal.gren_bnkguar_id) AND  
+(v_renewal.gren_latest_ind='Y'); 
+				 	 
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_guar_ren_list
+
+SELECT (informix.v_bank_guarantee.bnkguar_id) bnkguar_id,   
+Trim(informix.v_bank_guarantee.bnkguar_no) bnkguar_no,   
+Trim(informix.v_bank.bank_name) bank_name,   
+Trim(informix.v_bank_branch.bbr_street_name) bbr_street_name,   
+Trim(informix.v_town.town) town, 
+(informix.v_renewal.gren_amnt) gren_amnt,   
+(informix.v_renewal.gren_start_date) gren_start_date,   
+(informix.v_renewal.gren_end_date)gren_end_date,   
+Trim (informix.v_operator.oper_org_name) oper_org_name,
+Trim (informix.v_operator.oper_file_no) oper_file_no,
+Trim (informix.v_person.per_name) per_name,
+Trim (informix.v_person.per_surname) per_surname,
+(informix.v_renewal.gren_id) gren_id,
+(informix.v_renewal.gren_ren_amount) gren_ren_amount,
+(informix.v_renewal.gren_lttr_date) gren_lttr_date
+FROM informix.v_bank,   
+informix.v_bank_branch,
+informix.v_town,   
+informix.v_bank_guarantee,   
+informix.v_renewal,
+informix.v_stat_guarantee,
+informix.v_testing_station,
+informix.v_contract,
+informix.v_operator,
+OUTER informix.v_person
+WHERE ( :al_guar_id=0 OR informix.v_bank_guarantee.bnkguar_id=:al_guar_id) AND
+( informix.v_bank_guarantee.bnkguar_active_ind="Y") AND
+( informix.v_bank_branch.bbr_bank_id = informix.v_bank.bank_id ) AND  
+( informix.v_bank_branch.bbr_town_id = informix.v_town.town_id) AND
+( informix.v_bank_guarantee.bnkguar_bbr_id = informix.v_bank_branch.bbr_id ) AND
+( informix.v_bank_guarantee.bnkguar_oper_id = informix.v_operator.oper_id) AND
+( informix.v_renewal.gren_bnkguar_id = informix.v_bank_guarantee.bnkguar_id ) AND 
+( informix.v_operator.oper_per_id = informix.v_person.per_id) AND
+( informix.v_renewal.gren_latest_ind="Y" ) AND
+( :as_lttr_date_null_check_ind="N" OR informix.v_renewal.gren_lttr_date Is Null ) AND
+( informix.v_renewal.gren_end_date <=:ad_expiry_date) AND  
+(v_renewal.gren_id = v_stat_guarantee.stat_guar_gren_id) AND
+(v_stat_guarantee.stat_guar_stat_id = v_testing_station.stat_id) AND
+(v_testing_station.stat_id = v_contract.cont_stat_id) AND
+(v_contract.cont_term_ind = "N") AND
+(v_contract.cont_last_ind = "Y") AND
+(v_contract.cont_signed_ind = "Y") AND
+(v_renewal.gren_end_date < v_contract.cont_end_date);
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020 na kraju sve odraditi 
+
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_guar_ren_search
+
+SELECT (informix.v_bank_guarantee.bnkguar_id) bnkguar_id,   
+Trim(informix.v_bank_guarantee.bnkguar_no) bnkguar_no,   
+Trim(informix.v_bank.bank_name) bank_name,   
+Trim(informix.v_bank_branch.bbr_street_name) bbr_street_name,   
+Trim(informix.v_town.town) town, 
+(informix.v_renewal.gren_amnt) gren_amnt,   
+(informix.v_renewal.gren_start_date) gren_start_date,   
+(informix.v_renewal.gren_end_date)gren_end_date,   
+Trim (informix.v_operator.oper_org_name) oper_org_name,
+Trim (informix.v_operator.oper_file_no) oper_file_no,
+Trim (informix.v_person.per_name) per_name,
+Trim (informix.v_person.per_surname) per_surname,
+(informix.v_renewal.gren_id) gren_id,
+(informix.v_renewal.gren_lttr_date) gren_lttr_date,
+(informix.v_renewal.gren_ren_amount) gren_ren_amount, 
+"" as_curr1
+FROM informix.v_bank,   
+informix.v_bank_branch,
+informix.v_town,   
+informix.v_bank_guarantee,   
+informix.v_renewal,
+informix.v_operator,
+OUTER informix.v_person
+WHERE ( informix.v_bank_guarantee.bnkguar_active_ind="Y") AND
+( informix.v_bank_branch.bbr_bank_id = informix.v_bank.bank_id ) AND  
+( informix.v_bank_branch.bbr_town_id = informix.v_town.town_id) AND
+( informix.v_bank_guarantee.bnkguar_bbr_id = informix.v_bank_branch.bbr_id ) AND
+( informix.v_bank_guarantee.bnkguar_oper_id = informix.v_operator.oper_id) AND
+( informix.v_renewal.gren_bnkguar_id = informix.v_bank_guarantee.bnkguar_id ) AND 
+( informix.v_operator.oper_per_id = informix.v_person.per_id) AND
+( informix.v_renewal.gren_latest_ind="Y" )
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020 na kraju sve odraditi
+			
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_guar_renew
+
+SELECT 	Trim(informix.v_bank.bank_name) bank_name, 
+Trim(informix.v_bank_branch.bbr_street_name) bbr_street_name, 
+Trim(informix.v_town.town) town, 
+Trim(informix.v_bank_guarantee.bnkguar_no) bnkguar_no, 
+(informix.v_renewal.gren_amnt) amount, 
+(informix.v_renewal.gren_id) gren_id,
+(informix.v_renewal.gren_stn_amount) gren_stn_amount,
+(informix.v_renewal.gren_end_date) gren_end_date,
+(informix.v_bank_guarantee.bnkguar_id) bnkguar_id
+FROM informix.v_bank, 
+informix.v_bank_branch, 
+informix.v_town, 
+informix.v_bank_guarantee, 
+informix.v_renewal 
+WHERE(informix.v_renewal.gren_id=:an_renewal_id) AND
+(informix.v_bank_guarantee.bnkguar_bbr_id=informix.v_bank_branch.bbr_id) AND 
+(informix.v_bank_branch.bbr_town_id=informix.v_town.town_id) AND 
+(informix.v_bank_branch.bbr_bank_id=informix.v_bank.bank_id) AND 
+(informix.v_bank_guarantee.bnkguar_id=informix.v_renewal.gren_bnkguar_id) AND  
+(informix.v_renewal.gren_latest_ind="Y"); 
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020 
+
+SELECT 	Trim(v_bank.bank_name) bank_name, 
+Trim(v_bank_branch.bbr_street_name) bbr_street_name, 
+Trim(v_town.town) town, 
+Trim(v_bank_guarantee.bnkguar_no) bnkguar_no, 
+(v_renewal.gren_amnt) amount, 
+(v_renewal.gren_id) gren_id,
+(v_renewal.gren_stn_amount) gren_stn_amount,
+(v_renewal.gren_end_date) gren_end_date,
+(v_bank_guarantee.bnkguar_id) bnkguar_id
+FROM v_bank, 
+v_bank_branch, 
+v_town, 
+v_bank_guarantee, 
+v_renewal 
+WHERE(v_renewal.gren_id=:an_renewal_id) AND
+(v_bank_guarantee.bnkguar_bbr_id=v_bank_branch.bbr_id) AND 
+(v_bank_branch.bbr_town_id=v_town.town_id) AND 
+(v_bank_branch.bbr_bank_id=v_bank.bank_id) AND 
+(v_bank_guarantee.bnkguar_id=v_renewal.gren_bnkguar_id) AND  
+(v_renewal.gren_latest_ind='Y'); 
+				 			 
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_guar_renewal
+
+SELECT informix.v_renewal.gren_id,   
+informix.v_renewal.gren_start_date,   
+informix.v_renewal.gren_end_date,   
+informix.v_renewal.gren_lttr_date,   
+informix.v_renewal.gren_amnt,
+(informix.v_renewal.gren_latest_ind) gren_latest_ind 
+FROM informix.v_renewal   
+WHERE informix.v_renewal.gren_bnkguar_id = :an_bnkguar_id
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020 
+
+SELECT v_renewal.gren_id,   
+v_renewal.gren_start_date,   
+v_renewal.gren_end_date,   
+v_renewal.gren_lttr_date,   
+v_renewal.gren_amnt,
+(v_renewal.gren_latest_ind) gren_latest_ind 
+FROM v_renewal   
+WHERE v_renewal.gren_bnkguar_id = :an_bnkguar_id
+   
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_guar_sations
+
+SELECT informix.v_testing_station.stat_name,   
+informix.v_testing_station.stat_file_no,   
+informix.v_testing_station.stat_cnt_name,   
+informix.v_testing_station.stat_cnt_surname,
+Trim(informix.v_stat_guarantee.stg_active_ind) stg_active_ind,
+Trim(informix.v_bank_guarantee.bnkguar_active_ind) bnkguar_active_ind,
+(informix.v_renewal.gren_end_date) gren_end_date,
+(informix.v_testing_station.stat_id) stat_id,
+(informix.v_renewal.gren_id) gren_id
+FROM  informix.v_stat_guarantee,   
+informix.v_testing_station,
+informix.v_renewal,
+informix.v_bank_guarantee  
+WHERE ( informix.v_stat_guarantee.stat_guar_gren_id = :an_gren_id) AND
+( informix.v_testing_station.stat_id = informix.v_stat_guarantee.stat_guar_stat_id ) AND
+( informix.v_stat_guarantee.stat_guar_gren_id = informix.v_renewal.gren_id ) AND
+( informix.v_renewal.gren_bnkguar_id = informix.v_bank_guarantee.bnkguar_id ) 
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020 
+
+SELECT v_testing_station.stat_name,   
+v_testing_station.stat_file_no,   
+v_testing_station.stat_cnt_name,   
+v_testing_station.stat_cnt_surname,
+Trim(v_stat_guarantee.stg_active_ind) stg_active_ind,
+Trim(v_bank_guarantee.bnkguar_active_ind) bnkguar_active_ind,
+(v_renewal.gren_end_date) gren_end_date,
+(v_testing_station.stat_id) stat_id,
+(v_renewal.gren_id) gren_id
+FROM  v_stat_guarantee,   
+v_testing_station,
+v_renewal,
+v_bank_guarantee  
+WHERE ( v_stat_guarantee.stat_guar_gren_id = :an_gren_id) AND
+( v_testing_station.stat_id = v_stat_guarantee.stat_guar_stat_id ) AND
+( v_stat_guarantee.stat_guar_gren_id = v_renewal.gren_id ) AND
+( v_renewal.gren_bnkguar_id = v_bank_guarantee.bnkguar_id ) 
+			
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_guar_sations_add
+
+SELECT Trim(informix.v_testing_station.stat_name) stat_name,   
+Trim(informix.v_testing_station.stat_file_no) stat_file_no,   
+Trim(informix.v_testing_station.stat_cnt_name) stat_cnt_name,   
+Trim(informix.v_testing_station.stat_cnt_surname) stat_cnt_surname,
+(informix.v_stat_guarantee.stat_guar_stat_id) stat_guar_stat_id,
+(informix.v_stat_guarantee.stat_guar_gren_id) stat_guar_gren_id,
+(informix.v_stat_guarantee.stat_guar_id) stat_guar_id
+FROM informix.v_stat_guarantee,   
+informix.v_testing_station  
+WHERE ( informix.v_testing_station.stat_id = informix.v_stat_guarantee.stat_guar_stat_id )  AND
+( informix.v_stat_guarantee.stat_guar_gren_id = :an_gren_id)    
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020 
+
+SELECT Trim(v_testing_station.stat_name) stat_name,   
+Trim(v_testing_station.stat_file_no) stat_file_no,   
+Trim(v_testing_station.stat_cnt_name) stat_cnt_name,   
+Trim(v_testing_station.stat_cnt_surname) stat_cnt_surname,
+(v_stat_guarantee.stat_guar_stat_id) stat_guar_stat_id,
+(v_stat_guarantee.stat_guar_gren_id) stat_guar_gren_id,
+(v_stat_guarantee.stat_guar_id) stat_guar_id
+FROM v_stat_guarantee,   
+v_testing_station  
+WHERE ( v_testing_station.stat_id = v_stat_guarantee.stat_guar_stat_id )  AND
+( v_stat_guarantee.stat_guar_gren_id = :an_gren_id)    
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_guar_sations_cancel
+
+SELECT Trim(informix.v_testing_station.stat_name) stat_name,   
+Trim(informix.v_testing_station.stat_file_no) stat_file_no,   
+Trim(informix.v_testing_station.stat_cnt_name) stat_cnt_name,   
+Trim(informix.v_testing_station.stat_cnt_surname) stat_cnt_surname,
+(informix.v_stat_guarantee.stat_guar_stat_id) stat_guar_stat_id,
+(informix.v_stat_guarantee.stat_guar_gren_id) stat_guar_gren_id,
+(informix.v_stat_guarantee.stat_guar_id) stat_guar_id,
+Trim(informix.v_stat_guarantee.stg_active_ind) stg_active_ind
+FROM informix.v_stat_guarantee,   
+informix.v_testing_station  
+WHERE ( informix.v_testing_station.stat_id = informix.v_stat_guarantee.stat_guar_stat_id )  AND
+( informix.v_stat_guarantee.stat_guar_gren_id = :an_gren_id)    
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020 
+
+SELECT Trim(v_testing_station.stat_name) stat_name,   
+Trim(v_testing_station.stat_file_no) stat_file_no,   
+Trim(v_testing_station.stat_cnt_name) stat_cnt_name,   
+Trim(v_testing_station.stat_cnt_surname) stat_cnt_surname,
+(v_stat_guarantee.stat_guar_stat_id) stat_guar_stat_id,
+(v_stat_guarantee.stat_guar_gren_id) stat_guar_gren_id,
+(v_stat_guarantee.stat_guar_id) stat_guar_id,
+Trim(v_stat_guarantee.stg_active_ind) stg_active_ind
+FROM v_stat_guarantee,   
+v_testing_station  
+WHERE ( v_testing_station.stat_id = v_stat_guarantee.stat_guar_stat_id )  AND
+( v_stat_guarantee.stat_guar_gren_id = :an_gren_id)    
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_guar_search
+
+SELECT (informix.v_bank_guarantee.bnkguar_id) bnkguar_id,   
+Trim(informix.v_bank_guarantee.bnkguar_no) bnkguar_no,   
+Trim(informix.v_bank.bank_name) bank_name,   
+Trim(informix.v_bank_branch.bbr_street_name) bbr_street_name,   
+Trim(informix.v_town.town) town, 
+(informix.v_renewal.gren_amnt) gren_amnt,   
+(informix.v_renewal.gren_start_date) gren_start_date,   
+(informix.v_renewal.gren_end_date)gren_end_date,   
+Trim (informix.v_operator.oper_org_name) oper_org_name,
+Trim (informix.v_operator.oper_file_no) oper_file_no,
+Trim (informix.v_person.per_name) per_name,
+Trim (informix.v_person.per_surname) per_surname,
+(informix.v_renewal.gren_id) gren_id,
+Trim(informix.v_bank_guarantee.bnkguar_active_ind) bnkguar_active_ind
+FROM informix.v_bank,   
+informix.v_bank_branch,
+informix.v_town,   
+informix.v_bank_guarantee,   
+informix.v_renewal,
+informix.v_operator,
+OUTER informix.v_person
+WHERE ( informix.v_bank_branch.bbr_bank_id = informix.v_bank.bank_id ) and  
+( informix.v_bank_branch.bbr_town_id = informix.v_town.town_id) and
+( informix.v_bank_guarantee.bnkguar_bbr_id = informix.v_bank_branch.bbr_id ) and
+( informix.v_bank_guarantee.bnkguar_oper_id = informix.v_operator.oper_id) and
+( informix.v_renewal.gren_bnkguar_id = informix.v_bank_guarantee.bnkguar_id ) and 
+( informix.v_operator.oper_per_id = informix.v_person.per_id) 
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020 Tek na kraju OUTER
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_lane_classes_maintenance
+
+SELECT TRIM(informix.v_class.class_desc) class_desc,   
+informix.v_lane.lane_id lane_id,   
+TRIM(informix.v_lane.lane_desc) lane_desc
+FROM informix.v_class,   
+informix.v_cont_lane,   
+informix.v_lane,   
+informix.v_testing_station  
+WHERE ( informix.v_cont_lane.contla_class_id = informix.v_class.class_id ) and  
+( informix.v_lane.lane_id = informix.v_cont_lane.contla_lane_id ) and  
+( informix.v_testing_station.stat_id = informix.v_lane.lane_stat_id )    AND
+( informix.v_testing_station.stat_id = :ra_stat_id ) AND
+( informix.v_cont_lane.contla_term_ind = "N" )
+		
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020 
+
+SELECT TRIM(v_class.class_desc) class_desc,   
+v_lane.lane_id lane_id,   
+TRIM(v_lane.lane_desc) lane_desc
+FROM v_class,   
+v_cont_lane,   
+v_lane,   
+v_testing_station  
+WHERE ( v_cont_lane.contla_class_id = v_class.class_id ) and  
+( v_lane.lane_id = v_cont_lane.contla_lane_id ) and  
+( v_testing_station.stat_id = v_lane.lane_stat_id )    AND
+( v_testing_station.stat_id = :ra_stat_id ) AND
+( v_cont_lane.contla_term_ind = 'N' )
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_lane_faults
+
+SELECT informix.v_fault_type.ftype_id,   
+informix.v_fault_type.ftype_desc,   
+informix.v_faults.fault_id,   
+informix.v_faults.fault_ftype_id,   
+informix.v_faults.fault_lane_id,   
+informix.v_faults.fault_rep_date,   
+informix.v_faults.fault_ok_date
+FROM informix.v_fault_type,   
+informix.v_faults
+WHERE ( informix.v_faults.fault_ftype_id = informix.v_fault_type.ftype_id ) and  
+( informix.v_faults.fault_lane_id = :ra_lane_id )
+
+////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020 
+
+SELECT v_fault_type.ftype_id,   
+v_fault_type.ftype_desc,   
+v_faults.fault_id,   
+v_faults.fault_ftype_id,   
+v_faults.fault_lane_id,   
+v_faults.fault_rep_date,   
+v_faults.fault_ok_date
+FROM v_fault_type,   
+v_faults
+WHERE ( v_faults.fault_ftype_id = v_fault_type.ftype_id ) and  
+( v_faults.fault_lane_id = :ra_lane_id )
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_lane_licence
+
+SELECT  informix.v_ltd_address.ltd_dept_name ,
+informix.v_ltd_address.ltd_tel_no ,
+informix.v_ltd_address.ltd_fax_no ,
+informix.v_ltd_address.ltd_locality_name ,
+informix.v_ltd_address.ltd_postcode ,
+informix.v_ltd_address.ltd_other_name ,
+informix.v_operating_body.obdy_org_name
+FROM informix.v_ltd_address ,
+informix.v_operating_body   
+  
+ ////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020   ovo treba ubaciti u dw kada proradi baza
+ 
+ SELECT  v_ltd_address.ltd_dept_name ,
+v_ltd_address.ltd_tel_no ,
+v_ltd_address.ltd_fax_no ,
+v_ltd_address.ltd_locality_name ,
+v_ltd_address.ltd_postcode ,
+v_ltd_address.ltd_other_name ,
+v_operating_body.obdy_org_name
+FROM v_ltd_address ,
+v_operating_body 
+
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_lane_lttr_list
+
+SELECT DISTINCT  Trim(v_person.per_name)per_name, 
+Trim(v_person.per_surname)per_surname, 
+Trim(v_person.per_idno)per_idno, 
+Trim(v_operator.oper_file_no)oper_file_no, 
+Trim(v_operator.oper_org_name)oper_org_name, 
+Trim(v_operator.oper_org_ind)oper_org_ind, 
+Trim(v_testing_station.stat_name)stat_name,
+Trim(v_testing_station.stat_file_no)stat_file_no,
+(v_testing_station.stat_id)stat_id,
+(v_lane_renewal.lttr_issued_ind) lttr_issued_ind
+FROM v_lane_renewal,
+v_lane,
+v_testing_station,
+v_contract,
+v_cont_lane,
+v_operator,
+OUTER v_person
+WHERE(:al_stat_id=0 OR v_testing_station.stat_id=:al_stat_id) AND 
+v_lane_renewal.ren_last_ind = "Y" AND 
+v_lane_renewal.ren_term_ind = "N" AND 
+v_contract.cont_last_ind = "Y" AND 
+v_contract.cont_term_ind = "N" AND 
+v_contract.cont_signed_ind = "Y" AND
+v_contract.cont_end_date > TODAY AND 
+v_cont_lane.contla_term_ind="N" AND  
+v_contract.cont_end_date > v_lane_renewal.ren_end_date AND 
+v_lane_renewal.ren_end_date <= :ad_expiry_date AND 
+((:as_lttr_date_null_check_ind="N") OR 
+(v_lane_renewal.ren_lttr_date Is Null)) AND
+v_lane_renewal.ren_lane_id = v_lane.lane_id AND 
+v_lane.lane_stat_id = v_testing_station.stat_id AND 
+v_contract.cont_stat_id = v_testing_station.stat_id AND 
+v_contract.cont_oper_id = v_operator.oper_id AND 
+v_operator.oper_per_id = v_person.per_id AND 
+v_contract.cont_id = v_cont_lane.contla_cont_id AND 
+v_cont_lane.contla_lane_id = v_lane.lane_id 
+
+ ////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020 ma kraju sve srediti ovaj OUTER
+			
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_lane_lttr_search
+
+SELECT DISTINCT  Trim(v_person.per_name)per_name, 
+Trim(v_person.per_surname)per_surname, 
+Trim(v_person.per_idno)per_idno, 
+Trim(v_operator.oper_file_no)oper_file_no, 
+Trim(v_operator.oper_org_name)oper_org_name, 
+Trim(v_operator.oper_org_ind)oper_org_ind, 
+Trim(v_testing_station.stat_name)stat_name,
+Trim(v_testing_station.stat_file_no)stat_file_no,
+(v_testing_station.stat_id)stat_id 
+
+FROM v_lane_renewal,
+v_lane,
+v_testing_station,
+v_contract,
+v_cont_lane,
+v_operator,
+OUTER v_person
+ 
+WHERE		v_lane_renewal.ren_last_ind = "Y" AND 
+			v_lane_renewal.ren_term_ind = "N" AND 
+			v_contract.cont_last_ind = "Y" AND 
+			v_contract.cont_term_ind = "N" AND 
+			v_contract.cont_signed_ind = "Y" AND
+			v_contract.cont_end_date > TODAY AND 
+			v_cont_lane.contla_term_ind="N" AND  
+			v_contract.cont_end_date > v_lane_renewal.ren_end_date AND 
+			((v_lane_renewal.ren_lttr_date Is Null) OR 
+			(v_lane_renewal.ren_lttr_date ="00/00/0000")) AND
+			v_lane_renewal.ren_lane_id = v_lane.lane_id AND 
+			v_lane.lane_stat_id = v_testing_station.stat_id AND 
+			v_contract.cont_stat_id = v_testing_station.stat_id AND 
+			v_contract.cont_oper_id = v_operator.oper_id AND 
+			v_operator.oper_per_id = v_person.per_id AND 
+			v_contract.cont_id = v_cont_lane.contla_cont_id AND 
+			v_cont_lane.contla_lane_id = v_lane.lane_id 
+			
+ ////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020 ma kraju sve srediti ovaj OUTER
+			
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_lane_ren_det
+
+SELECT DISTINCT  (v_lane_renewal.ren_start_date)ren_start_date, 
+(v_lane_renewal.ren_end_date)ren_end_date, 
+Trim(v_lane.lane_desc)lane_desc,
+Trim(v_lane.lane_no)lane_no 
+FROM		v_lane_renewal, 
+			v_lane, 
+			v_testing_station, 
+			v_contract, 
+			v_cont_lane
+WHERE		(v_testing_station.stat_id=:al_stat_id) AND 
+			v_lane_renewal.ren_last_ind = "Y" AND 
+			v_lane_renewal.ren_term_ind = "N" AND 
+			v_contract.cont_last_ind = "Y" AND 
+			v_contract.cont_term_ind = "N" AND 
+			v_contract.cont_signed_ind = "Y" AND 
+			v_contract.cont_end_date > TODAY AND 
+			v_cont_lane.contla_term_ind="N" AND  
+			v_contract.cont_end_date > v_lane_renewal.ren_end_date AND 
+			v_lane_renewal.ren_lane_id = v_lane.lane_id AND 
+			v_lane.lane_stat_id = v_testing_station.stat_id AND 
+			v_contract.cont_stat_id = v_testing_station.stat_id AND 
+			v_contract.cont_id = v_cont_lane.contla_cont_id AND 
+			v_cont_lane.contla_lane_id=v_lane.lane_id ;
+			
+ ////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020
+ 
+SELECT DISTINCT  (v_lane_renewal.ren_start_date)ren_start_date, 
+(v_lane_renewal.ren_end_date)ren_end_date, 
+Trim(v_lane.lane_desc)lane_desc,
+Trim(v_lane.lane_no)lane_no 
+FROM v_lane_renewal, 
+v_lane, 
+v_testing_station, 
+v_contract, 
+v_cont_lane
+WHERE (v_testing_station.stat_id=:al_stat_id) AND 
+v_lane_renewal.ren_last_ind = 'Y' AND 
+v_lane_renewal.ren_term_ind = 'N' AND 
+v_contract.cont_last_ind = 'Y' AND 
+v_contract.cont_term_ind = 'N' AND 
+v_contract.cont_signed_ind = 'Y' AND 
+v_contract.cont_end_date > convert(date, getdate()) AND 
+v_cont_lane.contla_term_ind='N' AND  
+v_contract.cont_end_date > v_lane_renewal.ren_end_date AND 
+v_lane_renewal.ren_lane_id = v_lane.lane_id AND 
+v_lane.lane_stat_id = v_testing_station.stat_id AND 
+v_contract.cont_stat_id = v_testing_station.stat_id AND 
+v_contract.cont_id = v_cont_lane.contla_cont_id AND 
+v_cont_lane.contla_lane_id=v_lane.lane_id ;
+					
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_lane_renewals
+
+SELECT distinct informix.v_receipt.rec_no,   
+v_lane_renewal.ren_rec_id,
+informix.v_lane_renewal.ren_end_date,   
+informix.v_lane_renewal.ren_id,   
+informix.v_receipt.rec_amount,   
+informix.v_receipt.rec_dt_issd,   
+informix.v_receipt.rec_canc_ind,   
+informix.v_receipt.rec_create_user,   
+informix.v_paym_mthd.pmthd_desc,
+informix.v_lane_renewal.ren_start_date 
+FROM informix.v_lane_renewal,   
+informix.v_receipt,   
+informix.v_paym_mthd 
+WHERE	( informix.v_receipt.rec_id = informix.v_lane_renewal.ren_rec_id ) and  
+( informix.v_paym_mthd.pmthd_id = informix.v_receipt.rec_pmthd_id ) and
+( informix.v_lane_renewal.ren_lane_id IN ( :ra_lanes_id ) )
+
+ ////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020
+ 
+SELECT distinct v_receipt.rec_no,   
+v_lane_renewal.ren_rec_id,
+v_lane_renewal.ren_end_date,   
+v_lane_renewal.ren_id,   
+v_receipt.rec_amount,   
+v_receipt.rec_dt_issd,   
+v_receipt.rec_canc_ind,   
+v_receipt.rec_create_user,   
+v_paym_mthd.pmthd_desc,
+v_lane_renewal.ren_start_date 
+FROM v_lane_renewal,   
+v_receipt,   
+v_paym_mthd 
+WHERE	( v_receipt.rec_id = v_lane_renewal.ren_rec_id ) and  
+( v_paym_mthd.pmthd_id = v_receipt.rec_pmthd_id ) and
+( v_lane_renewal.ren_lane_id IN ( :ra_lanes_id ) )
+				
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_lanes_by_station
+
+SELECT DISTINCT informix.v_lane.lane_desc,   
+informix.v_lane.lane_id,
+v_contract.cont_id
+FROM informix.v_contract,   
+informix.v_lane,   
+informix.v_cont_lane  
+WHERE ( v_contract.cont_stat_id = :ra_stat_id ) AND
+( v_contract.cont_last_ind = "Y" ) AND (v_contract.cont_term_ind = "N" ) AND
+( v_cont_lane.contla_term_ind = "N" ) AND
+( informix.v_cont_lane.contla_lane_id = informix.v_lane.lane_id ) AND 
+( informix.v_cont_lane.contla_cont_id = informix.v_contract.cont_id )  
+
+ ////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020
+
+SELECT DISTINCT v_lane.lane_desc,   
+v_lane.lane_id,
+v_contract.cont_id
+FROM v_contract,   
+v_lane,   
+v_cont_lane  
+WHERE ( v_contract.cont_stat_id = :ra_stat_id ) AND
+( v_contract.cont_last_ind = 'Y' ) AND (v_contract.cont_term_ind = 'N' ) AND
+( v_cont_lane.contla_term_ind = 'N' ) AND
+( v_cont_lane.contla_lane_id = v_lane.lane_id ) AND 
+( v_cont_lane.contla_cont_id = v_contract.cont_id )    
+ 	 
+------------------------------------------------------------------------------------------------------
+vt_dw1.pbl - > dw_lanes_cross
+
+SELECT  informix.v_app_lane.app_lane_id ,   
+informix.v_app_lane.app_lane_lane_id ,       
+informix.v_app_lane.app_lane_class_id ,        
+informix.v_app_lane.app_lane_app_id ,         
+informix.v_app_lane.app_lane_rej_ind   
+FROM informix.v_app_lane  
+
+
+ ////////////////////////////////////////////////////////////////////////////////////////////// New sql 17.01.2020 
+
+SELECT  v_app_lane.app_lane_id ,
+v_app_lane.app_lane_lane_id ,
+v_app_lane.app_lane_class_id ,
+v_app_lane.app_lane_app_id ,
+v_app_lane.app_lane_rej_ind
+FROM v_app_lane     
+------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+			

@@ -1,0 +1,182 @@
+auto_update.pbl -> dw_version_def
+
+SELECT  informix.version_def.op_type ,
+informix.version_def.dest_file_path ,
+informix.version_def.dest_file_name ,
+informix.version_def.serial_id ,
+informix.version_def.version_ser_id
+FROM informix.version_def
+WHERE ( informix.version_def.version_ser_id = :ra_version_ser_id )
+ORDER BY informix.version_def.dest_file_name  ASC  
+
+///////////////////////////////////////////////////////////////////////////////////////////// 29.01.2020 New sql miljan ubacen 04.02.2020
+
+SELECT  version_def.op_type ,
+version_def.dest_file_path ,
+version_def.dest_file_name ,
+version_def.serial_id ,
+version_def.version_ser_id
+FROM version_def
+WHERE ( version_def.version_ser_id = :ra_version_ser_id )
+ORDER BY version_def.dest_file_name  ASC  
+  
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> fg_get_common_ver
+
+select serial_id 
+into :ra_version_ser_id 
+from version 
+where ver_description = :ra_version ;
+
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> fg_get_current_version  		line 0008
+
+select version 
+into :ls_version_ser_id 
+from v_system_par;
+
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> fg_get_current_version  		line 0020
+
+select ver_description
+ into :ra_version from version 
+where serial_id  = :ra_version_ser_id;
+
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> fg_get_enc  		line 0030
+
+ls_blow =dayname(today())+string(month(today()))
+
+///////////////////////////////////////////////////////////////////////////////////////////// 29.01.2020 New sql miljan treba proverriti koji je od ova dva upita ispravan
+
+ls_blow =dayname( convert(date, getdate() )+string(month(today()))
+
+ls_blow = datename( weekday, convert(date, getdate() ))+string(month( convert(date, getdate() ))
+
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> fg_get_enc  		line 0032
+
+IF month(today()) < 1 OR month(today()) > 12 THEN li_usage = -98
+
+///////////////////////////////////////////////////////////////////////////////////////////// 29.01.2020 New sql miljan
+
+IF month( convert(date, getdate() ) < 1 OR month( convert(date, getdate() ) > 12 THEN li_usage = -98
+
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> fg_get_enc  		line 0033
+
+IF len(dayname(today())) < 1 OR isnull(dayname(today())) THEN li_usage = -97
+
+///////////////////////////////////////////////////////////////////////////////////////////// 29.01.2020 New sql miljan treba proverriti koji je od ova dva upita ispravan
+
+IF len(dayname( convert(date, getdate() )) < 1 OR isnull(dayname( convert(date, getdate() )) THEN li_usage = -97
+
+IF len( datename( weekday, convert(date, getdate() )) ) < 1 OR isnull( datename( weekday, convert(date, getdate() )) ) THEN li_usage = -97
+
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> fg_get_enc  		line 0070
+
+if abs(daysafter(ld_date,today())) = 0 THEN
+
+///////////////////////////////////////////////////////////////////////////////////////////// 29.01.2020 New sql miljan
+
+if abs(daysafter(ld_date, convert(date, getdate()))) = 0 THEN
+
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> fg_get_local_ver
+
+select ver_description 
+into :ra_version
+ from version 
+ where serial_id = :ra_version_ser_id ;
+
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> fg_perform_ver_update   line 0039
+
+ls_sql = "select serial_id, trim(op_type), trim(dest_file_path), trim(dest_file_name) from version_def where " + &
+" version_ser_id = " + string(ll_curr_ver_ser_id) + " or version_ser_id = " + &
+string(ll_common_ver_ser_id)+ ";"
+
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> fg_set_current_version     line 0009
+
+select ver_description 
+into :ls_version 
+from version 
+where serial_id = :ra_version_ser_id ;
+
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> fg_set_current_version     line 0021
+
+select version 
+into :ls_temp 
+from v_system_par;
+
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> w_maint_ver -> cb_deleteversion.clicked     line 0010
+
+select trim(ver_description) 
+into :ls_selected_ver_code
+ from version 
+ where serial_id = :ll_selected ;
+
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> w_maint_ver -> cb_insertversion.clicked     line 0009
+
+select serial_id 
+into :ll_version_ser_id
+ from version 
+ where ver_description = :ls_new_version;
+
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> w_maint_ver -> cb_makecurrent.clicked     line 0009	
+
+select trim(ver_description) 
+into :ls_selected_ver_code 
+from version 
+where serial_id = :ll_selected ;
+
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> w_maint_ver -> ddlb_version.constructor    line 0007
+
+select serial_id 
+into :ll_common_ser_id
+from version 
+where ver_description = "COMMON VERSION";
+ 
+////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+select serial_id 
+into :ll_common_ser_id
+from version 
+where ver_description = 'COMMON VERSION';
+
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> w_maint_ver -> cb_insertversion.clicked     line 0020
+
+insert into version 
+values (0,:ls_new_version);
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+insert into version 
+values (:ls_new_version);
+
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> w_maint_ver -> ddlb_version.constructor    line 0012
+
+insert into version 
+values (0,"COMMON VERSION");
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.20202
+
+insert into version 
+values ('COMMON VERSION');
+
+--------------------------------------------------------------------------------------------
+auto_update.pbl -> w_maint_ver -> cb_deleteversion.clicked    line 0036
+
+delete from version where serial_id = :ll_selected;
+
+	
+		

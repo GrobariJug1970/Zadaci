@@ -1,0 +1,586 @@
+vt_returns_rep.pbl -> dw_class_param
+
+Nema sql upita
+
+-------------------------------------------------------------------------------
+vt_returns_rep.pbl -> dw_dup_test_det
+
+SELECT v_test.vtst_id,   
+v_test.vtst_class_id,   
+v_test.vtst_veh_no,   
+Trim(v_test.vtst_initial_ind)vtst_initial_ind,
+Trim(v_test.vtst_initial_ind)vtst_initial_ind_2,     
+Trim(v_test.vtst_passed_ind) vtst_passed_ind,   
+Trim(v_test.vtst_passed_ind) vtst_passed_ind_2,   
+v_test.vtst_light_ind,   
+v_test.vtst_stear_ind,   
+v_test.vtst_brake_ind,   
+v_test.vtst_tyres_ind,   
+v_test.vtst_gencon_ind,   
+v_test.vtst_genite_ind,   
+v_test.vtst_vehid_ind,   
+v_test.vtst_noise_ind,   
+v_test.vtst_exhst_ind,   
+Trim(v_test.vtst_certno) vtst_certno,   
+Trim(v_test.vtst_recno) vtst_recno,   
+v_test.vtst_tst_id,   
+v_test.vtst_date,
+(v_test.vtst_oper_id) vtst_oper_id,
+(v_testing_station.stat_name) stat_name
+
+FROM v_test,
+v_testing_station
+			
+WHERE v_test.vtst_veh_no = :ra_veh_no AND
+v_test.vtst_date Between :ad_from_date   AND :ad_to_date AND
+v_test.vtst_stat_id = v_testing_station.stat_id;
+  
+-------------------------------------------------------------------------------
+vt_returns_rep.pbl -> dw_dup_test_main
+
+Select a.vtst_veh_no,Max(a.vtst_date),Max(a.vtst_date -120)
+From v_test a 
+Where vtst_veh_no In(Select vtst_veh_no 
+From  v_test b
+WHERE b.vtst_stat_id <> a.vtst_stat_id and 
+b.vtst_oper_id <> a.vtst_oper_id and 
+b.vtst_veh_no = a.vtst_veh_no and 
+b.vtst_date between (a.vtst_date -120)  and a.vtst_date)
+GROUP BY a.vtst_veh_no;
+
+-------------------------------------------------------------------------------
+vt_returns_rep.pbl -> dw_err_list
+
+SELECT informix.v_returns_err.ret_err_des  
+FROM informix.v_returns_err,   
+informix.v_test_error  
+WHERE ( informix.v_test_error.tst_ret_err_code = informix.v_returns_err.ret_err_code ) AND
+( informix.v_test_error.tst_err_vtst_id = :al_test_id )  
+
+//////////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 23.01.2020 kada proradi baza ubaciti ove upite u aplikaciju  promenjeno 26.01.2020
+
+SELECT v_returns_err.ret_err_des  
+FROM v_returns_err,   
+v_test_error  
+WHERE ( v_test_error.tst_ret_err_code = v_returns_err.ret_err_code ) AND
+( v_test_error.tst_err_vtst_id = :al_test_id ) 
+			
+--------------------------------------------------------------------------------
+vt_returns_rep.pbl -> dw_operator_param
+
+Nema sql upita
+
+--------------------------------------------------------------------------------
+vt_returns_rep.pbl -> dw_station_param
+
+Nema sql upita
+
+--------------------------------------------------------------------------------
+vt_returns_rep.pbl -> dw_station_param
+
+Nema sql upita
+
+--------------------------------------------------------------------------------
+vt_returns_rep.pbl -> dw_test_err
+
+SELECT informix.v_test.vtst_id,   
+informix.v_test.vtst_class_id,   
+informix.v_test.vtst_veh_no,   
+Trim(informix.v_test.vtst_initial_ind)vtst_initial_ind,
+Trim(informix.v_test.vtst_initial_ind)vtst_initial_ind_2,     
+Trim(informix.v_test.vtst_passed_ind) vtst_passed_ind,   
+Trim(informix.v_test.vtst_passed_ind) vtst_passed_ind_2,   
+informix.v_test.vtst_light_ind,   
+informix.v_test.vtst_stear_ind,   
+informix.v_test.vtst_brake_ind,   
+informix.v_test.vtst_tyres_ind,   
+informix.v_test.vtst_gencon_ind,   
+informix.v_test.vtst_genite_ind,   
+informix.v_test.vtst_vehid_ind,   
+informix.v_test.vtst_noise_ind,   
+informix.v_test.vtst_exhst_ind,   
+Trim(informix.v_test.vtst_certno) vtst_certno,   
+Trim(informix.v_test.vtst_recno) vtst_recno,   
+informix.v_test.vtst_tst_id,   
+informix.v_test.vtst_date
+FROM informix.v_test
+WHERE v_test.vtst_stat_id = :ra_stat_id AND
+v_test.vtst_oper_id = :ra_oper_id AND 
+v_test.vtst_date Between :ad_from_date  AND :ad_to_date;
+
+//////////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 23.01.2020 kada proradi baza ubaciti ove upite u aplikaciju promenjeno 26.01.2020
+
+SELECT v_test.vtst_id,   
+v_test.vtst_class_id,   
+v_test.vtst_veh_no,   
+Trim(v_test.vtst_initial_ind)vtst_initial_ind,
+Trim(v_test.vtst_initial_ind)vtst_initial_ind_2,     
+Trim(v_test.vtst_passed_ind) vtst_passed_ind,   
+Trim(v_test.vtst_passed_ind) vtst_passed_ind_2,   
+v_test.vtst_light_ind,   
+v_test.vtst_stear_ind,   
+v_test.vtst_brake_ind,   
+v_test.vtst_tyres_ind,   
+v_test.vtst_gencon_ind,   
+v_test.vtst_genite_ind,   
+v_test.vtst_vehid_ind,   
+v_test.vtst_noise_ind,   
+v_test.vtst_exhst_ind,   
+Trim(v_test.vtst_certno) vtst_certno,   
+Trim(v_test.vtst_recno) vtst_recno,   
+v_test.vtst_tst_id,   
+v_test.vtst_date
+FROM v_test
+WHERE v_test.vtst_stat_id = :ra_stat_id AND
+v_test.vtst_oper_id = :ra_oper_id AND 
+v_test.vtst_date Between :ad_from_date  AND :ad_to_date;
+			
+--------------------------------------------------------------------------------
+vt_returns_rep.pbl -> dw_test_err_main
+
+SELECT DISTINCT (informix.v_test.vtst_oper_id) vtst_oper_id,
+(informix.v_test.vtst_stat_id) vtst_stat_id,  
+(informix.v_testing_station.stat_name) stat_name
+FROM informix.v_test,   
+informix.v_testing_station,
+informix.v_test_error
+WHERE ( informix.v_testing_station.stat_id = informix.v_test.vtst_stat_id ) AND
+( informix.v_test.vtst_id = informix.v_test_error.tst_err_vtst_id)
+
+//////////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 23.01.2020 kada proradi baza ubaciti ove upite u aplikaciju promenjeno 27.01.2020
+
+SELECT DISTINCT (v_test.vtst_oper_id) vtst_oper_id,
+(v_test.vtst_stat_id) vtst_stat_id,  
+(v_testing_station.stat_name) stat_name
+FROM v_test,   
+v_testing_station,
+v_test_error
+WHERE ( v_testing_station.stat_id = v_test.vtst_stat_id ) AND
+( v_test.vtst_id = v_test_error.tst_err_vtst_id)
+			
+--------------------------------------------------------------------------------
+vt_returns_rep.pbl -> dw_test_gen_main
+
+SELECT DISTINCT (informix.v_test.vtst_oper_id) vtst_oper_id,   
+(informix.v_testing_station.stat_name) stat_name,   
+(informix.v_test.vtst_stat_id) vtst_stat_id
+FROM informix.v_test,   
+informix.v_testing_station  
+WHERE ( informix.v_testing_station.stat_id = informix.v_test.vtst_stat_id ) 
+
+//////////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 23.01.2020 kada proradi baza ubaciti ove upite u aplikaciju promenjeno 27.01.2020
+
+SELECT DISTINCT (v_test.vtst_oper_id) vtst_oper_id,   
+(v_testing_station.stat_name) stat_name,   
+(v_test.vtst_stat_id) vtst_stat_id
+FROM v_test,   
+v_testing_station  
+WHERE ( v_testing_station.stat_id = v_test.vtst_stat_id ) 
+
+--------------------------------------------------------------------------------
+vt_returns_rep.pbl -> dw_test_stat
+
+SELECT DISTINCT (informix.v_test.vtst_oper_id) vtst_oper_id,   
+(informix.v_testing_station.stat_name) stat_name,   
+(informix.v_test.vtst_stat_id) vtst_stat_id
+FROM informix.v_test,   
+informix.v_testing_station  
+WHERE ( informix.v_testing_station.stat_id = informix.v_test.vtst_stat_id ) AND
+( :al_oper_id = -1 OR informix.v_test.vtst_oper_id = :al_oper_id ) AND
+( :al_stat_id = -1 OR informix.v_test.vtst_stat_id = :al_stat_id ) 
+
+//////////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 23.01.2020 kada proradi baza ubaciti ove upite u aplikaciju promenjeno 27.01.2020
+
+SELECT DISTINCT (v_test.vtst_oper_id) vtst_oper_id,   
+(v_testing_station.stat_name) stat_name,   
+(v_test.vtst_stat_id) vtst_stat_id
+FROM v_test,   
+v_testing_station  
+WHERE ( v_testing_station.stat_id = v_test.vtst_stat_id ) AND
+( :al_oper_id = -1 OR v_test.vtst_oper_id = :al_oper_id ) AND
+( :al_stat_id = -1 OR v_test.vtst_stat_id = :al_stat_id ) 
+
+--------------------------------------------------------------------------------
+vt_returns_rep.pbl -> dw_tester_param
+
+nema sql upita
+
+--------------------------------------------------------------------------------
+vt_returns_rep.pbl -> dw_veh_test_det
+
+SELECT v_test.vtst_id,   
+v_test.vtst_class_id,   
+v_test.vtst_veh_no,   
+Trim(v_test.vtst_initial_ind)vtst_initial_ind,
+Trim(v_test.vtst_initial_ind)vtst_initial_ind_2,     
+Trim(v_test.vtst_passed_ind) vtst_passed_ind,   
+Trim(v_test.vtst_passed_ind) vtst_passed_ind_2,   
+v_test.vtst_light_ind,   
+v_test.vtst_stear_ind,   
+v_test.vtst_brake_ind,   
+v_test.vtst_tyres_ind,   
+v_test.vtst_gencon_ind,   
+v_test.vtst_genite_ind,   
+v_test.vtst_vehid_ind,   
+v_test.vtst_noise_ind,   
+v_test.vtst_exhst_ind,   
+Trim(v_test.vtst_certno) vtst_certno,   
+Trim(v_test.vtst_recno) vtst_recno,   
+v_test.vtst_tst_id,   
+v_test.vtst_date,
+(v_test.vtst_oper_id) vtst_oper_id,
+(v_testing_station.stat_name) stat_name
+FROM v_test,
+v_testing_station
+WHERE v_test.vtst_veh_no = :ra_veh_no AND
+v_test.vtst_stat_id = v_testing_station.stat_id;
+  
+--------------------------------------------------------------------------------
+vt_returns_rep.pbl -> fg_gen_rep_count - promenjenja cela funkcija svuda gde je bilo informixa zamenjeno 27.01.2020
+
+ls_select = "Select Count(*) "
+ls_from = "From v_test "
+
+	ls_where = "Where informix.v_test.vtst_oper_id = " + String(al_oper_id) + " "
+	ELSE
+		ls_where = ls_where + "AND informix.v_test.vtst_oper_id = " + String(al_oper_id) + " "
+
+			ls_where = "Where informix.v_test.vtst_class_id = " + String(al_class_id) + " "
+	ELSE
+		ls_where = ls_where + "AND informix.v_test.vtst_class_id = " + String(al_class_id) + " "
+	END IF
+END IF
+
+//Tester
+IF al_tester_id <> -1 THEN 
+	IF ls_where = "" THEN
+		ls_where = "Where informix.v_test.vtst_tst_id = " + String(al_tester_id) + " "
+	ELSE
+		ls_where = ls_where + "AND informix.v_test.vtst_tst_id = " + String(al_tester_id) + " "
+	END IF
+END IF
+
+
+//Date Range
+IF as_from_date <> "" AND as_from_date <> "00/00/0000" AND as_to_date <> "" AND  as_to_date <> "00/00/0000" THEN
+	//as_from_date = fg_date_conv(as_from_date)
+	//as_to_date = fg_date_conv(as_to_date)
+	IF ls_where = "" THEN
+		ls_where = "Where informix.v_test.vtst_date Between '" + as_from_date + "' AND '" + as_to_date + "' "
+	ELSE
+		ls_where = ls_where + "AND informix.v_test.vtst_date Between '" + as_from_date + "' AND '" + as_to_date + "' "
+	END IF
+END IF
+
+//Test
+IF ac_test_ind <> "B" THEN 
+	CHOOSE CASE ac_test_ind
+		CASE "I"
+			IF ls_where = "" THEN
+				ls_where = "Where informix.v_test.vtst_initial_ind = 'Y' " 
+			ELSE
+				ls_where = ls_where + "AND informix.v_test.vtst_initial_ind = 'Y' " 
+			END IF		
+		CASE "R"
+			IF ls_where = "" THEN
+				ls_where = "Where informix.v_test.vtst_initial_ind = 'N' " 
+			ELSE
+				ls_where = ls_where + "AND informix.v_test.vtst_initial_ind = 'N' " 
+			END IF		
+	END CHOOSE
+	
+END IF
+
+//Result
+IF ac_result_ind <> "B" THEN 
+	CHOOSE CASE ac_result_ind
+		CASE "P"
+			IF ls_where = "" THEN
+				ls_where = "Where informix.v_test.vtst_passed_ind = 'Y' " 
+			ELSE
+				ls_where = ls_where + "AND informix.v_test.vtst_passed_ind = 'Y' " 
+			END IF		
+		CASE "F"
+			IF ls_where = "" THEN
+				ls_where = "Where informix.v_test.vtst_passed_ind = 'N' " 
+			ELSE
+				ls_where = ls_where + "AND informix.v_test.vtst_passed_ind = 'N' " 
+			END IF		
+	END CHOOSE
+	
+END IF
+
+//Defects
+IF al_defect_code <> 0 THEN
+	CHOOSE CASE al_defect_code
+		CASE 1
+			IF ls_where = "" THEN
+				ls_where = "Where informix.v_test.vtst_light_ind = 'Y' " 
+			ELSE
+				ls_where = ls_where + "AND informix.v_test.vtst_light_ind = 'Y' " 
+			END IF	
+		CASE 2
+			IF ls_where = "" THEN
+				ls_where = "Where informix.v_test.vtst_stear_ind = 'Y' " 
+			ELSE
+				ls_where = ls_where + "AND informix.v_test.vtst_stear_ind = 'Y' " 
+			END IF	
+		CASE 3
+			IF ls_where = "" THEN
+				ls_where = "Where informix.v_test.vtst_brake_ind = 'Y' " 
+			ELSE
+				ls_where = ls_where + "AND informix.v_test.vtst_brake_ind = 'Y' " 
+			END IF	
+		CASE 4
+			IF ls_where = "" THEN
+				ls_where = "Where informix.v_test.vtst_tyres_ind = 'Y' " 
+			ELSE
+				ls_where = ls_where + "AND informix.v_test.vtst_tyres_ind = 'Y' " 
+			END IF	
+		CASE 5
+			IF ls_where = "" THEN
+				ls_where = "Where informix.v_test.vtst_gencon_ind = 'Y' " 
+			ELSE
+				ls_where = ls_where + "AND informix.v_test.vtst_gencon_ind = 'Y' " 
+			END IF	
+		CASE 6
+			IF ls_where = "" THEN
+				ls_where = "Where informix.v_test.vtst_genite_ind = 'Y' " 
+			ELSE
+				ls_where = ls_where + "AND informix.v_test.vtst_genite_ind = 'Y' " 
+			END IF	
+		CASE 7
+			IF ls_where = "" THEN
+				ls_where = "Where informix.v_test.vtst_exhst_ind = 'Y' " 
+			ELSE
+				ls_where = ls_where + "AND informix.v_test.vtst_exhst_ind = 'Y' " 
+			END IF	
+		CASE 8
+			IF ls_where = "" THEN
+				ls_where = "Where informix.v_test.vtst_noise_ind = 'Y' " 
+			ELSE
+				ls_where = ls_where + "AND informix.v_test.vtst_noise_ind = 'Y' " 
+			END IF	
+		CASE 9
+			IF ls_where = "" THEN
+				ls_where = "Where informix.v_test.vtst_vehid_ind = 'Y' " 
+			ELSE
+				ls_where = ls_where + "AND informix.v_test.vtst_vehid_ind = 'Y' " 
+			END IF	
+	END CHOOSE
+ELSE
+	//Defects
+	IF ac_lights_ind = "Y" THEN li_count = li_count + 1
+	IF ac_stearing_ind = "Y" THEN li_count = li_count + 1
+	IF ac_brakes_ind = "Y" THEN li_count = li_count + 1
+	IF ac_tyres_ind = "Y" THEN li_count = li_count + 1
+	IF ac_gencon_ind = "Y" THEN li_count = li_count + 1
+	IF ac_genitem_ind = "Y" THEN li_count = li_count + 1
+	IF ac_exhaust_ind = "Y" THEN li_count = li_count + 1
+	IF ac_noise_ind = "Y" THEN li_count = li_count + 1
+	IF ac_vehid_ind = "Y" THEN li_count = li_count + 1
+	
+	CHOOSE CASE li_count
+		CASE 1
+			IF ac_lights_ind = "Y" THEN	
+				ls_where = ls_where + "AND v_test.vtst_light_ind = 'Y' "
+			END IF
+			IF ac_brakes_ind = "Y" THEN	
+				ls_where = ls_where + "AND v_test.vtst_brake_ind = 'Y' "	
+			END IF
+			IF ac_exhaust_ind = "Y" THEN	
+				ls_where = ls_where + "AND v_test.vtst_exhst_ind = 'Y' "
+			END IF
+			IF ac_gencon_ind = "Y" THEN	
+				ls_where = ls_where + "AND v_test.vtst_gencon_ind = 'Y' "
+			END IF
+			IF ac_genitem_ind = "Y" THEN	
+				ls_where = ls_where + "AND v_test.vtst_genite_ind = 'Y' "
+			END IF
+			IF ac_noise_ind = "Y" THEN	
+				ls_where = ls_where + "AND v_test.vtst_noise_ind = 'Y' "
+			END IF
+			IF ac_stearing_ind = "Y" THEN	
+				ls_where = ls_where + "AND v_test.vtst_stear_ind = 'Y' "
+			END IF
+			IF ac_tyres_ind = "Y" THEN	
+				ls_where = ls_where + "AND v_test.vtst_tyres_ind = 'Y' "
+			END IF
+			IF ac_vehid_ind = "Y" THEN	
+				ls_where = ls_where + "AND v_test.vtst_vehid_ind = 'Y' "
+			END IF
+		
+		CASE IS > 1 
+			IF ac_lights_ind = "Y" THEN
+				IF lb_first_found THEN
+					ls_where = ls_where + "OR v_test.vtst_light_ind = 'Y' "
+				ELSE
+					ls_where = ls_where + "AND (v_test.vtst_light_ind = 'Y' "
+					lb_first_found = TRUE
+				END IF
+			END IF
+			
+
+			IF ac_brakes_ind = "Y" THEN
+				IF lb_first_found THEN
+					ls_where = ls_where + "OR v_test.vtst_brake_ind = 'Y' "
+				ELSE
+					ls_where = ls_where + "AND (v_test.vtst_brake_ind = 'Y' "
+					lb_first_found = TRUE
+				END IF
+			END IF
+			
+
+			IF ac_exhaust_ind = "Y" THEN
+				IF lb_first_found THEN
+					ls_where = ls_where + "OR v_test.vtst_exhst_ind = 'Y' "
+				ELSE
+					ls_where = ls_where + "AND (v_test.vtst_exhst_ind = 'Y' "
+					lb_first_found = TRUE
+				END IF
+			END IF
+			
+			IF ac_gencon_ind = "Y" THEN
+				IF lb_first_found THEN
+					ls_where = ls_where + "OR v_test.vtst_gencon_ind = 'Y' "
+				ELSE
+					ls_where = ls_where + "AND (v_test.vtst_gencon_ind = 'Y' "
+					lb_first_found = TRUE
+				END IF
+			END IF
+			
+			IF ac_genitem_ind = "Y" THEN
+				IF lb_first_found THEN
+					ls_where = ls_where + "OR v_test.vtst_genite_ind = 'Y' "
+				ELSE
+					ls_where = ls_where + "AND (v_test.vtst_genite_ind = 'Y' "
+					lb_first_found = TRUE
+				END IF
+			END IF
+			
+			IF ac_noise_ind = "Y" THEN
+				IF lb_first_found THEN
+					ls_where = ls_where + "OR v_test.vtst_noise_ind = 'Y' "
+				ELSE
+					ls_where = ls_where + "AND (v_test.vtst_noise_ind = 'Y' "
+					lb_first_found = TRUE
+				END IF
+			END IF
+			
+			IF ac_stearing_ind = "Y" THEN
+				IF lb_first_found THEN
+					ls_where = ls_where + "OR v_test.vtst_stear_ind = 'Y' "
+				ELSE
+					ls_where = ls_where + "AND (v_test.vtst_stear_ind = 'Y' "
+					lb_first_found = TRUE
+				END IF
+			END IF
+			
+			IF ac_tyres_ind = "Y" THEN
+				IF lb_first_found THEN
+					ls_where = ls_where + "OR v_test.vtst_tyres_ind = 'Y' "				
+				ELSE
+					ls_where = ls_where + "AND (v_test.vtst_tyres_ind = 'Y' "
+					lb_first_found = TRUE
+				END IF
+			END IF
+			
+			IF ac_vehid_ind = "Y" THEN
+				IF lb_first_found THEN
+					ls_where = ls_where + "OR v_test.vtst_vehid_ind = 'Y' "
+				ELSE
+					ls_where = ls_where + "AND (v_test.vtst_vehid_ind = 'Y' "
+					lb_first_found = TRUE
+				END IF
+			END IF
+			
+			ls_where = ls_where + ")"
+			
+		CASE 0
+		ls_where = ls_where + "AND vtst_light_ind = 'N' AND vtst_stear_ind = 'N' " +&
+									 "AND vtst_brake_ind = 'N' AND vtst_tyres_ind = 'N' " +&
+									 "AND vtst_gencon_ind ='N' AND vtst_genite_ind = 'N' " +&
+									 "AND vtst_vehid_ind = 'N' AND vtst_noise_ind = 'N' " +&
+									 "AND vtst_exhst_ind = 'N'"
+									 
+									 
+									 cela funkcija u sql upitu
+									 
+//////////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 23.01.2020 kada proradi baza ubaciti ove upite u aplikaciju celu ovu funkciju treba deo po deo preci kada proradi baza
+						zamenjenja cela funkcija 			 
+--------------------------------------------------------------------------------
+vt_returns_rep.pbl -> fg_gen_rep_count
+
+SELECT COUNT(*)
+INTO :ll_count
+FROM v_test
+WHERE vtst_oper_id = :al_oper_id AND
+vtst_stat_id = :al_stat_id AND
+vtst_date Between :ld_from AND :ld_to AND
+vtst_passed_ind = :as_passed_ind AND
+vtst_initial_ind = :as_initial_ind;
+		
+--------------------------------------------------------------------------------
+vt_returns_rep.pbl -> w_dup_test_param  -> ue_sql_bld
+
+ls_select = "SELECT a.vtst_veh_no,Max(a.vtst_date),Max(a.vtst_date -120) "
+
+ls_from = "FROM v_test a " 
+   
+ls_where = "a.vtst_veh_no In(SELECT vtst_veh_no " +&
+"FROM v_test b " +&
+"WHERE b.vtst_stat_id <> a.vtst_stat_id AND " +&
+"b.vtst_oper_id <> a.vtst_oper_id AND " +&
+"b.vtst_veh_no = a.vtst_veh_no AND " +&
+"b.vtst_date between (a.vtst_date -120) AND a.vtst_date) "
+IF cbx_veh_all.CHECKED = TRUE THEN //Report by month and year selected
+ls_where = "WHERE Month(a.vtst_date) = " + ls_month + " AND " +&
+"Year(a.vtst_date) = " + ls_year + " AND " + ls_where 
+ls_veh_no = "-1"
+ELSE //Report by vehicle no. selected
+ls_where = "WHERE a.vtst_veh_no = '" + ls_veh_no + "' AND " + ls_where
+ls_month = "-1"
+ls_year = "-1"
+END IF
+
+
+//Concatinate SQL statement
+ls_sql = ls_select + ls_from + ls_where + "GROUP BY a.vtst_veh_no;"
+
+--------------------------------------------------------------------------------
+vt_returns_rep.pbl -> w_test_err_param  -> ue_sql_bld
+
+ls_select = "SELECT DISTINCT (v_test.vtst_oper_id) vtst_oper_id, " +&   
+				"(informix.v_test.vtst_stat_id) vtst_stat_id, " +& 
+            "(v_testing_station.stat_name) stat_name " 
+
+ls_from = "FROM v_test, " +&
+          "v_testing_station, " +&
+			 "v_test_error "
+   
+ls_where = "WHERE ( v_testing_station.stat_id = v_test.vtst_stat_id ) AND " +&
+				"(v_test.vtst_id = v_test_error.tst_err_vtst_id ) "
+		
+////////////////////////////////////////////////////////////////////////////////////////////////////////////// new sql miljan 23.01.2020 kada proradi baza ubaciti ove upite
+
+ls_select = "SELECT DISTINCT (v_test.vtst_oper_id) vtst_oper_id, " +&   
+				"(v_test.vtst_stat_id) vtst_stat_id, " +& 
+            "(v_testing_station.stat_name) stat_name " 
+
+ls_from = "FROM v_test, " +&
+          "v_testing_station, " +&
+			 "v_test_error "
+   
+ls_where = "WHERE ( v_testing_station.stat_id = v_test.vtst_stat_id ) AND " +&
+				"(v_test.vtst_id = v_test_error.tst_err_vtst_id ) "
+--------------------------------------------------------------------------------
+vt_returns_rep.pbl -> w_test_gen_param  -> ue_sql_bld
+
+ls_select = "SELECT DISTINCT (v_test.vtst_oper_id) vtst_oper_id, " +&   
+            "(v_testing_station.stat_name) stat_name, " +&
+         	"(v_test.vtst_stat_id) vtst_stat_id "
+
+ls_from = "FROM v_test, " +&
+          "v_testing_station " 
+   
+ls_where = "WHERE ( v_testing_station.stat_id = v_test.vtst_stat_id ) "

@@ -1,0 +1,604 @@
+--------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_app_pending_docs
+
+SELECT pendoc_show_ind, pendoc_id, TRIM(pendoc_desc) pendoc_desc,
+pendoc_comp_ind,
+pendoc_per_ind,
+pendoc_par_ind
+FROM informix.v_pending_docs
+WHERE pendoc_id = :ra_pendoc_id
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 23.01.2020 na kraju kada proradi baza ubaciti kod ubaceno 27.01.2020
+
+SELECT pendoc_show_ind, pendoc_id, TRIM(pendoc_desc) pendoc_desc,
+pendoc_comp_ind,
+pendoc_per_ind,
+pendoc_par_ind
+FROM v_pending_docs
+WHERE pendoc_id = :ra_pendoc_id
+
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_app_pending_docs_list
+
+SELECT informix.v_pending_docs.pendoc_id,   
+informix.v_pending_docs.pendoc_desc, 
+informix.v_pending_docs.pendoc_show_ind,  
+informix.v_pending_docs.pendoc_comp_ind,
+informix.v_pending_docs.pendoc_par_ind,
+informix.v_pending_docs.pendoc_per_ind
+FROM informix.v_pending_docs   
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 23.01.2020 na kraju kada proradi baza ubaciti kod ubaceno 27.01.2020
+
+SELECT v_pending_docs.pendoc_id,   
+v_pending_docs.pendoc_desc, 
+v_pending_docs.pendoc_show_ind,  
+v_pending_docs.pendoc_comp_ind,
+v_pending_docs.pendoc_par_ind,
+v_pending_docs.pendoc_per_ind
+FROM v_pending_docs   
+
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_app_pending_process
+
+SELECT informix.v_process_pending.process_pend_id,   
+informix.v_process_pending.process_pend_desc,   
+informix.v_process_pending.process_pend_ind  
+FROM informix.v_process_pending 
+WHERE process_pend_id = :ra_pend_id
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 23.01.2020 na kraju kada proradi baza ubaciti kod ubaceno 27.01.2020
+
+SELECT v_process_pending.process_pend_id,   
+v_process_pending.process_pend_desc,   
+v_process_pending.process_pend_ind  
+FROM v_process_pending 
+WHERE process_pend_id = :ra_pend_id
+
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_app_pending_process_list
+
+SELECT informix.v_process_pending.process_pend_id,   
+informix.v_process_pending.process_pend_desc,   
+informix.v_process_pending.process_pend_ind  
+FROM informix.v_process_pending
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 23.01.2020 na kraju kada proradi baza ubaciti kod ubaceno 27.01.2020
+
+SELECT v_process_pending.process_pend_id,   
+v_process_pending.process_pend_desc,   
+v_process_pending.process_pend_ind  
+FROM v_process_pending
+	
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_bank_branch_details
+
+SELECT 	TRIM (informix.v_bank_branch.bbr_street_name) bbr_street_name,
+TRIM (informix.v_bank_branch.bbr_telno) bbr_telno,
+TRIM (informix.v_bank_branch.bbr_faxno) bbr_faxno,
+informix.v_bank_branch.bbr_id,  
+informix.v_bank_branch.bbr_bank_id,
+informix.v_bank_branch.bbr_town_id,
+informix.v_bank_branch.bbr_post_code 
+FROM informix.v_bank_branch 
+WHERE informix.v_bank_branch.bbr_id = :ra_bbr_id
+
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod 
+
+SELECT 	TRIM (v_bank_branch.bbr_street_name) bbr_street_name,
+TRIM (v_bank_branch.bbr_telno) bbr_telno,
+TRIM (v_bank_branch.bbr_faxno) bbr_faxno,
+v_bank_branch.bbr_id,  
+v_bank_branch.bbr_bank_id,
+v_bank_branch.bbr_town_id,
+v_bank_branch.bbr_post_code 
+FROM v_bank_branch 
+WHERE v_bank_branch.bbr_id = :ra_bbr_id
+			
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_bank_branch_list
+
+SELECT 	Trim(informix.v_country.long_name) long_name,
+Trim(informix.v_town.town) town,
+informix.v_town.town_id,   
+informix.v_bank_branch.bbr_id,
+informix.v_bank_branch.bbr_bank_id,   
+Trim(informix.v_bank_branch.bbr_street_name) bbr_street_name,
+informix.v_bank_branch.bbr_town_id,
+Trim(informix.v_bank.bank_name) bank_name
+FROM 	informix.v_bank,   
+informix.v_bank_branch,
+informix.v_town,
+informix.v_country  
+WHERE 	( informix.v_bank_branch.bbr_bank_id = informix.v_bank.bank_id ) AND
+(informix.v_bank_branch.bbr_town_id = informix.v_town.town_id) AND
+(informix.v_town.town_ctry_id = informix.v_country.ctry_id)    
+				
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubaceno je 27.01.2020
+
+SELECT 	Trim(v_country.long_name) long_name,
+Trim(v_town.town) town,
+v_town.town_id,   
+v_bank_branch.bbr_id,
+v_bank_branch.bbr_bank_id,   
+Trim(v_bank_branch.bbr_street_name) bbr_street_name,
+v_bank_branch.bbr_town_id,
+Trim(v_bank.bank_name) bank_name
+FROM 	v_bank,   
+v_bank_branch,
+v_town,
+v_country  
+WHERE 	( v_bank_branch.bbr_bank_id = v_bank.bank_id ) AND
+(v_bank_branch.bbr_town_id = v_town.town_id) AND
+(v_town.town_ctry_id = v_country.ctry_id)   
+				
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_bank_branch_list_cr
+
+SELECT 	Trim(informix.v_country.long_name) long_name,
+Trim(informix.v_town.town) town,
+informix.v_town.town_id,   
+informix.v_bank_branch.bbr_id,
+informix.v_bank_branch.bbr_bank_id,   
+Trim(informix.v_bank_branch.bbr_street_name) bbr_street_name,
+informix.v_bank_branch.bbr_town_id,
+Trim(informix.v_bank.bank_name) bank_name
+FROM 	informix.v_bank,   
+informix.v_bank_branch,
+informix.v_town,
+informix.v_country  
+WHERE 	(informix.v_bank_branch.bbr_bank_id =:an_bank_id or :an_bank_id = 0) AND
+(informix.v_bank_branch.bbr_town_id =:an_locality_id or :an_locality_id = 0) AND
+(informix.v_bank_branch.bbr_street_name Matches :as_street or :as_street="0") And
+( informix.v_bank_branch.bbr_bank_id = informix.v_bank.bank_id ) AND
+(informix.v_bank_branch.bbr_town_id = informix.v_town.town_id) AND
+(informix.v_town.town_ctry_id = informix.v_country.ctry_id)    
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubacneo je 27.01.2020
+				
+SELECT 	Trim(v_country.long_name) long_name,
+Trim(v_town.town) town,
+v_town.town_id,   
+v_bank_branch.bbr_id,
+v_bank_branch.bbr_bank_id,   
+Trim(v_bank_branch.bbr_street_name) bbr_street_name,
+v_bank_branch.bbr_town_id,
+Trim(v_bank.bank_name) bank_name
+FROM 	v_bank,   
+v_bank_branch,
+v_town,
+v_country  
+WHERE 	(v_bank_branch.bbr_bank_id =:an_bank_id or :an_bank_id = 0) AND
+(v_bank_branch.bbr_town_id =:an_locality_id or :an_locality_id = 0) AND
+(v_bank_branch.bbr_street_name Like :as_street or :as_street="0") And
+( v_bank_branch.bbr_bank_id = v_bank.bank_id ) AND
+(v_bank_branch.bbr_town_id = v_town.town_id) AND
+(v_town.town_ctry_id = .v_country.ctry_id)    
+				
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_class_cat
+
+SELECT informix.v_tst_receipt.tst_rec_id,   
+informix.v_tst_receipt.tst_rec_class_id,   
+Trim(informix.v_tst_receipt.tst_rec_des) tst_rec_des  
+FROM informix.v_tst_receipt   
+WHERE   informix.v_tst_receipt.tst_rec_id = :al_tst_rec_id
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubaceno je 27.01.2020
+
+SELECT v_tst_receipt.tst_rec_id,   
+v_tst_receipt.tst_rec_class_id,   
+Trim(v_tst_receipt.tst_rec_des) tst_rec_des  
+FROM v_tst_receipt   
+WHERE   v_tst_receipt.tst_rec_id = :al_tst_rec_id
+ 
+ -----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_cont_pend_proc
+
+SELECT informix.v_pending_reas.pending_id,   
+informix.v_pending_reas.pending_reason,   
+informix.v_pending_reas.pr_active_ind  
+FROM informix.v_pending_reas   
+WHERE pending_id = :ra_pending_id 
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubaceno je 27.01.2020
+
+SELECT v_pending_reas.pending_id,   
+v_pending_reas.pending_reason,   
+v_pending_reas.pr_active_ind  
+FROM v_pending_reas   
+WHERE pending_id = :ra_pending_id 
+	
+ -----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_cont_pending_reas
+
+SELECT  informix.v_pending_reas.pending_id ,
+informix.v_pending_reas.pending_reason ,
+informix.v_pending_reas.pr_active_ind
+FROM informix.v_pending_reas   
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubaceno je 27.01.2020
+
+SELECT  v_pending_reas.pending_id ,
+v_pending_reas.pending_reason ,
+v_pending_reas.pr_active_ind
+FROM v_pending_reas  
+
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_course_details 
+
+SELECT informix.v_course.crse_id,   
+informix.v_course.crse_duration,   
+informix.v_course.crse_pass_att,   
+informix.v_course.crse_pass_exam, 
+informix.v_course.crse_provider_id,   
+informix.v_course.crse_crse_type_id  
+FROM informix.v_course, informix.v_course_type, informix.v_provider       
+WHERE v_course.crse_id = :ra_course_id and
+v_course.crse_provider_id = v_provider.provider_id and 
+v_course.crse_crse_type_id = v_course_type.crse_type_id
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubaceno je 27.01.2020
+
+SELECT v_course.crse_id,   
+v_course.crse_duration,   
+v_course.crse_pass_att,   
+v_course.crse_pass_exam, 
+v_course.crse_provider_id,   
+v_course.crse_crse_type_id  
+FROM v_course, v_course_type, v_provider       
+WHERE v_course.crse_id = :ra_course_id and
+v_course.crse_provider_id = v_provider.provider_id and 
+v_course.crse_crse_type_id = v_course_type.crse_type_id
+					
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_course_list 
+
+SELECT informix.v_course.crse_id,   
+informix.v_course.crse_provider_id,   
+informix.v_course.crse_crse_type_id,   
+informix.v_course_type.crse_type_id,   
+informix.v_course_type.crse_type_name,   
+informix.v_provider.provider_id,   
+informix.v_provider.provider_name,
+informix.v_class.class_desc
+FROM informix.v_course,   
+informix.v_course_type,   
+informix.v_provider,
+informix.v_class  
+WHERE ( informix.v_course_type.crse_type_id = informix.v_course.crse_crse_type_id ) and  
+( informix.v_provider.provider_id = informix.v_course.crse_provider_id ) and
+( informix.v_course_type.crse_class_id = v_class.class_id )
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubaceno je 27.01.20202
+
+SELECT v_course.crse_id,   
+v_course.crse_provider_id,   
+v_course.crse_crse_type_id,   
+v_course_type.crse_type_id,   
+v_course_type.crse_type_name,   
+v_provider.provider_id,   
+v_provider.provider_name,
+v_class.class_desc
+FROM v_course,   
+v_course_type,   
+v_provider,
+v_class  
+WHERE ( v_course_type.crse_type_id = v_course.crse_crse_type_id ) and  
+( v_provider.provider_id = v_course.crse_provider_id ) and
+( v_course_type.crse_class_id = v_class.class_id )
+			
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_course_list_with_criteria
+
+SELECT	informix.v_course.crse_id,   
+informix.v_course.crse_duration, 
+informix.v_course_type.crse_type_name, 
+informix.v_provider.provider_name 
+FROM informix.v_course, informix.v_provider, informix.v_course_type 
+WHERE (informix.v_course_type.crse_type_name MATCHES :ra_course_name or :ra_course_name="-1") AND
+(informix.v_provider.provider_name MATCHES :ra_provider or :ra_provider="-1" or :ra_provider = "*") AND
+(informix.v_course.crse_crse_type_id = informix.v_course_type.crse_type_id) AND 
+(informix.v_course.crse_provider_id = informix.v_provider.provider_id) 
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubaceno je 27.01.20202
+
+SELECT	v_course.crse_id,   
+v_course.crse_duration, 
+v_course_type.crse_type_name, 
+v_provider.provider_name 
+FROM v_course, v_provider, v_course_type 
+WHERE (v_course_type.crse_type_name LIKE :ra_course_name or :ra_course_name='-1') AND
+(v_provider.provider_name LIKE :ra_provider or :ra_provider='-1' or :ra_provider = '*') AND
+(v_course.crse_crse_type_id = v_course_type.crse_type_id) AND 
+(v_course.crse_provider_id = v_provider.provider_id) 
+			
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_course_provider_details
+
+SELECT TRIM(informix.v_provider.provider_name) as provider_name, informix.v_provider.provider_id, informix.v_provider.provider_loc_id    
+FROM informix.v_provider   
+WHERE ( informix.v_provider.provider_id = :ra_provider_id )
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubaceno je 27.01.20202
+
+SELECT TRIM(v_provider.provider_name) as provider_name, v_provider.provider_id, v_provider.provider_loc_id    
+FROM v_provider   
+WHERE ( v_provider.provider_id = :ra_provider_id )
+   
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_course_provider_list
+
+SELECT informix.v_provider.provider_name, 
+informix.v_provider.provider_id, 
+informix.v_provider.provider_loc_id 
+FROM informix.v_provider   
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubaceno je 27.01.2020
+
+SELECT .v_provider.provider_name, 
+v_provider.provider_id, 
+v_provider.provider_loc_id 
+FROM v_provider   
+
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_course_provider_list_with_criteria
+
+SELECT informix.v_location.loc_id,   
+informix.v_provider.provider_name,   
+informix.v_provider.provider_id,   
+informix.v_provider.provider_loc_id,   
+informix.v_location.loc_town_id,   
+informix.v_town.town_id,   
+informix.v_town.town    
+FROM informix.v_provider,   outer ( informix.v_location,   informix.v_town  )
+WHERE ( informix.v_provider.provider_loc_id = informix.v_location.loc_id ) and  
+( informix.v_town.town_id = informix.v_location.loc_town_id )   and 
+( ( informix.v_provider.provider_name MATCHES :ra_provider_name ) or ( :ra_provider_name = "-1") )
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod - OUTER na kraju menjamo
+
+
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_mtr_rec_class
+
+SELECT (informix.v_tst_receipt.tst_rec_id) tst_rec_id,   
+(informix.v_tst_receipt.tst_rec_class_id) tst_rec_class_id,   
+Trim(informix.v_tst_receipt.tst_rec_des) tst_rec_des,   
+Trim(informix.v_st_class.st_class_desc) class_desc  
+FROM informix.v_st_class,   
+informix.v_tst_receipt  
+WHERE ( informix.v_tst_receipt.tst_rec_class_id = informix.v_st_class.st_class_id )
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubaceno 27.01.2020
+
+SELECT (v_tst_receipt.tst_rec_id) tst_rec_id,   
+(v_tst_receipt.tst_rec_class_id) tst_rec_class_id,   
+Trim(v_tst_receipt.tst_rec_des) tst_rec_des,   
+Trim(v_st_class.st_class_desc) class_desc  
+FROM v_st_class,   
+v_tst_receipt  
+WHERE ( v_tst_receipt.tst_rec_class_id = v_st_class.st_class_id )
+
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_mtr_ref_class   
+
+SELECT (informix.v_ref_cat.ref_cat_id) ref_cat_id,   
+(informix.v_ref_cat.ref_class_id) ref_class_id,   
+Trim(informix.v_ref_cat.ref_cat_des) ref_cat_des,   
+Trim(informix.v_st_class.st_class_desc) class_desc  
+FROM informix.v_st_class,   
+informix.v_ref_cat  
+WHERE ( informix.v_ref_cat.ref_class_id = informix.v_st_class.st_class_id ) 
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubaceno 27.01.2020
+
+SELECT (v_ref_cat.ref_cat_id) ref_cat_id,   
+(v_ref_cat.ref_class_id) ref_class_id,   
+Trim(v_ref_cat.ref_cat_des) ref_cat_des,   
+Trim(v_st_class.st_class_desc) class_desc  
+FROM v_st_class,   
+v_ref_cat  
+WHERE ( v_ref_cat.ref_class_id = v_st_class.st_class_id ) 
+
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_person_details  
+
+SELECT v_person.per_id,   
+TRIM(v_person.per_name) per_name,   
+TRIM(v_person.per_surname) per_surname,   
+TRIM(v_person.per_idno) per_idno,   
+TRIM(v_person.per_email) per_email,   
+v_person.per_dob  
+FROM v_person   
+WHERE per_id = :ra_per_id
+	
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_person_list
+
+SELECT v_person.per_id,   
+v_person.per_name,   
+v_person.per_surname,   
+v_person.per_idno  
+FROM v_person   
+
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_person_list_with_criteria
+
+SELECT v_person.per_id,   
+v_person.per_name,   
+v_person.per_surname,   
+v_person.per_idno  
+FROM v_person   
+WHERE (v_person.per_idno MATCHES :ra_idno or :ra_idno = "-1") AND
+(v_person.per_name MATCHES :ra_name or :ra_name = "-1" ) AND
+(v_person.per_surname MATCHES :ra_surname or :ra_surname = "-1")
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubaceno 27.01.2020
+
+SELECT v_person.per_id,   
+v_person.per_name,   
+v_person.per_surname,   
+v_person.per_idno  
+FROM v_person   
+WHERE (v_person.per_idno LIKE :ra_idno or :ra_idno = '-1') AND
+(v_person.per_name LIKE :ra_name or :ra_name = '-1' ) AND
+(v_person.per_surname LIKE :ra_surname or :ra_surname = '-1')
+			
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_provider_address
+
+SELECT informix.v_location.loc_id,   
+informix.v_location.address_1,   
+informix.v_location.address_2,   
+informix.v_location.loc_town_id,   
+informix.v_location.post_code 
+FROM  informix.v_location 
+WHERE ( informix.v_location.loc_id = :ra_loc_id)  
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubaceno 27.01.2020
+
+SELECT v_location.loc_id,   
+v_location.address_1,   
+v_location.address_2,   
+v_location.loc_town_id,   
+v_location.post_code 
+FROM  v_location 
+WHERE ( v_location.loc_id = :ra_loc_id)  
+
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_refusal_class_cat 
+
+SELECT informix.v_ref_cat.ref_cat_id,   
+informix.v_ref_cat.ref_class_id,   
+Trim(informix.v_ref_cat.ref_cat_des) ref_cat_des  
+FROM informix.v_ref_cat   
+WHERE   informix.v_ref_cat.ref_cat_id = :al_tst_rec_id  
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubaceno 27.01.2020
+
+SELECT v_ref_cat.ref_cat_id,   
+v_ref_cat.ref_class_id,   
+Trim(v_ref_cat.ref_cat_des) ref_cat_des  
+FROM v_ref_cat   
+WHERE   v_ref_cat.ref_cat_id = :al_tst_rec_id  
+ 
+ -----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_session_details
+
+SELECT informix.v_session.sess_id,   
+informix.v_session.sess_start_date,   
+informix.v_session.sess_end_date
+FROM informix.v_session 
+WHERE informix.v_session.sess_id = :ra_session_id
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubacen 27.01.2020
+
+SELECT v_session.sess_id,   
+v_session.sess_start_date,   
+v_session.sess_end_date
+FROM v_session 
+WHERE v_session.sess_id = :ra_session_id
+	
+-----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_session_list
+
+SELECT informix.v_session.sess_id,   
+informix.v_session.sess_crse_id,   
+informix.v_session.sess_start_date,   
+informix.v_session.sess_end_date
+FROM informix.v_session 
+WHERE v_session.sess_crse_id = :ra_crse_id
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubacen 27.01.2020
+
+SELECT v_session.sess_id,   
+v_session.sess_crse_id,   
+v_session.sess_start_date,   
+v_session.sess_end_date
+FROM v_session 
+WHERE v_session.sess_crse_id = :ra_crse_id
+	
+ -----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_session_list_with_criteria		
+
+SELECT  informix.v_course.crse_id ,
+informix.v_course.crse_name ,
+informix.v_session.sess_id ,
+informix.v_session.sess_crse_id ,
+informix.v_session.sess_start_date ,
+informix.v_session.sess_end_date
+FROM informix.v_course ,
+informix.v_session
+WHERE ( informix.v_session.sess_crse_id = informix.v_course.crse_id )   
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubacen 27.01.2020 - ne moze se ubacti ne postoji ova kolona u tabeli crse_name
+
+SELECT  v_course.crse_id ,
+v_course.crse_name ,
+v_session.sess_id ,
+v_session.sess_crse_id ,
+v_session.sess_start_date ,
+v_session.sess_end_date
+FROM v_course ,
+v_session
+WHERE ( v_session.sess_crse_id = v_course.crse_id )   
+
+  -----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_test_station_det_rep_oper
+
+SELECT informix.v_operator.oper_id, oper_file_no   
+FROM informix.v_operator,v_contract
+WHERE (informix.v_operator.oper_id = v_contract.cont_oper_id) AND
+(v_contract.cont_id = :ra_cont_id)
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubaceno 27.01.2020
+
+SELECT v_operator.oper_id, oper_file_no   
+FROM v_operator,v_contract
+WHERE (v_operator.oper_id = v_contract.cont_oper_id) AND
+(v_contract.cont_id = :ra_cont_id)
+			    
+ -----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_veh_class
+
+SELECT  informix.v_st_class.st_class_id ,
+informix.v_st_class.st_class_desc ,
+informix.v_st_class.st_class_vera_id
+FROM informix.v_st_class    
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod ubaceno 27.01.2020
+
+SELECT  v_st_class.st_class_id ,
+v_st_class.st_class_desc ,
+v_st_class.st_class_vera_id
+FROM v_st_class 
+  
+ -----------------------------------------------------------------------------------
+vt_rfdw.pbl -> dw_veh_class_maint 
+
+SELECT informix.v_st_class.st_class_id,
+informix.v_st_class.st_class_desc,
+informix.v_st_class.st_class_vera_id 
+FROM informix.v_st_class 
+WHERE    informix.v_st_class.st_class_id = :al_class_id
+
+////////////////////////////////////////////////////////////////////////////////////////// new sql code miljan 24.01.2020 na kraju kada proradi baza ubaciti kod
+
+SELECT v_st_class.st_class_id,
+v_st_class.st_class_desc,
+v_st_class.st_class_vera_id 
+FROM v_st_class 
+WHERE v_st_class.st_class_id = :al_class_id
+
+
+   
+
+
+
+
+
+
+
+

@@ -1,0 +1,817 @@
+vt_win_nr.pbl  ->  w_oper_person_edit -> dw_per_det.ue_pre_update    line 0019
+
+SELECT Count(*) 
+INTO :ll_count 
+FROM v_person
+WHERE v_person.per_idno=:ls_id_card_no;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_oper_person_edit -> dw_per_det.ue_update    line 0016
+
+Insert Into v_person (per_name,per_surname,per_idno)
+Values(:ls_per_name,:ls_per_srn,:ls_id_card_no);
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_oper_person_edit -> dw_per_det.ue_update    line 0023
+
+Update v_person
+Set (per_idno,per_name,per_surname) = (:ls_id_card_no,:ls_per_name,:ls_per_srn)
+Where per_id = :il_per_id;
+	  
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> ue_retrieve   line 0011
+
+SELECT 	informix.v_operator.oper_id,   
+Trim(informix.v_operator.oper_auth_no) oper_auth_no,   
+Trim(informix.v_operator.oper_file_no) oper_file_no,   
+Trim(informix.v_operator.oper_org_name) oper_org_name,   
+Trim(informix.v_operator.oper_reg_no) oper_reg_no,   
+Trim(informix.v_operator.oper_org_ind) oper_org_ind,   
+informix.v_operator.oper_loc_id,
+informix.v_operator.oper_per_id,
+Trim(informix.v_person.per_idno) per_id_no,   
+Trim(informix.v_person.per_surname) per_surname,
+Trim(informix.v_person.per_name) per_name
+INTO :ll_oper_id,:ls_oper_auth_no,:ls_oper_file_no,:ls_oper_org_name,
+:ls_oper_reg_no,:ls_oper_org_ind,:ll_oper_loc_id,:ll_oper_per_id,
+:ls_per_id_no,:ls_per_surname,:ls_per_name
+FROM informix.v_operator,
+Outer informix.v_person
+WHERE (informix.v_operator.oper_per_id=informix.v_person.per_id) AND
+(informix.v_operator.oper_id = :al_primary_id);
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan na kraju OUTER
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> ue_per_retrieve   line 0021
+
+SELECT informix.v_person.per_id,
+Trim(informix.v_person.per_idno), 
+Trim(informix.v_person.per_surname),   
+Trim(informix.v_person.per_name)
+INTO :ll_per_id,
+:ls_per_id_no,:ls_per_surname,:ls_per_name
+FROM informix.v_person
+WHERE (informix.v_person.per_id =:al_person_id);
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan	ubacen 03.02.2020
+
+SELECT v_person.per_id,
+Trim(v_person.per_idno), 
+Trim(v_person.per_surname),   
+Trim(v_person.per_name)
+INTO :ll_per_id,
+:ls_per_id_no,:ls_per_surname,:ls_per_name
+FROM v_person
+WHERE (v_person.per_id =:al_person_id);
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> ue_validate   line 0031
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_operator
+Where informix.v_operator.oper_file_no=:ls_value;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_operator
+Where v_operator.oper_file_no=:ls_value;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> ue_validate   line 0050
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_operator
+Where informix.v_operator.oper_auth_no=:ls_value;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_operator
+Where v_operator.oper_auth_no=:ls_value;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> ue_validate   line 0079
+
+SELECT 	COUNT(*)
+INTO 		:ll_rc
+FROM  	informix.v_operator
+WHERE 	informix.v_operator.oper_per_id=:il_person_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+SELECT 	COUNT(*)
+INTO 		:ll_rc
+FROM  	v_operator
+WHERE 	v_operator.oper_per_id=:il_person_id;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> ue_validate   line 0102
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_operator
+Where informix.v_operator.oper_reg_no=:ls_value;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_operator
+Where v_operator.oper_reg_no=:ls_value;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> ue_validate   line 0133
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_operator
+Where informix.v_operator.oper_org_name=:ls_value;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_operator
+Where v_operator.oper_org_name=:ls_value;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> ue_validate   line 0165
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_operator
+Where informix.v_operator.oper_file_no=:ls_value AND informix.v_operator.oper_id <> :il_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_operator
+Where v_operator.oper_file_no=:ls_value AND v_operator.oper_id <> :il_oper_id;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> ue_validate   line 0184
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_operator
+Where informix.v_operator.oper_auth_no=:ls_value AND informix.v_operator.oper_id <> :il_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_operator
+Where v_operator.oper_auth_no=:ls_value AND v_operator.oper_id <> :il_oper_id;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> ue_validate   line 0212
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_operator
+Where informix.v_operator.oper_reg_no=:ls_value AND informix.v_operator.oper_id <> :il_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_operator
+Where v_operator.oper_reg_no=:ls_value AND v_operator.oper_id <> :il_oper_id;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> ue_validate   line 0243
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_operator
+Where informix.v_operator.oper_org_name=:ls_value AND informix.v_operator.oper_id <> :il_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_operator
+Where v_operator.oper_org_name=:ls_value AND v_operator.oper_id <> :il_oper_id;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> ue_delete   line 0012
+
+SELECT 	COUNT(*)
+INTO :ll_count
+FROM  	informix.v_application
+WHERE 	informix.v_application.app_oper_id=:il_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+SELECT 	COUNT(*)
+INTO :ll_count
+FROM  	v_application
+WHERE 	v_application.app_oper_id=:il_oper_id;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> rb_partnership.getfocus()  line 0013
+
+SELECT 	COUNT(*)
+INTO :ll_count
+FROM  	informix.v_application
+WHERE 	informix.v_application.app_oper_id=:ll_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubaceno 04.02.2020
+
+SELECT 	COUNT(*)
+INTO :ll_count
+FROM  	v_application
+WHERE 	v_application.app_oper_id=:ll_oper_id;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> rb_company.getfocus()  line 0013
+
+SELECT 	COUNT(*)
+INTO :ll_count
+FROM  	informix.v_application
+WHERE 	informix.v_application.app_oper_id=:ll_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan  ubaceno 04.02.2020
+
+SELECT 	COUNT(*)
+INTO :ll_count
+FROM  	v_application
+WHERE 	v_application.app_oper_id=:ll_oper_id;
+	
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> rb_individual.getfocus()  line 0013
+
+SELECT 	COUNT(*)
+INTO :ll_count
+FROM  	informix.v_application
+WHERE 	informix.v_application.app_oper_id=:ll_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubaceno 04.02.2020
+
+SELECT 	COUNT(*)
+INTO :ll_count
+FROM  	v_application
+WHERE 	v_application.app_oper_id=:ll_oper_id;
+	
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> ue_insert()  line 0047
+
+Insert Into v_operator (oper_per_id, oper_loc_id, oper_auth_no, oper_file_no,oper_reg_no,oper_org_name,oper_org_ind)
+Values(:ll_oper_per_id,:ll_oper_loc_id,:ls_auth_no,:ls_file_no,:ls_reg_no,:ls_org_name,:ls_oper_org_ind);
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> dw_addr_det.ue_update()  line 0040
+
+Insert into v_location (loc_id,address_1, address_2, loc_town_id, post_code)
+Values (0,:ls_address_1,:ls_address_2,:ll_loc_town_id,:ls_post_code);
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+Insert into v_location (address_1, address_2, loc_town_id, post_code)
+Values (:ls_address_1,:ls_address_2,:ll_loc_town_id,:ls_post_code);
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> ue_update()  line 0048
+
+Update v_operator Set (oper_per_id, oper_loc_id, oper_auth_no, oper_file_no,oper_reg_no,oper_org_name,oper_org_ind) 
+= (:ll_oper_per_id,:ll_oper_loc_id,:ls_auth_no,:ls_file_no,:ls_reg_no,:ls_org_name,:ls_oper_org_ind)
+Where oper_id = :ll_oper_id;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> dw_addr_det.ue_update()  line 0056
+
+Update v_location
+Set (address_1, address_2, loc_town_id, post_code) = (:ls_address_1,:ls_address_2,:ll_loc_town_id,:ls_post_code)
+Where loc_id = :ll_loc_id;
+				 
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_add -> dw_breaches.ue_delete_row()  line 0014
+
+ SELECT COUNT(*) 
+ INTO :li_count
+ FROM v_breaches
+ WHERE brch_id = :ll_primary_id ;
+ 
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_abreaches -> ue_insert_row()  line 0016
+
+INSERT INTO v_breaches
+(brch_oper_id, brch_date, brch_remarks, brch_ind)
+Values (:il_oper_bdy_id, :ld_date,:as_arg2, "O") ;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+INSERT INTO v_breaches
+(brch_oper_id, brch_date, brch_remarks, brch_ind)
+Values (:il_oper_bdy_id, :ld_date,:as_arg2, 'O') ;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operator_breaches -> ue_delete_row() 
+
+SELECT 	informix.v_operator.oper_id,   
+Trim(informix.v_operator.oper_auth_no) oper_auth_no,   
+Trim(informix.v_operator.oper_file_no) oper_file_no,   
+Trim(informix.v_operator.oper_org_name) oper_org_name,   
+Trim(informix.v_operator.oper_reg_no) oper_reg_no,   
+Trim(informix.v_operator.oper_org_ind) oper_org_ind,   
+informix.v_operator.oper_loc_id,
+informix.v_operator.oper_per_id,
+Trim(informix.v_person.per_idno) per_id_no,   
+Trim(informix.v_person.per_surname) per_surname,
+Trim(informix.v_person.per_name) per_name
+INTO :ll_oper_id,:ls_oper_auth_no,:ls_oper_file_no,:ls_oper_org_name,
+:ls_oper_reg_no,:ls_oper_org_ind,:ll_oper_loc_id,:ll_oper_per_id,
+:ls_per_id_no,:ls_per_surname,:ls_per_name
+FROM informix.v_operator,
+Outer informix.v_person
+WHERE (informix.v_operator.oper_per_id=informix.v_person.per_id) AND
+(informix.v_operator.oper_id = :al_primary_id);
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan na kraju OUTER
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_retrieve() 		line 0011
+
+SELECT 	informix.v_operator.oper_id,   
+Trim(informix.v_operator.oper_auth_no) oper_auth_no,   
+Trim(informix.v_operator.oper_file_no) oper_file_no,   
+Trim(informix.v_operator.oper_org_name) oper_org_name,   
+Trim(informix.v_operator.oper_reg_no) oper_reg_no,   
+Trim(informix.v_operator.oper_org_ind) oper_org_ind,   
+informix.v_operator.oper_loc_id,
+informix.v_operator.oper_per_id,
+Trim(informix.v_person.per_idno) per_id_no,   
+Trim(informix.v_person.per_surname) per_surname,
+Trim(informix.v_person.per_name) per_name
+INTO :ll_oper_id,:ls_oper_auth_no,:ls_oper_file_no,:ls_oper_org_name,
+:ls_oper_reg_no,:ls_oper_org_ind,:ll_oper_loc_id,:ll_oper_per_id,
+:ls_per_id_no,:ls_per_surname,:ls_per_name
+FROM informix.v_operator,
+Outer informix.v_person
+WHERE (informix.v_operator.oper_per_id=informix.v_person.per_id) AND
+(informix.v_operator.oper_id = :al_primary_id);
+
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan na kraju OUTER
+			
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_per_retrieve() 		line 0009
+
+SELECT informix.v_person.per_id,
+Trim(informix.v_person.per_idno), 
+Trim(informix.v_person.per_surname),   
+Trim(informix.v_person.per_name)
+INTO :ll_per_id,
+:ls_per_id_no,:ls_per_surname,:ls_per_name
+FROM informix.v_person
+WHERE(informix.v_person.per_id =:al_person_id);
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+SELECT v_person.per_id,
+Trim(v_person.per_idno), 
+Trim(v_person.per_surname),   
+Trim(v_person.per_name)
+INTO :ll_per_id,
+:ls_per_id_no,:ls_per_surname,:ls_per_name
+FROM v_person
+WHERE(v_person.per_id =:al_person_id);
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_validate() 		line 0040	
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_operator
+Where informix.v_operator.oper_file_no=:ls_value;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubaceno 04.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_operator
+Where v_operator.oper_file_no=:ls_value;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_validate() 		line 0058
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_testing_station
+Where informix.v_testing_station.stat_file_no=:ls_value;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubaceno 04.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_testing_station
+Where v_testing_station.stat_file_no=:ls_value;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_validate() 		line 0076
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_tester
+Where informix.v_tester.tst_file_no=:ls_value;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_tester
+Where v_tester.tst_file_no=:ls_value;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_validate() 		line 0096
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_operator
+Where informix.v_operator.oper_auth_no=:ls_value;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_operator
+Where v_operator.oper_auth_no=:ls_value;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_validate() 		line 0114
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_testing_station
+Where informix.v_testing_station.stat_auth_no=:ls_value;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_testing_station
+Where v_testing_station.stat_auth_no=:ls_value;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_validate() 		line 0146
+
+SELECT 	COUNT(*)
+INTO 		:ll_rc
+FROM  	informix.v_operator
+WHERE 	informix.v_operator.oper_per_id=:il_person_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020 
+
+SELECT 	COUNT(*)
+INTO 		:ll_rc
+FROM  	v_operator
+WHERE 	v_operator.oper_per_id=:il_person_id;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_validate() 		line 0183
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_operator
+Where informix.v_operator.oper_reg_no=:ls_value;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020 
+
+Select Count(*) 
+Into   :ll_rc
+From  v_operator
+Where v_operator.oper_reg_no=:ls_value;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_validate() 		line 0215
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_operator
+Where informix.v_operator.oper_org_name=:ls_value;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_operator
+Where v_operator.oper_org_name=:ls_value;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_validate() 		line 0256
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_operator
+Where informix.v_operator.oper_file_no=:ls_value AND informix.v_operator.oper_id <> :il_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_operator
+Where v_operator.oper_file_no=:ls_value AND v_operator.oper_id <> :il_oper_id;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_validate() 		line 0274
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_testing_station
+Where informix.v_testing_station.stat_file_no=:ls_value;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_testing_station
+Where v_testing_station.stat_file_no=:ls_value;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_validate() 		line 0294
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_operator
+Where informix.v_operator.oper_auth_no=:ls_value AND informix.v_operator.oper_id <> :il_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_operator
+Where v_operator.oper_auth_no=:ls_value AND v_operator.oper_id <> :il_oper_id;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_validate() 		line 0312
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_testing_station
+Where informix.v_testing_station.stat_auth_no=:ls_value;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_testing_station
+Where v_testing_station.stat_auth_no=:ls_value;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_validate() 		line 0342
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_operator
+Where informix.v_operator.oper_reg_no=:ls_value AND informix.v_operator.oper_id <> :il_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan  ubacen 04.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_operator
+Where v_operator.oper_reg_no=:ls_value AND v_operator.oper_id <> :il_oper_id;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_validate() 		line 0390
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_operator
+Where informix.v_operator.oper_org_name=:ls_value AND informix.v_operator.oper_id <> :il_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+Select Count(*) 
+Into   :ll_rc
+From  v_operator
+Where v_operator.oper_org_name=:ls_value AND v_operator.oper_id <> :il_oper_id;
+		
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_delete() 		line 0012
+
+SELECT 	COUNT(*)
+INTO 		:ll_count
+FROM  	informix.v_application
+WHERE 	informix.v_application.app_oper_id=:il_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+SELECT 	COUNT(*)
+INTO 		:ll_count
+FROM  	v_application
+WHERE 	v_application.app_oper_id=:il_oper_id;
+	
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> rb_partnership.getfocus() 		line 0013
+
+SELECT 	COUNT(*)
+INTO 		:ll_count
+FROM  	informix.v_application
+WHERE 	informix.v_application.app_oper_id=:ll_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+SELECT 	COUNT(*)
+INTO 		:ll_count
+FROM  	v_application
+WHERE 	v_application.app_oper_id=:ll_oper_id;
+	
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> rb_company.getfocus() 		line 0013
+
+SELECT 	COUNT(*)
+INTO 		:ll_count
+FROM  	informix.v_application
+WHERE 	informix.v_application.app_oper_id=:ll_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+SELECT 	COUNT(*)
+INTO 		:ll_count
+FROM  	v_application
+WHERE 	v_application.app_oper_id=:ll_oper_id;
+	
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> rb_individual.getfocus() 		line 0013
+
+SELECT 	COUNT(*)
+INTO 		:ll_count
+FROM  	informix.v_application
+WHERE 	informix.v_application.app_oper_id=:ll_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+SELECT 	COUNT(*)
+INTO 		:ll_count
+FROM  	v_application
+WHERE 	v_application.app_oper_id=:ll_oper_id;
+	
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_insert() 		line 0047
+
+Insert Into v_operator (oper_per_id, oper_loc_id, oper_auth_no, oper_file_no,oper_reg_no,oper_org_name,oper_org_ind)
+Values(:ll_oper_per_id,:ll_oper_loc_id,:ls_auth_no,:ls_file_no,:ls_reg_no,:ls_org_name,:ls_oper_org_ind);
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> dw_addr_det.ue_update() 		line 0040
+
+Insert into v_location (loc_id,address_1, address_2, loc_town_id, post_code)
+Values (0,:ls_address_1,:ls_address_2,:ll_loc_town_id,:ls_post_code);
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+Insert into v_location (address_1, address_2, loc_town_id, post_code)
+Values (:ls_address_1,:ls_address_2,:ll_loc_town_id,:ls_post_code);
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_update() 		line 0048
+
+Update v_operator
+Set (oper_per_id, oper_loc_id, oper_auth_no, oper_file_no,oper_reg_no,oper_org_name,oper_org_ind) 
+= (:ll_oper_per_id,:ll_oper_loc_id,:ls_auth_no,:ls_file_no,:ls_reg_no,:ls_org_name,:ls_oper_org_ind)
+Where oper_id = :ll_oper_id;
+		
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> dw_addr_det.ue_update() 		line 0056
+
+Update v_location
+Set (address_1, address_2, loc_town_id, post_code) = (:ls_address_1,:ls_address_2,:ll_loc_town_id,:ls_post_code)
+Where loc_id = :ll_loc_id;
+				 
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> dw_addr_det.ue_delete_row() 		line 0012
+
+Delete From informix.v_location 
+Where informix.v_location.loc_id=:ll_loc_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+Delete From v_location 
+Where v_location.loc_id=:ll_loc_id;
+	
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_delete() 		line 0045
+
+Delete From informix.v_telephone 
+Where informix.v_telephone.tel_oper_id=:il_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+Delete From v_telephone 
+Where v_telephone.tel_oper_id=:il_oper_id;
+	
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_delete() 		line 0035
+
+Delete From informix.v_operator 
+Where informix.v_operator.oper_id=:il_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+Delete From v_operator 
+Where v_operator.oper_id=:il_oper_id;
+		
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_operators -> ue_delete() 		line 0026
+
+Delete From informix.v_telephone 
+Where informix.v_telephone.tel_oper_id=:il_oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+Delete From v_telephone 
+Where v_telephone.tel_oper_id=:il_oper_id;
+	
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_per_edit_admin -> dw_per_det.ue_pre_update() 		line 0019
+
+SELECT Count(*) 
+INTO :ll_count 
+FROM v_person
+WHERE v_person.per_idno=:ls_id_card_no;
+		
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_per_edit_admin -> dw_per_det.ue_update() 		line 0023
+
+Update v_person Set (per_idno,per_name,per_surname) = (:ls_id_card_no,:ls_per_name,:ls_per_srn)
+Where per_id = :il_per_id;
+	  
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_per_edit_admin -> dw_per_det.ue_update() 		line 0016
+
+Insert Into v_person (per_name,per_surname,per_idno)
+Values(:ls_per_name,:ls_per_srn,:ls_id_card_no);
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_person_edit-> dw_per_det.ue_update() 		line 0019
+
+SELECT Count(*) 
+INTO :ll_count 
+FROM v_person
+WHERE v_person.per_idno=:ls_id_card_no;
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_person_edit-> dw_per_det.ue_update() 		line 0018
+
+SELECT Count(*) 
+INTO :ll_count 
+FROM v_person
+WHERE v_person.per_idno=:ls_id_card_no;
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_person_edit -> dw_per_det.ue_update() 		line 0040		
+		
+Insert into v_location (loc_id,address_1, address_2, loc_town_id, post_code)
+Values (0,:ls_address_1,:ls_address_2,:ll_loc_town_id,:ls_post_code);
+
+///////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 04.02.2020
+
+Insert into v_location (address_1, address_2, loc_town_id, post_code)
+Values (:ls_address_1,:ls_address_2,:ll_loc_town_id,:ls_post_code);
+
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_person_edit -> dw_per_det.ue_update() 		line 0055
+
+Update v_location Set (address_1, address_2, loc_town_id, post_code) = (:ls_address_1,:ls_address_2,:ll_loc_town_id,:ls_post_code)
+Where loc_id = :ll_loc_id;
+				 
+-----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_print_tester_certif -> cb_print.clicked() 		line 0004
+
+SELECT tst_id 
+INTO :ll_tst_id
+FROM v_tester, v_tester_licence
+WHERE v_tester_licence.tstcl_tst_id = v_tester.tst_id AND
+v_tester_licence.tstcl_id = :il_tstcl_id ;
+		
+----------------------------------------------------------------------------------------
+vt_win_nr.pbl  ->  w_print_tester_certif -> cb_print.clicked() 		line 0015
+
+UPDATE v_tester
+SET tst_actv_ind = 'Y'
+WHERE tst_id = :ll_tst_id ;
+
+
+	
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+

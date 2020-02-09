@@ -1,0 +1,74 @@
+security32.pbl -> d_access
+
+SELECT  window_access.usergroup_ref,
+window_access.window_ref,
+window_access.read_yn,
+window_access.update_yn,
+window_access.delete_yn,
+window_table.app_name     
+FROM informix.window_access,
+informix.window_table     
+WHERE ( informix.window_access.window_ref = informix.window_table.window_ref )   
+
+//////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 06.02.2020
+
+SELECT  window_access.usergroup_ref,
+window_access.window_ref,
+window_access.read_yn,
+window_access.update_yn,
+window_access.delete_yn,
+window_table.app_name     
+FROM window_access,
+window_table     
+WHERE ( window_access.window_ref = window_table.window_ref )
+		
+--------------------------------------------------------------------------------------------
+security32.pbl -> d_dddw_functionapp
+
+SELECT  function.description ,
+function.function_ref ,
+function.app_name
+FROM function    
+
+--------------------------------------------------------------------------------------------
+security32.pbl -> d_dddw_windowapp
+
+SELECT window_table.window_ref,   
+window_table.app_name,   
+window_table.description  
+FROM window_table   
+
+--------------------------------------------------------------------------------------------
+security32.pbl -> d_function_access
+
+SELECT  function_access.function_ref ,
+function_access.usergroup_ref ,
+function.app_name
+FROM function_access ,
+function
+WHERE ( function_access.function_ref = function.function_ref )   
+
+--------------------------------------------------------------------------------------------
+security32.pbl -> d_tab_user
+
+SELECT users.user_id , users.first_name , users.last_name , users.usergroup_ref , users.status 
+FROM users
+WHERE ( users.usergroup_ref = :ai_usergroupref ) ;
+
+--------------------------------------------------------------------------------------------
+security32.pbl -> d_user_list
+
+SELECT user_id, first_name, last_name, usergroup_ref, status FROM users   
+
+--------------------------------------------------------------------------------------------
+security32.pbl -> d_usergroup
+
+SELECT usergroup.usergroup_name, usergroup.usergroup_ref FROM 
+informix.usergroup 
+ORDER BY usergroup.usergroup_name ASC 
+
+//////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 06.02.2020
+
+SELECT usergroup.usergroup_name, usergroup.usergroup_ref FROM 
+usergroup 
+ORDER BY usergroup.usergroup_name ASC

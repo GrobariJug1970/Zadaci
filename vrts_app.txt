@@ -1,0 +1,41 @@
+vrts_app.pbl -> w_mdi_vrts -> ue_logon   line 0082
+
+SELECT status INTO :ls_status FROM users
+WHERE user_id = :ls_UserId ;
+ 
+--------------------------------------------------------------------------------
+ vrts_app.pbl -> w_mdi_vrts -> ue_logon   line 0095
+
+SELECT usergroup_ref INTO :gi_UserGroupRef FROM users
+WHERE user_id = :ls_UserId ;
+
+--------------------------------------------------------------------------------
+ vrts_app.pbl -> w_mdi_vrts -> ue_logon   line 0102
+
+SELECT usergroup_name INTO :ls_Group FROM usergroup
+WHERE usergroup_ref = :gi_UserGroupRef ;
+
+--------------------------------------------------------------------------------
+vrts_app.pbl -> w_mdi_vrts -> ue_logon   line 0179
+
+SELECT COUNT(*)
+INTO :ll_cont_no
+FROM v_contract
+WHERE cont_last_ind = "Y" AND
+cont_signed_ind = "Y" AND
+cont_term_ind = "N" AND
+Month(cont_end_date) = :li_calc_month AND
+Year(cont_end_date) = :li_year;
+
+/////////////////////////////////////////////////////////New SQL  13.01.2020 17.45
+
+SELECT COUNT(*)
+INTO :ll_cont_no
+FROM v_contract
+WHERE cont_last_ind = 'Y' AND
+cont_signed_ind = 'Y' AND
+cont_term_ind = 'N' AND
+Month(cont_end_date) = :li_calc_month AND
+Year(cont_end_date) = :li_year;
+
+--------------------------------------------------------------------------------

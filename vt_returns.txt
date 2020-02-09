@@ -1,0 +1,640 @@
+vt_returns.pbl -> dw_returns
+
+SELECT informix.v_test.vtst_id,   
+informix.v_test.vtst_class_id,   
+informix.v_test.vtst_stat_id,   
+informix.v_test.vtst_veh_no,   
+Trim(informix.v_test.vtst_initial_ind)vtst_initial_ind,
+Trim(informix.v_test.vtst_initial_ind)vtst_initial_ind_2,     
+Trim(informix.v_test.vtst_passed_ind) vtst_passed_ind,   
+Trim(informix.v_test.vtst_passed_ind) vtst_passed_ind_2,   
+informix.v_test.vtst_light_ind,   
+informix.v_test.vtst_stear_ind,   
+informix.v_test.vtst_brake_ind,   
+informix.v_test.vtst_tyres_ind,   
+informix.v_test.vtst_gencon_ind,   
+informix.v_test.vtst_genite_ind,   
+informix.v_test.vtst_vehid_ind,   
+informix.v_test.vtst_noise_ind,   
+informix.v_test.vtst_exhst_ind,   
+Trim(informix.v_test.vtst_certno) vtst_certno,   
+Trim(informix.v_test.vtst_recno) vtst_recno,   
+informix.v_test.vtst_tst_id,   
+informix.v_test.vtst_date,   
+informix.v_test.vtst_oper_id,
+(informix.v_test.vtst_err_ind) vtst_err_ind,
+(informix.v_test.vtst_input_type) vtst_input_type
+FROM informix.v_test
+WHERE informix.v_test.vtst_oper_id = :ra_oper_id AND
+informix.v_test.vtst_stat_id = :ra_station_id AND
+MONTH(informix.v_test.vtst_date) = :ra_month AND
+YEAR (informix.v_test.vtst_date) = :ra_year;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 22.01.2020 Miljan old informix sql code mora se ubaciti ova promena kada proradi baza namesteno 26.01.2020
+
+SELECT    v_test.vtst_id,   
+v_test.vtst_class_id,   
+v_test.vtst_stat_id,   
+v_test.vtst_veh_no,   
+Trim(   v_test.vtst_initial_ind)vtst_initial_ind,
+Trim(   v_test.vtst_initial_ind)vtst_initial_ind_2,     
+Trim(   v_test.vtst_passed_ind) vtst_passed_ind,   
+Trim(   v_test.vtst_passed_ind) vtst_passed_ind_2,   
+v_test.vtst_light_ind,   
+v_test.vtst_stear_ind,   
+v_test.vtst_brake_ind,   
+v_test.vtst_tyres_ind,   
+v_test.vtst_gencon_ind,   
+v_test.vtst_genite_ind,   
+v_test.vtst_vehid_ind,   
+v_test.vtst_noise_ind,   
+v_test.vtst_exhst_ind,   
+Trim(   v_test.vtst_certno) vtst_certno,   
+Trim(   v_test.vtst_recno) vtst_recno,   
+v_test.vtst_tst_id,   
+v_test.vtst_date,   
+v_test.vtst_oper_id,
+(   v_test.vtst_err_ind) vtst_err_ind,
+(   v_test.vtst_input_type) vtst_input_type
+FROM    v_test
+WHERE    v_test.vtst_oper_id = :ra_oper_id AND
+v_test.vtst_stat_id = :ra_station_id AND
+MONTH(   v_test.vtst_date) = :ra_month AND
+YEAR (   v_test.vtst_date) = :ra_year;
+  
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> dw_returns_err
+
+SELECT informix.v_returns_err.ret_err_des  
+FROM informix.v_returns_err,   
+informix.v_test_error  
+WHERE ( informix.v_test_error.tst_ret_err_code = informix.v_returns_err.ret_err_code ) AND
+( informix.v_test_error.tst_err_vtst_id = :al_test_id )
+
+//////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 22.01.2020 Miljan old informix sql code mora se ubaciti ova promena kada proradi baza promenjeno 26.01.2020
+
+SELECT v_returns_err.ret_err_des  
+FROM v_returns_err,   
+v_test_error  
+WHERE ( v_test_error.tst_ret_err_code = v_returns_err.ret_err_code ) AND
+( v_test_error.tst_err_vtst_id = :al_test_id )
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> dw_returns_upload  - Ovde se prijavljuje da ne postoji ova tabela ali to sve treba ispitai posto sam ja nakacen na new_vera 26.01.2020
+
+SELECT  Export.TST_ID ,
+Export.TST_VEH_NO ,
+Export.TST_CLASS ,
+Export.TST_RETEST ,
+Export.TST_PASSED ,
+Export.TST_LIGHT ,
+Export.TST_STEAR ,
+Export.TST_BRAKE ,
+Export.TST_TYRES ,
+Export.TST_SIDEC ,
+Export.TST_GENCON ,
+Export.TST_GENITE ,
+Export.TST_VEH_ID ,
+Export.TST_NOISE ,
+Export.TST_EXHST ,
+Export.TST_CERTNO ,
+Export.TST_RECNO ,
+Export.TST_LICNO ,
+Export.TST_DOM ,         
+Export.TST_MONTH ,
+Export.TST_YEAR ,
+Export.TST_STATID ,     
+Export.TST_OPERID
+FROM Export    			
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns -> ue_validate()   line 0019
+
+SELECT oper_id
+INTO :ll_oper_id
+FROM v_operator
+WHERE Trim(oper_auth_no) = :ls_auth_no;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns -> ue_validate()   line 0043
+
+SELECT stat_id
+INTO :ll_stat_id
+FROM v_testing_station
+WHERE Trim(stat_auth_no) = :ls_auth_no;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns -> ue_validate()   line 0061
+
+SELECT Count(*)
+INTO :ll_count
+FROM v_contract
+WHERE (cont_oper_id = :il_oper_id) AND
+(cont_stat_id = :il_station_id) AND
+((Year(cont_start_date) < :ll_year) OR
+(Year(cont_start_date) = :ll_year AND Month(cont_start_date) <= :ll_month)) AND
+((Year(cont_end_date) > :ll_year) OR
+(Year(cont_end_date) = :ll_year AND Month(cont_end_date) >= :ll_month)) AND
+((TRIM(cont_term_ind) = "N" OR Year(cont_term_date) > :ll_year) OR
+(TRIM(cont_term_ind) = "N" OR 
+(Year(cont_term_date) = :ll_year AND Month(cont_term_date) >= :ll_month)));
+
+//////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 22.01.2020 Miljan old informix sql code mora se ubaciti ova promena kada proradi baza ubacen 26.01.2020
+
+SELECT Count(*)
+INTO :ll_count
+FROM v_contract
+WHERE (cont_oper_id = :il_oper_id) AND
+(cont_stat_id = :il_station_id) AND
+((Year(cont_start_date) < :ll_year) OR
+(Year(cont_start_date) = :ll_year AND Month(cont_start_date) <= :ll_month)) AND
+((Year(cont_end_date) > :ll_year) OR
+(Year(cont_end_date) = :ll_year AND Month(cont_end_date) >= :ll_month)) AND
+((RTRIM(LTRIM(cont_term_ind)) = 'N' OR Year(cont_term_date) > :ll_year) OR
+(RTRIM(LTRIM(cont_term_ind)) = 'N' OR 
+(Year(cont_term_date) = :ll_year AND Month(cont_term_date) >= :ll_month)));
+		 
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns -> cb_op.find.clicked  line 0009
+
+SELECT oper_auth_no
+INTO  :ls_auth_file_no
+FROM v_operator
+WHERE v_operator.oper_id = :ll_oper_id ;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns -> wf_audit() 
+
+INSERT INTO v_audit (tab_name,col_name,old_detail,key_1,key_2,trans_type,user_id,time_stamp)
+VALUES ("v_test","RECORD",:ls_string,:ls_oper_id,:ls_stat_id,"D",USER,CURRENT);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 22.01.2020 Miljan old informix sql code mora se ubaciti ova promena kada proradi baza promenjeno 26.01.2020
+
+INSERT INTO v_audit (tab_name,col_name,old_detail,key_1,key_2,trans_type,user_id,time_stamp)
+VALUES ('v_test','RECORD',:ls_string,:ls_oper_id,:ls_stat_id,'D',USER,getdate());
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_add -> ue_clear()
+
+"tst_id In(SELECT DISTINCT emphis_tst_id FROM v_employ_hist WHERE emphis_stat_id = " + String(il_stat_id) + " AND emphis_actve_ind = 'Y')")
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_add -> ue_validate()    line 0075
+
+SELECT Count(*)
+INTO :ll_count
+FROM v_cert_cat
+WHERE cert_cat_des = :ls_cert_cat;
+	
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_add -> ue_validate()    line 0082
+
+SELECT Count(*)
+INTO :ll_count
+FROM v_ref_cat
+WHERE ref_class_id = :ls_code AND ref_cat_des = :ls_cert_cat;
+	
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_add -> ue_validate()    line 0127
+
+SELECT Count(*)
+INTO :ll_count
+FROM v_tst_receipt
+WHERE tst_rec_class_id = :ls_code AND tst_rec_des = :ls_receipt_cat;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_add -> ue_validate()    line 0151
+
+SELECT COUNT(*)
+INTO :ll_count
+FROM v_test
+WHERE vtst_stat_id = :il_stat_id AND
+vtst_oper_id = :il_oper_id AND
+vtst_veh_no = :ls_reg_no AND
+vtst_date Between :ld_calc_date AND :ld_date;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_add -> open() 
+
+"tst_id In(SELECT DISTINCT emphis_tst_id FROM v_employ_hist WHERE emphis_stat_id = " + String(il_stat_id) + " AND emphis_actve_ind = 'Y')")
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_add -> ue_save() 
+
+INSERT INTO v_test (vtst_oper_id,vtst_tst_id,vtst_stat_id,vtst_class_id,vtst_veh_no, 
+vtst_initial_ind,vtst_passed_ind,vtst_light_ind,vtst_stear_ind,vtst_brake_ind, 
+vtst_tyres_ind,vtst_gencon_ind,vtst_genite_ind,vtst_vehid_ind,vtst_noise_ind,
+vtst_exhst_ind,vtst_certno,vtst_recno,vtst_date,vtst_err_ind)
+	
+VALUES (	:ll_oper_id,:ll_tester_id,:ll_stat_id,:ll_class_id,:ls_regno,:lc_initial_ind,:lc_passed_ind,:lc_light_ind,
+:lc_stear_ind,:lc_brake_ind,:lc_tyres_ind,:lc_gencon_ind,:lc_genite_ind,:lc_vehid_ind,:lc_noise_ind,
+:lc_exhst_ind,:ls_certno,:ls_recno,:ld_tst_date,"N");
+
+//////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 22.01.2020 Miljan old informix sql code mora se ubaciti ova promena kada proradi baza promenjeno 26.01.2020
+
+INSERT INTO v_test (vtst_oper_id,vtst_tst_id,vtst_stat_id,vtst_class_id,vtst_veh_no, 
+vtst_initial_ind,vtst_passed_ind,vtst_light_ind,vtst_stear_ind,vtst_brake_ind, 
+vtst_tyres_ind,vtst_gencon_ind,vtst_genite_ind,vtst_vehid_ind,vtst_noise_ind,
+vtst_exhst_ind,vtst_certno,vtst_recno,vtst_date,vtst_err_ind)
+	
+VALUES (	:ll_oper_id,:ll_tester_id,:ll_stat_id,:ll_class_id,:ls_regno,:lc_initial_ind,:lc_passed_ind,:lc_light_ind,
+:lc_stear_ind,:lc_brake_ind,:lc_tyres_ind,:lc_gencon_ind,:lc_genite_ind,:lc_vehid_ind,:lc_noise_ind,
+:lc_exhst_ind,:ls_certno,:ls_recno,:ld_tst_date,'N');
+	
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_add -> ue_save() 
+
+UPDATE v_test
+SET vtst_err_ind = "Y"
+WHERE vtst_id = :ll_pk;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 22.01.2020 Miljan old informix sql code mora se ubaciti ova promena kada proradi baza promenjeno 26.01.2020
+
+UPDATE v_test
+SET vtst_err_ind = 'Y'
+WHERE vtst_id = :ll_pk;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_edit-> ue_clear()
+
+     "tst_id In(SELECT DISTINCT emphis_tst_id FROM v_employ_hist WHERE emphis_stat_id = " + String(il_stat_id) + " AND emphis_actve_ind = 'Y')")
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_edit-> ue_validate()      line 0075
+
+SELECT Count(*)
+	INTO :ll_count
+	FROM v_cert_cat
+	WHERE cert_cat_des = :ls_cert_cat;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_edit-> ue_validate()      line 0082
+
+SELECT Count(*)
+	INTO :ll_count
+	FROM v_ref_cat
+	WHERE ref_class_id = :ls_code AND ref_cat_des = :ls_cert_cat;
+	
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_edit-> ue_validate()      line 0127
+
+SELECT Count(*)
+INTO :ll_count
+FROM v_tst_receipt
+WHERE tst_rec_class_id = :ls_code AND tst_rec_des = :ls_receipt_cat;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_edit-> ue_validate()      line 0151
+
+SELECT COUNT(*)
+INTO :ll_count
+FROM v_test
+WHERE vtst_id <> :il_tst_id AND
+vtst_stat_id = :il_stat_id AND
+vtst_oper_id = :il_oper_id AND
+vtst_veh_no = :ls_reg_no AND
+vtst_date Between :ld_calc_date AND :ld_date;
+			
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_edit-> ue_retrieve()     
+
+SELECT 		vtst_oper_id, 
+vtst_tst_id, 
+vtst_stat_id, 
+vtst_class_id, 
+vtst_veh_no, 
+vtst_initial_ind,
+vtst_passed_ind, 
+vtst_light_ind, 
+vtst_stear_ind, 
+vtst_brake_ind,  
+vtst_tyres_ind, 
+vtst_gencon_ind,
+vtst_genite_ind, 
+vtst_vehid_ind,
+vtst_noise_ind,
+vtst_exhst_ind, 
+vtst_certno, 
+vtst_recno,
+vtst_date,
+vtst_err_ind 
+
+INTO :ll_oper_id,
+:ll_tester_id,
+:ll_stat_id,
+:ll_class_id,
+:ls_regno,
+:lc_initial_ind,
+:lc_passed_ind,
+:lc_light_ind,
+:lc_stear_ind,
+:lc_brake_ind,
+:lc_tyres_ind,
+:lc_gencon_ind,
+:lc_genite_ind,
+:lc_vehid_ind,
+:lc_noise_ind,
+:lc_exhst_ind,
+:ls_certno,
+:ls_recno,
+:ld_tst_date,
+:lc_err_ind
+FROM v_test
+WHERE vtst_id = :il_tst_id;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_edit-> open()
+
+"tst_id In(SELECT DISTINCT emphis_tst_id FROM v_employ_hist WHERE emphis_stat_id = " + String(il_stat_id) + " AND emphis_actve_ind = 'Y')")
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_edit-> ue_save()     line 0080
+
+UPDATE v_test 
+SET vtst_oper_id = :ll_oper_id,
+vtst_tst_id = :ll_tester_id,
+vtst_stat_id = :ll_stat_id,
+vtst_class_id = :ll_class_id,
+vtst_veh_no = :ls_regno, 
+vtst_initial_ind = :lc_initial_ind,
+vtst_passed_ind = :lc_passed_ind,
+vtst_light_ind = :lc_light_ind,
+vtst_stear_ind = :lc_stear_ind,
+vtst_brake_ind = :lc_brake_ind, 
+vtst_tyres_ind = :lc_tyres_ind,
+vtst_gencon_ind = :lc_gencon_ind,
+vtst_genite_ind = :lc_genite_ind,
+vtst_vehid_ind = :lc_vehid_ind,
+vtst_noise_ind = :lc_noise_ind,
+vtst_exhst_ind = :lc_exhst_ind,
+vtst_certno = :ls_certno,
+vtst_recno = :ls_recno,
+vtst_date = :ld_tst_date,
+vtst_err_ind = "N"
+WHERE vtst_id = :il_tst_id;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 22.01.2020 Miljan old informix sql code mora se ubaciti ova promena kada proradi baza promenjeno 26.01.2020
+
+UPDATE v_test 
+SET vtst_oper_id = :ll_oper_id,
+vtst_tst_id = :ll_tester_id,
+vtst_stat_id = :ll_stat_id,
+vtst_class_id = :ll_class_id,
+vtst_veh_no = :ls_regno, 
+vtst_initial_ind = :lc_initial_ind,
+vtst_passed_ind = :lc_passed_ind,
+vtst_light_ind = :lc_light_ind,
+vtst_stear_ind = :lc_stear_ind,
+vtst_brake_ind = :lc_brake_ind, 
+vtst_tyres_ind = :lc_tyres_ind,
+vtst_gencon_ind = :lc_gencon_ind,
+vtst_genite_ind = :lc_genite_ind,
+vtst_vehid_ind = :lc_vehid_ind,
+vtst_noise_ind = :lc_noise_ind,
+vtst_exhst_ind = :lc_exhst_ind,
+vtst_certno = :ls_certno,
+vtst_recno = :ls_recno,
+vtst_date = :ld_tst_date,
+vtst_err_ind = 'N'
+WHERE vtst_id = :il_tst_id;
+	
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_edit-> ue_save()     line 0121
+
+UPDATE v_test
+SET vtst_err_ind = "Y"
+WHERE vtst_id = :il_tst_id;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 22.01.2020 Miljan old informix sql code mora se ubaciti ova promena kada proradi baza promenjeno 26.01.2020
+
+UPDATE v_test
+SET vtst_err_ind = 'Y'
+WHERE vtst_id = :il_tst_id;
+					
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_edit-> ue_validate()     line 0037
+
+SELECT oper_id
+INTO :ll_oper_id
+FROM v_operator
+WHERE Trim(oper_auth_no) = :ls_auth_no;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_edit-> ue_validate()     line 0061
+
+SELECT stat_id
+INTO :ll_stat_id
+FROM v_testing_station
+WHERE Trim(stat_auth_no) = :ls_auth_no;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_edit-> ue_delete()     
+
+(SELECT vtst_id 
+FROM v_test
+WHERE vtst_oper_id = :il_oper_id AND
+vtst_stat_id = :il_station_id AND
+Month(vtst_date) = :il_month AND
+Year(vtst_date) = :il_year);
+			 
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_edit->   cb_st_find.clicked  line 009 
+
+SELECT stat_auth_no
+INTO  :ls_stat_auth_no
+FROM v_testing_station
+WHERE v_testing_station.stat_id = :ll_station_id ;
+	
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_returns_purge->   wf_audit
+
+INSERT INTO v_audit (tab_name,col_name,old_detail,key_1,key_2,trans_type,user_id,time_stamp)
+VALUES ("v_test","RECORD",:ls_string,:ls_oper_id,:ls_stat_id,"D",USER,CURRENT);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 22.01.2020 Miljan old informix sql code mora se ubaciti ova promena kada proradi baza promenjeno 26.01.2020
+
+INSERT INTO v_audit (tab_name,col_name,old_detail,key_1,key_2,trans_type,user_id,time_stamp)
+VALUES ('v_test','RECORD',:ls_string,:ls_oper_id,:ls_stat_id,'D',USER,getdate());
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_upload->   wf_execute()   line 0121
+
+SELECT tst_id
+INTO :ll_tester_id
+FROM v_tester
+WHERE tst_lic_no = :ls_tst_lic_no;
+						
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_upload->   wf_execute()   line 0137
+
+SELECT st_class_id
+INTO :ll_class_id
+FROM v_st_class
+WHERE st_class_desc = :ls_class;
+						
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_upload->   wf_connect()   line 0028
+
+SELECT COUNT(*) 
+INTO :ii_no_of_tests
+FROM export
+USING foxdb;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_upload->   wf_connect()   line 0039
+
+SELECT COUNT(DISTINCT tst_statid) 
+INTO :ll_count 
+FROM export 
+USING foxdb;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_upload->   wf_connect()   line 0056
+
+SELECT COUNT(DISTINCT tst_operid) 
+INTO :ll_count 
+FROM export 
+USING foxdb;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_upload->   wf_connect()   line 0074
+
+SELECT DISTINCT tst_statid
+INTO :is_statauth
+FROM export
+USING FOXdb ;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_upload->   wf_connect()   line 0091
+
+SELECT stat_name,stat_id
+INTO :is_statname,:il_stat_id
+FROM v_testing_station
+WHERE stat_auth_no = :is_statauth ;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_upload->   wf_connect()   line 0109
+
+SELECT DISTINCT tst_operid
+INTO :is_operauth
+FROM export
+USING FOXdb ;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_upload->   wf_connect()   line 0126
+
+SELECT oper_org_name,
+per_name,
+per_surname,
+oper_id 
+INTO :ls_org_name,
+:ls_per_name,
+:ls_per_surname,
+:il_oper_id 
+FROM v_operator, OUTER v_person 
+WHERE v_operator.oper_auth_no = :is_operauth AND v_operator.oper_per_id = v_person.per_id
+USING SQLCA;
+
+/////////////////////////////////////////////////////////////////////////////// new sql code 22.01.2020 Miljan na kraju outer
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_upload->   wf_connect()   line 0157
+
+SELECT COUNT(DISTINCT tst_month) 
+INTO :ll_count 
+FROM export 
+USING foxdb;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_upload->   wf_connect()   line 0174
+
+SELECT COUNT(DISTINCT tst_year) 
+INTO :ll_count 
+FROM export 
+USING foxdb;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_upload->   wf_connect()   line 0190
+
+SELECT DISTINCT tst_month,tst_year
+INTO :ii_month,:ii_year
+FROM export
+USING FOXdb ;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_upload->   wf_connect()   line 0205
+
+SELECT Count(*)
+INTO :ll_count
+FROM v_contract
+WHERE (cont_oper_id = :il_oper_id) AND
+(cont_stat_id = :il_stat_id) AND
+((Year(cont_start_date) < :ii_year) OR
+(Year(cont_start_date) = :ii_year AND Month(cont_start_date) <= :ii_month)) AND
+((Year(cont_end_date) > :ii_year) OR
+(Year(cont_end_date) = :ii_year AND Month(cont_end_date) >= :ii_month)) AND
+((TRIM(cont_term_ind) = "N" OR Year(cont_term_date) > :ii_year) OR
+(TRIM(cont_term_ind) = "N" OR 
+(Year(cont_term_date) = :ii_year AND Month(cont_term_date) >= :ii_month)));
+
+/////////////////////////////////////////////////////////////////////////////// new sql code 22.01.2020 Miljan ubaciti na kraju u aplikaciju ne radi baza promenjeno 26.01.2020
+
+SELECT Count(*)
+INTO :ll_count
+FROM v_contract
+WHERE (cont_oper_id = :il_oper_id) AND
+(cont_stat_id = :il_stat_id) AND
+((Year(cont_start_date) < :ii_year) OR
+(Year(cont_start_date) = :ii_year AND Month(cont_start_date) <= :ii_month)) AND
+((Year(cont_end_date) > :ii_year) OR
+(Year(cont_end_date) = :ii_year AND Month(cont_end_date) >= :ii_month)) AND
+((TRIM(cont_term_ind) = 'N' OR Year(cont_term_date) > :ii_year) OR
+(TRIM(cont_term_ind) = 'N' OR 
+(Year(cont_term_date) = :ii_year AND Month(cont_term_date) >= :ii_month)));
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_upload->   wf_connect()   line 0229
+
+SELECT Count(*)
+INTO :ll_count
+FROM v_test
+WHERE vtst_oper_id = :il_oper_id AND
+vtst_stat_id = :il_stat_id AND
+Year(vtst_date) = :ii_year AND
+Month(vtst_date) = :ii_month;
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_upload->   wf_execute()
+
+INSERT INTO v_test (vtst_oper_id,vtst_tst_id,vtst_stat_id,vtst_class_id,vtst_veh_no, 
+vtst_initial_ind,vtst_passed_ind,vtst_light_ind,vtst_stear_ind,vtst_brake_ind, 
+vtst_tyres_ind,vtst_gencon_ind,vtst_genite_ind,vtst_vehid_ind,vtst_noise_ind,
+vtst_exhst_ind,vtst_certno,vtst_recno,vtst_date,vtst_err_ind,vtst_input_type)
+						
+VALUES (	:il_oper_id,:ll_tester_id,:il_stat_id,:ll_class_id,:ls_reg_no,:lc_initial_ind,:lc_passed_ind,:lc_light_ind,
+:lc_stear_ind,:lc_brake_ind,:lc_tyres_ind,:lc_gencon_ind,:lc_genite_ind,:lc_vehid_ind,:lc_noise_ind,
+:lc_exhst_ind,:ls_certno,:ls_recno,:ld_tst_date,"N","U");
+
+/////////////////////////////////////////////////////////////////////////////// new sql code 22.01.2020 Miljan ubaciti na kraju u aplikaciju ne radi baza promenjeno 26.01.2020
+
+INSERT INTO v_test (vtst_oper_id,vtst_tst_id,vtst_stat_id,vtst_class_id,vtst_veh_no, 
+vtst_initial_ind,vtst_passed_ind,vtst_light_ind,vtst_stear_ind,vtst_brake_ind, 
+vtst_tyres_ind,vtst_gencon_ind,vtst_genite_ind,vtst_vehid_ind,vtst_noise_ind,
+vtst_exhst_ind,vtst_certno,vtst_recno,vtst_date,vtst_err_ind,vtst_input_type)
+						
+VALUES (	:il_oper_id,:ll_tester_id,:il_stat_id,:ll_class_id,:ls_reg_no,:lc_initial_ind,:lc_passed_ind,:lc_light_ind,
+:lc_stear_ind,:lc_brake_ind,:lc_tyres_ind,:lc_gencon_ind,:lc_genite_ind,:lc_vehid_ind,:lc_noise_ind,
+:lc_exhst_ind,:ls_certno,:ls_recno,:ld_tst_date,'N','U');
+
+------------------------------------------------------------------------------------------------
+vt_returns.pbl -> w_upload->   wf_execute()
+
+UPDATE v_test
+SET vtst_err_ind = "Y"
+WHERE vtst_id = :ll_pk;
+
+/////////////////////////////////////////////////////////////////////////////// new sql code 22.01.2020 Miljan ubaciti na kraju u aplikaciju ne radi baza
+
+UPDATE v_test
+SET vtst_err_ind = 'Y'
+WHERE vtst_id = :ll_pk;

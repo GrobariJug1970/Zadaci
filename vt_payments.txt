@@ -1,0 +1,738 @@
+vt_payments.pbl -> dw_issue_lane_receipt
+
+SELECT DISTINCT Trim(informix.v_receipt.rec_no) rec_no,   
+informix.v_receipt.rec_amount,   
+informix.v_receipt.rec_dt_issd,   
+Trim(informix.v_receipt.rec_create_user) rec_create_user,   
+Trim(informix.v_testing_station.stat_name) stat_name,   
+Trim(informix.v_testing_station.stat_file_no) stat_file_no,
+informix.v_operator.oper_id,
+informix.v_contract.cont_statloc_id
+FROM informix.v_receipt,
+informix.v_lane_renewal,   
+informix.v_testing_station,
+informix.v_operator,
+informix.v_contract
+WHERE ( informix.v_receipt.rec_id = :ra_receipt_id ) AND
+( informix.v_receipt.rec_id = informix.v_lane_renewal.ren_rec_id ) AND
+( informix.v_lane_renewal.ren_cont_id = informix.v_contract.cont_id ) AND
+( informix.v_operator.oper_id = informix.v_contract.cont_oper_id ) AND
+( informix.v_testing_station.stat_id = informix.v_contract.cont_stat_id );
+
+/////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT DISTINCT Trim(v_receipt.rec_no) rec_no,   
+v_receipt.rec_amount,   
+v_receipt.rec_dt_issd,   
+Trim(v_receipt.rec_create_user) rec_create_user,   
+Trim(v_testing_station.stat_name) stat_name,   
+Trim(v_testing_station.stat_file_no) stat_file_no,
+v_operator.oper_id,
+v_contract.cont_statloc_id
+FROM v_receipt,
+v_lane_renewal,   
+v_testing_station,
+v_operator,
+v_contract
+WHERE( v_receipt.rec_id = :ra_receipt_id ) AND
+( v_receipt.rec_id = v_lane_renewal.ren_rec_id ) AND
+( v_lane_renewal.ren_cont_id = v_contract.cont_id ) AND
+( v_operator.oper_id = v_contract.cont_oper_id ) AND
+( v_testing_station.stat_id = v_contract.cont_stat_id );
+
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> dw_issue_lane_receipt_copy
+
+SELECT DISTINCT Trim(informix.v_receipt.rec_no) rec_no,   
+informix.v_receipt.rec_amount,   
+informix.v_receipt.rec_dt_issd,   
+Trim(informix.v_receipt.rec_create_user) rec_create_user,   
+Trim(informix.v_testing_station.stat_name) stat_name,   
+Trim(informix.v_testing_station.stat_file_no) stat_file_no,
+informix.v_operator.oper_id,
+informix.v_contract.cont_statloc_id  
+FROM informix.v_receipt,
+informix.v_lane_renewal,   
+informix.v_testing_station,
+informix.v_operator,
+informix.v_contract 
+WHERE ( informix.v_receipt.rec_id = :ra_receipt_id ) AND
+( informix.v_receipt.rec_id = informix.v_lane_renewal.ren_rec_id ) AND
+( informix.v_lane_renewal.ren_cont_id = informix.v_contract.cont_id ) AND
+( informix.v_operator.oper_id = informix.v_contract.cont_oper_id ) AND
+( informix.v_testing_station.stat_id = informix.v_contract.cont_stat_id );
+
+/////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT DISTINCT Trim(v_receipt.rec_no) rec_no,   
+v_receipt.rec_amount,   
+v_receipt.rec_dt_issd,   
+Trim(v_receipt.rec_create_user) rec_create_user,   
+Trim(v_testing_station.stat_name) stat_name,   
+Trim(v_testing_station.stat_file_no) stat_file_no,
+v_operator.oper_id,
+v_contract.cont_statloc_id  
+FROM v_receipt,
+v_lane_renewal,   
+v_testing_station,
+v_operator,
+v_contract 
+WHERE( v_receipt.rec_id = :ra_receipt_id ) AND
+( v_receipt.rec_id = v_lane_renewal.ren_rec_id ) AND
+( v_lane_renewal.ren_cont_id = v_contract.cont_id ) AND
+( v_operator.oper_id = v_contract.cont_oper_id ) AND
+( v_testing_station.stat_id = v_contract.cont_stat_id );
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> dw_lane_amount
+
+SELECT Trim(informix.v_lane.lane_desc) lane_desc,   
+informix.v_lane_renewal.ren_start_date,   
+informix.v_lane_renewal.ren_end_date,   
+informix.v_lane_renewal.ren_amount  
+FROM informix.v_lane,   
+informix.v_lane_renewal  
+WHERE ( informix.v_lane_renewal.ren_lane_id = informix.v_lane.lane_id )  AND
+( informix.v_lane_renewal.ren_rec_id = :ra_receipt_id);  
+
+/////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT Trim(v_lane.lane_desc) lane_desc,   
+v_lane_renewal.ren_start_date,   
+v_lane_renewal.ren_end_date,   
+v_lane_renewal.ren_amount  
+FROM v_lane,   
+v_lane_renewal  
+WHERE ( v_lane_renewal.ren_lane_id = v_lane.lane_id )  AND
+( v_lane_renewal.ren_rec_id = :ra_receipt_id);  
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> dw_lane_ren_lanes
+
+SELECT DISTINCT informix.v_lane.lane_desc,   
+informix.v_lane.lane_id,
+v_contract.cont_id
+FROM informix.v_contract,   
+informix.v_lane,   
+informix.v_cont_lane  
+WHERE ( v_contract.cont_stat_id = :ra_stat_id ) AND
+( v_contract.cont_last_ind = "Y" ) AND (v_contract.cont_term_ind = "N" ) AND
+( v_cont_lane.contla_term_ind = "N" ) AND
+( informix.v_cont_lane.contla_lane_id = informix.v_lane.lane_id ) AND 
+( informix.v_cont_lane.contla_cont_id = informix.v_contract.cont_id )    
+
+/////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT DISTINCT v_lane.lane_desc,   
+v_lane.lane_id,
+v_contract.cont_id
+FROM v_contract,   
+v_lane,   
+v_cont_lane  
+WHERE ( v_contract.cont_stat_id = :ra_stat_id ) AND
+( v_contract.cont_last_ind = 'Y' ) AND (v_contract.cont_term_ind = 'N' ) AND
+( v_cont_lane.contla_term_ind = 'N' ) AND
+( v_cont_lane.contla_lane_id = v_lane.lane_id ) AND 
+( v_cont_lane.contla_cont_id = v_contract.cont_id )    
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> dw_man_rec_no	 
+		 
+SELECT  tst_id_no,
+tst_surname,
+tst_name,
+class_desc,
+Trim(rec_manual_rec_no)rec_manual_rec_no,
+rec_id
+FROM informix.v_class,   
+informix.v_receipt,   
+informix.v_tester,   
+informix.v_tester_licence  
+WHERE ( informix.v_receipt.rec_manual_rec_no is not NULL) and
+( informix.v_tester_licence.tstcl_tst_id = informix.v_tester.tst_id ) and  
+( informix.v_tester_licence.tstcl_id = informix.v_receipt.rec_tstcl_id ) and  
+( informix.v_tester_licence.tstcl_class_id = informix.v_class.class_id )   ; 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT  tst_id_no,
+tst_surname,
+tst_name,
+class_desc,
+Trim(rec_manual_rec_no)rec_manual_rec_no,
+rec_id
+FROM v_class,   
+v_receipt,   
+v_tester,   
+v_tester_licence  
+WHERE ( v_receipt.rec_manual_rec_no is not NULL) and
+( v_tester_licence.tstcl_tst_id = v_tester.tst_id ) and  
+( v_tester_licence.tstcl_id = v_receipt.rec_tstcl_id ) and  
+( v_tester_licence.tstcl_class_id = v_class.class_id )   ; 
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> dw_pay_lane_calc
+
+SELECT (informix.v_lane_renewal.ren_id) ren_id,
+(informix.v_lane_renewal.ren_start_date) ren_start_date,
+(informix.v_lane_renewal.ren_end_date) ren_end_date,
+(informix.v_lane_renewal.ren_lane_id) ren_lane_id,
+(informix.v_receipt.rec_amount) rec_amount,
+(informix.v_lane_renewal.ren_cont_id) ren_cont_id,
+Trim(informix.v_lane_renewal.ren_last_ind) ren_first_ind
+FROM informix.v_cont_lane,   
+informix.v_lane_renewal,   
+informix.v_contract,   
+informix.v_lane,
+informix.v_receipt
+WHERE ( informix.v_contract.cont_id = :al_contract_id) AND
+( informix.v_contract.cont_id = informix.v_cont_lane.contla_cont_id ) AND  
+( informix.v_lane.lane_id = informix.v_lane_renewal.ren_lane_id ) AND  
+( informix.v_lane.lane_id = informix.v_cont_lane.contla_lane_id ) AND
+( informix.v_lane_renewal.ren_rec_id = informix.v_receipt.rec_id) AND
+( Trim(informix.v_lane_renewal.ren_last_ind)="Y") AND
+( Trim(informix.v_lane_renewal.ren_term_ind)="N") AND
+( Trim(informix.v_cont_lane.contla_term_ind)="N") ;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT (v_lane_renewal.ren_id) ren_id,
+(v_lane_renewal.ren_start_date) ren_start_date,
+(v_lane_renewal.ren_end_date) ren_end_date,
+(v_lane_renewal.ren_lane_id) ren_lane_id,
+(v_receipt.rec_amount) rec_amount,
+(v_lane_renewal.ren_cont_id) ren_cont_id,
+Trim(v_lane_renewal.ren_last_ind) ren_first_ind
+FROM v_cont_lane,   
+v_lane_renewal,   
+v_contract,   
+v_lane,
+v_receipt
+WHERE ( v_contract.cont_id = :al_contract_id) AND
+( v_contract.cont_id = v_cont_lane.contla_cont_id ) AND  
+( v_lane.lane_id = v_lane_renewal.ren_lane_id ) AND  
+( v_lane.lane_id = v_cont_lane.contla_lane_id ) AND
+( v_lane_renewal.ren_rec_id = v_receipt.rec_id) AND
+( Trim(v_lane_renewal.ren_last_ind)='Y') AND
+( Trim(v_lane_renewal.ren_term_ind)='N') AND
+( Trim(v_cont_lane.contla_term_ind)='N') ;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> dw_print_receipt
+
+SELECT   informix.v_tester.tst_name,   
+informix.v_tester.tst_surname,   
+informix.v_tester.tst_id_no,   
+informix.v_tester.tst_file_no,
+informix.v_class.class_desc
+FROM informix.v_tester,
+informix.v_tester_licence,
+informix.v_receipt,
+informix.v_class 
+WHERE	( informix.v_tester.tst_id = :ra_tst_id) AND
+( informix.v_tester.tst_id = informix.v_tester_licence.tstcl_tst_id ) AND
+( informix.v_tester_licence.tstcl_id = informix.v_receipt.rec_tstcl_id) AND
+( informix.v_receipt.rec_no = :ra_rec_no ) AND
+( informix.v_tester_licence.tstcl_class_id = informix.v_class.class_id );
+				
+/////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT   v_tester.tst_name,   
+v_tester.tst_surname,   
+v_tester.tst_id_no,   
+v_tester.tst_file_no,
+v_class.class_desc
+FROM v_tester,
+v_tester_licence,
+v_receipt,
+v_class 
+WHERE	( v_tester.tst_id = :ra_tst_id) AND
+( v_tester.tst_id = v_tester_licence.tstcl_tst_id ) AND
+( v_tester_licence.tstcl_id = v_receipt.rec_tstcl_id) AND
+( v_receipt.rec_no = :ra_rec_no ) AND
+( v_tester_licence.tstcl_class_id = v_class.class_id );
+				
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> dw_print_receipt_copy
+
+SELECT   informix.v_tester.tst_name,
+informix.v_tester.tst_surname,
+informix.v_tester.tst_id_no,
+Trim(informix.v_tester.tst_file_no),
+Trim(informix.v_receipt.rec_no) rec_no, 
+informix.v_receipt.rec_amount, 
+informix.v_receipt.rec_dt_issd,
+informix.v_class.class_desc 
+FROM informix.v_tester, 
+informix.v_receipt, 
+informix.v_tester_licence,
+informix.v_class 
+WHERE	( informix.v_tester_licence.tstcl_id = :ra_licence_id ) AND 
+( informix.v_tester.tst_id = informix.v_tester_licence.tstcl_tst_id) AND 
+( informix.v_receipt.rec_tstcl_id = informix.v_tester_licence.tstcl_id) AND 
+( Trim(informix.v_receipt.rec_canc_ind) = "N") AND
+( informix.v_class.class_id = informix.v_tester_licence.tstcl_class_id);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT   v_tester.tst_name,
+v_tester.tst_surname,
+v_tester.tst_id_no,
+Trim(v_tester.tst_file_no),
+Trim(v_receipt.rec_no) rec_no, 
+v_receipt.rec_amount, 
+v_receipt.rec_dt_issd,
+v_class.class_desc 
+FROM v_tester, 
+v_receipt, 
+v_tester_licence,
+v_class 
+WHERE	( v_tester_licence.tstcl_id = :ra_licence_id ) AND 
+( v_tester.tst_id = v_tester_licence.tstcl_tst_id) AND 
+( v_receipt.rec_tstcl_id = v_tester_licence.tstcl_id) AND 
+( Trim(v_receipt.rec_canc_ind) = 'N') AND
+( v_class.class_id = v_tester_licence.tstcl_class_id);
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> dw_receipt_list
+
+SELECT informix.v_receipt.rec_no,   
+informix.v_receipt.rec_amount,   
+informix.v_receipt.rec_dt_issd,   
+informix.v_receipt.rec_canc_ind,   
+informix.v_receipt.rec_id,   
+informix.v_receipt.rec_payer_ind  
+FROM informix.v_receipt   
+WHERE ( rec_no MATCHES :ra_rec_no  OR :ra_rec_no = "-1") AND
+( (rec_dt_issd = :ra_dt_issued) OR (:ra_dt_used = "-1")  ) AND
+( :ra_type = "-1" OR rec_payer_ind = :ra_type ) AND
+( rec_canc_ind = "N" )
+
+/////////////////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT v_receipt.rec_no,   
+v_receipt.rec_amount,   
+v_receipt.rec_dt_issd,   
+v_receipt.rec_canc_ind,   
+v_receipt.rec_id,   
+v_receipt.rec_payer_ind  
+FROM v_receipt   ..
+WHERE ( rec_no LIKE :ra_rec_no  OR :ra_rec_no = '-1') AND
+( (rec_dt_issd = :ra_dt_issued) OR (:ra_dt_used = '-1')  ) AND
+( :ra_type = '-1' OR rec_payer_ind = :ra_type ) AND
+( rec_canc_ind = 'N' )
+	
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> fg_receipt_issued_to   line 0005
+
+SELECT rec_payer_ind
+INTO :lc_payer_ind
+FROM v_receipt
+WHERE rec_id = :ra_rec_id ;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> fg_receipt_issued_to   line 0021
+
+SELECT DISTINCT(stat_name)
+INTO :ls_stat_name
+FROM v_contract,v_testing_station,v_lane_renewal 
+WHERE v_lane_renewal.ren_rec_id = :ra_rec_id AND
+v_lane_renewal.ren_cont_id = v_contract.cont_id AND
+v_contract.cont_stat_id = v_testing_station.stat_id ;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> fg_receipt_issued_to   line 0034
+
+SELECT v_tester.tst_name, v_tester.tst_surname
+INTO :ls_name, :ls_surname
+FROM v_tester, v_tester_licence, v_receipt
+WHERE v_receipt.rec_id = :ra_rec_id AND
+v_receipt.rec_tstcl_id = v_tester_licence.tstcl_id AND
+v_tester_licence.tstcl_tst_id = v_tester.tst_id ;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_lane_pay  -> ue_issue_receipt    line 0034
+
+lb_ok = fg_lock("Select rec_no_tst from v_system_par",2)
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_lane_pay  -> ue_issue_receipt    line 0038
+
+SELECT rec_no_lane, rec_pref_lane
+INTO	 :ll_rec_no,:ls_rec_prefix
+FROM	 v_system_par;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_lane_pay  -> ue_issue_receipt    line 0096
+
+SELECT ren_id
+INTO :ll_prev_ren_id
+FROM v_lane_renewal
+WHERE ren_lane_id = :ll_ren_lane_id AND
+Trim(ren_last_ind) = "Y" AND
+Trim(ren_term_ind) = "N";
+
+//////////////////////////////////////////////////////////////////////////////////////// new sql code 19.01.2020
+
+SELECT ren_id
+INTO :ll_prev_ren_id
+FROM v_lane_renewal
+WHERE ren_lane_id = :ll_ren_lane_id AND
+Trim(ren_last_ind) = 'Y' AND
+Trim(ren_term_ind) = 'N';
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_lane_pay  -> open()
+
+Select first_name,last_name
+INTO :gs_user_name,:gs_user_sname
+FROM informix.users
+WHERE informix.users.user_id = :gs_userid;
+
+//////////////////////////////////////////////////////////////////////////////////////// New sql code 19.01.2020
+
+Select first_name,last_name
+INTO :gs_user_name,:gs_user_sname
+FROM users
+WHERE users.user_id = :gs_userid;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_lane_pay  -> dw_1.clicked  line 0016		
+
+SELECT Trim(cont_last_ind)
+INTO :lc_cont_last_ind
+FROM v_contract
+WHERE cont_id = :il_cont_id;
+				
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_lane_pay  -> dw_1.clicked  line 0030	
+
+SELECT Count(*)
+INTO :ll_count
+FROM  v_lane_renewal
+WHERE ren_cont_id = :il_cont_id AND
+ren_lane_id = :ll_lane_id AND
+Trim(ren_term_ind)="N";
+
+//////////////////////////////////////////////////////////////////////////////////////// New sql code 19.01.2020
+
+SELECT Count(*)
+INTO :ll_count
+FROM  v_lane_renewal
+WHERE ren_cont_id = :il_cont_id AND
+ren_lane_id = :ll_lane_id AND
+Trim(ren_term_ind)='N';
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_lane_pay  -> ue_issue_receipt    line 0053
+
+INSERT INTO v_receipt
+(rec_bank_id,rec_pmthd_id,rec_no,rec_amount,rec_dt_issd,rec_payer_ind,rec_cq_no,rec_create_user,rec_manual_rec_no)
+VALUES 
+(:ll_bank_id,:ll_pmth_id,:ls_rec_no,:ld_amount,:ld_receipt_date,"L",:ls_cheque_no,:gs_userid,:ls_manual_rec_no);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 21.01.2020 Miljan proveriti samo da li je okej posto taj dan nije radila baza provereno 26.01.2020
+
+INSERT INTO v_receipt
+(rec_bank_id,rec_pmthd_id,rec_no,rec_amount,rec_dt_issd,rec_payer_ind,rec_cq_no,rec_create_user,rec_manual_rec_no)
+VALUES 
+(:ll_bank_id,:ll_pmth_id,:ls_rec_no,:ld_amount,:ld_receipt_date,'L',:ls_cheque_no,:gs_userid,:ls_manual_rec_no);
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_lane_pay  -> ue_issue_receipt    line 0081
+
+INSERT INTO v_lane_renewal
+(ren_cont_id,ren_lane_id,ren_rec_id,ren_start_date,ren_end_date,ren_last_ind,ren_rec_issued,ren_amount,ren_term_ind)
+VALUES
+(:ll_ren_cont_id,:ll_ren_lane_id,:ll_receipt_id,:ld_ren_start_date,:ld_ren_end_date,"Y","Y",:ld_lane_amount,"N");
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 21.01.2020 Miljan proveriti samo da li je okej posto taj dan nije radila baza provereno 26.01.2020
+
+INSERT INTO v_lane_renewal
+(ren_cont_id,ren_lane_id,ren_rec_id,ren_start_date,ren_end_date,ren_last_ind,ren_rec_issued,ren_amount,ren_term_ind)
+VALUES
+(:ll_ren_cont_id,:ll_ren_lane_id,:ll_receipt_id,:ld_ren_start_date,:ld_ren_end_date,'Y','Y',:ld_lane_amount,'N');
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_lane_pay  -> ue_issue_receipt    line 0125
+
+INSERT INTO v_lane_renewal
+(ren_cont_id,ren_lane_id,ren_rec_id,ren_start_date,ren_end_date,ren_last_ind,ren_rec_issued,ren_prev_id,ren_amount,ren_term_ind)
+VALUES
+(:ll_ren_cont_id,:ll_ren_lane_id,:ll_receipt_id,:ld_ren_start_date,:ld_ren_end_date,"Y","Y",:ll_prev_ren_id,:ld_lane_amount,"N");
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 21.01.2020 Miljan proveriti samo da li je okej posto taj dan nije radila baza provereno 26.01.2020
+
+INSERT INTO v_lane_renewal
+(ren_cont_id,ren_lane_id,ren_rec_id,ren_start_date,ren_end_date,ren_last_ind,ren_rec_issued,ren_prev_id,ren_amount,ren_term_ind)
+VALUES
+(:ll_ren_cont_id,:ll_ren_lane_id,:ll_receipt_id,:ld_ren_start_date,:ld_ren_end_date,'Y','Y',:ll_prev_ren_id,:ld_lane_amount,'N');
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_lane_pay  -> ue_issue_receipt    line 0112
+
+UPDATE v_lane_renewal
+SET ren_last_ind ="N"
+WHERE ren_id = :ll_prev_ren_id;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 21.01.2020 Miljan proveriti samo da li je okej posto taj dan nije radila bazam provereno 26.01.2020
+
+UPDATE v_lane_renewal
+SET ren_last_ind ='N'
+WHERE ren_id = :ll_prev_ren_id;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_lane_pay  -> ue_issue_receipt    line 0143
+
+UPDATE v_system_par
+SET rec_no_lane = :ll_rec_no;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_cancel  -> cb_cancel.ue_process    line 0013
+
+Select Trim(rec_payer_ind),rec_tstcl_id
+Into :ls_payer_ind, :ll_tstcl_id
+From v_receipt
+Where rec_id = :il_rec_id;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_cancel  -> cb_cancel.ue_process    line 0024
+
+Select ren_id,ren_prev_id,ren_cont_id,ren_last_ind
+From v_lane_renewal
+Where ren_rec_id = :il_rec_id;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_cancel  -> cb_cancel.ue_process    line 0105
+
+select count(veh_id) into :li_rc
+from v_sheet,v_book
+where v_sheet.book_id = v_book.v_book_pk
+and v_book.receipt_id = :il_rec_id
+and veh_id is not null
+and veh_id > 0;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_cancel  -> cb_find_receipt.clicked   line 0016
+
+SELECT rec_no, rec_dt_issd, rec_create_user
+INTO :ls_rec_no, :ld_rec_date, :ls_user
+FROM v_receipt
+WHERE v_receipt.rec_id = :il_rec_id;
+	
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_cancel  -> cb_cancel.ue_process    line 0039
+
+Update v_lane_renewal
+Set ren_term_ind ="Y",ren_last_ind="N"
+Where ren_id =:ll_ren_id;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 21.01.2020 Miljan proveriti samo da li je okej posto taj dan nije radila baza provereno 26.01.2020
+
+Update v_lane_renewal
+Set ren_term_ind ='Y',ren_last_ind='N'
+Where ren_id =:ll_ren_id;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_cancel  -> cb_cancel.ue_process    line 0054
+
+Update v_lane_renewal
+Set ren_term_ind ="Y",ren_last_ind="N"
+Where ren_id =:ll_ren_id;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 21.01.2020 Miljan proveriti samo da li je okej posto taj dan nije radila baza provereno 26.01.2020
+
+Update v_lane_renewal
+Set ren_term_ind ='Y',ren_last_ind='N'
+Where ren_id =:ll_ren_id;
+				
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_cancel  -> cb_cancel.ue_process    line 0062
+
+Update v_lane_renewal
+Set ren_last_ind="Y"
+Where ren_id=:ll_prev_id;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 21.01.2020 Miljan proveriti samo da li je okej posto taj dan nije radila baza provereno 26.01.2020
+
+Update v_lane_renewal
+Set ren_last_ind='Y'
+Where ren_id=:ll_prev_id;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_cancel  -> cb_cancel.ue_process    line 0094
+
+Update v_tester_licence
+Set tstcl_lic_issd ="C"
+Where tstcl_id =:ll_tstcl_id;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 21.01.2020 Miljan proveriti samo da li je okej posto taj dan nije radila baza provereno 26.01.2020
+
+Update v_tester_licence
+Set tstcl_lic_issd ='C'
+Where tstcl_id =:ll_tstcl_id;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_cancel  -> cb_cancel.ue_process    line 0115
+
+update v_book
+set sale_date = null,
+user_id = null,
+receipt_id = null
+where receipt_id = :il_rec_id;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_cancel  -> cb_cancel.clicked    line 0025
+
+UPDATE v_receipt
+SET	rec_canc_ind = "Y",
+rec_canc_user = :ls_user,
+rec_canc_date = today,
+rec_remarks = :ls_remarks
+WHERE v_receipt.rec_id = :il_rec_id;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 21.01.2020 Miljan proveriti samo da li je okej posto taj dan nije radila baza provereno 26.01.2020
+
+UPDATE v_receipt
+SET	rec_canc_ind = 'Y',
+rec_canc_user = :ls_user,
+rec_canc_date = convert(date, getdate()),
+rec_remarks = :ls_remarks
+WHERE v_receipt.rec_id = :il_rec_id;
+		
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_issue_tester -> open()   line 0021
+
+SELECT v_tester.tst_name, v_tester.tst_surname,v_tester.tst_id_no,v_class.class_desc
+INTO :ls_tester_name, :ls_tester_surname, :ls_tester_idno, :ls_class_desc
+FROM v_tester, v_tester_licence, v_class
+WHERE (:il_tstcl_id = v_tester_licence.tstcl_id) AND
+(V_TESTER_LICENCE.tstcl_class_id = V_CLASS.class_id) AND
+(V_TESTER_LICENCE.tstcl_tst_id = V_TESTER.tst_id);
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_issue_tester -> open()   line 0035
+
+SELECT tst_lic_amount 
+INTO :ld_amount
+FROM v_system_par;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_issue_tester -> cb_confirm.clicked   line 0060
+
+lb_ok = fg_lock("Select rec_no_tst from v_system_par",2)
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_issue_tester -> cb_confirm.clicked   line 0063
+
+SELECT rec_no_tst,rec_pref_tst
+INTO :ll_rec_no, :ls_rec_prefix
+FROM v_system_par;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_print -> open()  line 0019
+
+SELECT users.first_name,users.last_name
+INTO :ls_user_name, :ls_user_surname
+FROM users
+WHERE users.user_id = :gs_userid;
+	
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_print_copy -> ue_stat_rec()  line 0025
+
+SELECT rec_no,rec_create_user,rec_vatno
+INTO :ls_receipt,:ls_user,:ls_vat
+FROM v_receipt WHERE rec_id = :il_rec_id;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_print_copy -> ue_stat_rec()  line 0031
+
+SELECT max(station_no) INTO :ll_station
+FROM v_book
+WHERE v_book.receipt_id = :il_rec_id;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_print_copy -> ue_stat_rec()  line 0037
+
+SELECT last_name,first_name INTO :ls_ad1,:ls_ad2 
+FROM users WHERE lower(trim(user_id)) = :ls_user;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_print_copy -> ue_stat_rec()  line 0045
+
+SELECT Max(station_no) INTO :ll_station
+FROM v_book 
+WHERE v_book.receipt_id = :il_rec_id;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_print_copy -> ue_stat_rec()  line 0049
+
+SELECT stat_name INTO :ls_name
+FROM v_testing_station WHERE stat_id = :ll_station;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_print_copy -> ue_stat_rec()  line 0052
+
+SELECT address_1,address_2,area_name,town,post_code
+INTO :ls_ad1,:ls_ad2,:ls_ad3,:ls_ad4,:ls_ad5 
+FROM v_location,v_town
+WHERE loc_stat_id = :ll_station
+AND loc_active_ind = "Y"
+AND loc_town_id = v_town.town_id;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 21.01.2020 Miljan proveriti samo da li je okej posto taj dan nije radila baza
+
+SELECT address_1,address_2,area_name,town,post_code
+INTO :ls_ad1,:ls_ad2,:ls_ad3,:ls_ad4,:ls_ad5 
+FROM v_location,v_town
+WHERE loc_stat_id = :ll_station
+AND loc_active_ind = 'Y'
+AND loc_town_id = v_town.town_id;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_print_copy -> ue_stat_rec()  line 0093
+
+SELECT book_type,vrt_class,start_no,quantity
+FROM v_book WHERE v_book.receipt_id = :il_rec_id
+ORDER BY 1 ASC,2 ASC ,3 ASC;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_print_copy ->open()  
+
+Select first_name,last_name
+INTO :gs_user_name,:gs_user_sname
+FROM informix.users
+WHERE informix.users.user_id = :gs_userid;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 21.01.2020 Miljan proveriti samo da li je okej posto taj dan nije radila baza provereno 26.01.2020
+
+Select first_name,last_name
+INTO :gs_user_name,:gs_user_sname
+FROM users
+WHERE users.user_id = :gs_userid;
+
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_receipt_print_copy -> cb_find.receipt.clicked ()
+
+SELECT rec_no, rec_dt_issd, rec_create_user,rec_id,rec_tstcl_id,Trim(rec_payer_ind)
+INTO :ls_rec_no, :ld_rec_date, :ls_user, :ll_rec_id, :ll_tstcl_id, :ls_payer_ind
+FROM v_receipt
+WHERE v_receipt.rec_id = :il_rec_id;
+ 
+----------------------------------------------------------------------------------------------------
+vt_payments.pbl -> w_verify_receipts 
+
+Update v_receipt 
+Set 	rec_verified_ind = 'Y',
+rec_verify_user = :gs_userid,
+rec_verify_date = Today
+Where rec_id = :ll_rec_id ; 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// New sql code 21.01.2020 Miljan proveriti samo da li je okej posto taj dan nije radila baza provereno 26.01.2020
+
+Update v_receipt 
+Set 	rec_verified_ind = 'Y',
+rec_verify_user = :gs_userid,
+rec_verify_date = convert(date,getdate())
+Where rec_id = :ll_rec_id ;

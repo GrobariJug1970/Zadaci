@@ -1,0 +1,1107 @@
+vrt_book.pbl -> dddw_book_deliver
+
+SELECT informix.v_order_deliver.book_type,   
+informix.v_order_deliver.vrt_class,   
+informix.v_order_deliver.qty,   
+informix.v_order_deliver.delivery,
+informix.v_order_deliver.bk_order_id, 
+informix.v_order_deliver.order_deliver_id
+FROM informix.v_order_deliver
+WHERE bk_order_id = :ll_order
+	
+///////////////////////////////////////////////////////////////////////////// New SQL CODE   13.01.2020  (10min)
+
+SELECT .v_order_deliver.book_type,   
+v_order_deliver.vrt_class,   
+v_order_deliver.qty,   
+v_order_deliver.delivery,
+v_order_deliver.bk_order_id, 
+v_order_deliver.order_deliver_id
+FROM v_order_deliver
+WHERE bk_order_id = :ll_order
+	
+----------------------------------------------------------------------------
+vrt_book.pbl -> dddw_book_order
+
+Nema sql upita
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> dddw_book_type
+
+SELECT distinct informix.v_book_type.v_book_name,   
+informix.v_book_type.v_book_type_pk,
+informix.v_book_type.v_book_desc
+FROM informix.v_book_type
+	
+////////////////////////////////////////////////////////////////////////////////////////   New SQL CODE  10min   13.01.2020
+
+SELECT distinct v_book_type.v_book_name,   
+v_book_type.v_book_type_pk,
+v_book_type.v_book_desc
+FROM v_book_type
+
+*/*/*/*/*/**/*/*/*/*/*/*//**/**/**//*//*/*/*/*/*/*/*/*/*/*/*/*
+
+Update properties 
+
+tabela v_book_type 
+
+2 radio button				*			1 radio button
+							*
+sve osim zadnjeg			*			samo drugi 
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> dddw_return_reason
+
+SELECT informix.v_return_reason.dsc,   
+informix.v_return_reason.reason_id 
+FROM informix.v_return_reason; 
+
+/////////////////////////////////////////////////////////////////////////////////////////New sql code   5 min 13.01.2020
+	
+SELECT v_return_reason.dsc,   
+v_return_reason.reason_id 
+FROM v_return_reason; 
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> dddw_vrt_class
+
+SELECT vrt_class,vrt_class_id 
+FROM vrt_class;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> dddw_vrt_class_old 
+
+Nema sql upita
+
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> dddw_vrt_station1
+
+SELECT distinct stat_name,v_testing_station.stat_id 
+FROM v_testing_station,v_contract 
+where v_contract.cont_stat_id = v_testing_station.stat_id
+and v_contract.cont_term_ind = "N" 
+and v_contract.cont_end_date >= today
+order by 1;
+
+///////////////////////////////////////////////////////////////////////// New Sql code 10 min 13.01.2020
+
+SELECT distinct stat_name,v_testing_station.stat_id 
+FROM v_testing_station,v_contract 
+where v_contract.cont_stat_id = v_testing_station.stat_id
+and v_contract.cont_term_ind = 'N' 
+and v_contract.cont_end_date >= convert(date, getdate())
+order by 1;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> dddw_vrt_station1_old
+
+Nema sql upita
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> dw_book_balance
+
+select v_book_class_pl,date_from,date_to,v_book_name,v_class,v_price,v_stock,v_minim,
+v_pages,v_damag,v_book_type_id,v_stock - v_damag disp_stock
+from v_book_class,v_book_type where v_book_type_pk = v_book_type_id and date_to is null
+order by v_book_type_id ASC,v_class ASC;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> dw_book_balance1_old
+
+Nema sql upita	
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> dw_book_order
+
+SELECT informix.v_order_hd.order_date,   
+informix.v_order_hd.order_by,     
+informix.v_order_hd.ltd_approv_date,   
+informix.v_order_hd.ltd_approv_by,   
+informix.v_order_hd.ext_approv_date,   
+informix.v_order_hd.ext_approv_by,   
+informix.v_order_hd.order_submit_date, 
+informix.v_order_hd.order_submit_by,   
+informix.v_order_hd.order_confir_date,   
+informix.v_order_hd.order_confir_by,   
+informix.v_order_hd.timestamp,    
+informix.v_order_hd.bk_order_id ....
+FROM informix.v_order_hd  
+WHERE bk_order_id = :ll_order
+
+/////////////////////////////////////////////////////////////////////////// New sql code Miljan 10 min 13.01.2020
+
+SELECT v_order_hd.order_date,   
+v_order_hd.order_by,     
+v_order_hd.ltd_approv_date,   
+v_order_hd.ltd_approv_by,   
+v_order_hd.ext_approv_date,   
+v_order_hd.ext_approv_by,   
+v_order_hd.order_submit_date, 
+v_order_hd.order_submit_by,   
+v_order_hd.order_confir_date,   
+v_order_hd.order_confir_by,   
+v_order_hd.timestamp,    
+v_order_hd.bk_order_id 
+FROM v_order_hd  
+WHERE bk_order_id = :ll_order
+
+*/*/*/*/*/**/*/*/*/*/*/*//**/**/**//*//*/*/*/*/*/*/*/*/*/*/*/*
+
+Update properties 
+
+tabela v_order_hd
+
+1 radio button				*			1 radio button
+							*
+sve osim zadnjeg			*			samo zadnji 
+   
+----------------------------------------------------------------------------
+vrt_book.pbl -> dw_book_return2
+
+SELECT informix.v_book_return.station_id,   
+informix.v_book_return.return_date,   
+informix.v_book_return.book_type,   
+informix.v_book_return.vrt_class,   
+informix.v_book_return.start_no,   
+informix.v_book_return.end_no,   
+informix.v_book_return.return_reason,   
+informix.v_book_return.refund_yn,   
+informix.v_book_return.book_return_id,   
+informix.v_book_return.user_id,   
+informix.v_book_return.timestamp  
+FROM informix.v_book_return
+WHERE informix.v_book_return.station_id = :ra_station;
+   
+ //////////////////////////////////////////////////////////////////////////////////// New SQl code Miljan 13.01.2020 10 min  
+ 
+SELECT v_book_return.station_id,   
+v_book_return.return_date,   
+v_book_return.book_type,   
+v_book_return.vrt_class,   
+v_book_return.start_no,   
+v_book_return.end_no,   
+v_book_return.return_reason,   
+v_book_return.refund_yn,   
+v_book_return.book_return_id,   
+v_book_return.user_id,   
+v_book_return.timestamp  
+FROM v_book_return
+WHERE v_book_return.station_id = :ra_station;
+
+*/*/*/*/*/**/*/*/*/*/*/*//**/**/**//*//*/*/*/*/*/*/*/*/*/*/*/*
+
+Update properties 
+
+tabela v_book_return
+
+1 radio button				*			1 radio button
+							*
+sve kolone			*			samo book_return_id
+   
+----------------------------------------------------------------------------
+   
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> dw_getpair_verified_report 
+
+Nema sql upita
+
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> dw_lane_amount2
+
+SELECT Trim(informix.v_lane.lane_desc) lane_desc,   
+informix.v_lane_renewal.ren_start_date,   
+informix.v_lane_renewal.ren_end_date,   
+informix.v_lane_renewal.ren_amount  
+FROM informix.v_lane,   
+informix.v_lane_renewal  
+WHERE ( informix.v_lane_renewal.ren_lane_id = informix.v_lane.lane_id )  AND
+( informix.v_lane_renewal.ren_rec_id = :ra_receipt_id); 
+
+///////////////////////////////////////////////////////////////////////////////// New SQl code Miljan 13.01.2020 10 min 
+
+SELECT Trim(v_lane.lane_desc) lane_desc,   
+v_lane_renewal.ren_start_date,   
+v_lane_renewal.ren_end_date,   
+v_lane_renewal.ren_amount  
+FROM v_lane,   
+v_lane_renewal  
+WHERE ( v_lane_renewal.ren_lane_id = v_lane.lane_id )  AND
+( v_lane_renewal.ren_rec_id = :ra_receipt_id);  
+		
+----------------------------------------------------------------------------
+vrt_book.pbl -> dw_order_details 
+
+SELECT informix.v_order_hd.bk_order_id,   
+informix.v_order_hd.order_needed_date,   
+informix.v_order_hd.order_exp_deliver,   
+informix.v_order_hd.price,   
+informix.v_order_hd.payment_date,   
+informix.v_order_hd.payment_by  
+FROM informix.v_order_hd   
+WHERE informix.v_order_hd.bk_order_id = :ll_order
+
+////////////////////////////////////////////////////////////////////////// New Sql code Miljan 13.01.2020 10 min
+
+SELECT v_order_hd.bk_order_id,   
+v_order_hd.order_needed_date,   
+v_order_hd.order_exp_deliver,   
+v_order_hd.price,   
+v_order_hd.payment_date,   
+v_order_hd.payment_by  
+FROM v_order_hd   
+WHERE v_order_hd.bk_order_id = :ll_order
+
+*/*/*/*/*/**/*/*/*/*/*/*//**/**/**//*//*/*/*/*/*/*/*/*/*/*/*/*
+
+Update properties 
+
+tabela v_order_hd
+
+1 radio button				*			2 radio button
+							*
+sve kolone	osim prve		*			samo bk_order_id
+	
+----------------------------------------------------------------------------
+vrt_book.pbl -> dw_order_receipt 
+
+Nema sql upita 
+
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> dw_order_temp 
+
+Nema sql upita 
+
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> dw_pending_orders 
+
+select stat_name,v_book_name dsc,v_book_desc bk,vrt_class vrt,book_price,count(v_book_pk) qty,
+count(v_book_pk) * book_price total 
+from v_book,v_book_type,v_testing_station where sale_date is null 
+and v_book_type.v_book_type_pk = v_book.book_type
+and station_no = stat_id
+GROUP BY 1,2,3,4,5
+ORDER BY 1,2,3,4,5
+
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> dw_station_order 
+
+Nema sql upita
+
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> dw_temp_receipt_fix
+
+SELECT refusal_bk_id ser,'N',vrt_class,station_no,start_no,sale_date,vrt_bk_rec_ref FROM vrt_refusal_bk 
+WHERE (vrt_bk_rec_ref is null or vrt_bk_rec_ref < 1) AND (sale_date is not null and sale_date < today) 
+UNION 
+SELECT rec_bk_id ser,'R',vrt_class,station_no,start_no,sale_date,vrt_bk_rec_ref FROM vrt_rec_bk 
+WHERE (vrt_bk_rec_ref is null or vrt_bk_rec_ref < 1) AND (sale_date is not null and sale_date < today) 
+UNION 
+SELECT cert_bk_id ser,'V',' ',station_no,start_no,sale_date,vrt_bk_rec_ref FROM vrt_cert_bk 
+WHERE (vrt_bk_rec_ref is null or vrt_bk_rec_ref < 1) AND (sale_date is not null and sale_date < today) 
+ORDER BY 4 ASC,6 ASC,2 ASC,3 ASC,2 ASC;
+
+////////////////////////////////////////////////////////////////////////////////// Miljan New sql code 13.01.2020 15 min
+
+SELECT refusal_bk_id ser,'N',vrt_class,station_no,start_no,sale_date,vrt_bk_rec_ref FROM vrt_refusal_bk 
+WHERE (vrt_bk_rec_ref is null or vrt_bk_rec_ref < 1) AND (sale_date is not null and sale_date < convert(date, getdate())) 
+UNION 
+SELECT rec_bk_id ser,'R',vrt_class,station_no,start_no,sale_date,vrt_bk_rec_ref FROM vrt_rec_bk 
+WHERE (vrt_bk_rec_ref is null or vrt_bk_rec_ref < 1) AND (sale_date is not null and sale_date < convert(date, getdate()))
+UNION 
+SELECT cert_bk_id ser,'V',' ',station_no,start_no,sale_date,vrt_bk_rec_ref FROM vrt_cert_bk 
+WHERE (vrt_bk_rec_ref is null or vrt_bk_rec_ref < 1) AND (sale_date is not null and sale_date <  convert(date, getdate()))
+ORDER BY 4 ASC,6 ASC,2 ASC,3 ASC,2 ASC;
+
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> dw_users_temp
+
+Nema sql upita
+
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> dw_verified_report 
+
+SELECT informix.v_book_verify.verify_date,   
+informix.v_book_verify.book_type,   
+informix.v_book_verify.vrt_class,   
+informix.v_book_verify.start_no,   
+informix.v_book_verify.qty,   
+informix.v_book_verify.end_no,   
+informix.v_book_verify.passed,   
+informix.v_book_verify.user_id  
+FROM informix.v_book_verify   
+where 1=1;
+
+///////////////////////////////////////////////////////////////////////////////Miljan new sql code 10 min 13.01.2020
+
+SELECT v_book_verify.verify_date,   
+v_book_verify.book_type,   
+v_book_verify.vrt_class,   
+v_book_verify.start_no,   
+v_book_verify.qty,   
+v_book_verify.end_no,   
+v_book_verify.passed,   
+v_book_verify.user_id  
+FROM v_book_verify   
+where 1=1;
+
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> dw_verify_book 
+
+SELECT informix.v_book_verify.book_verify_id, 
+informix.v_book_verify.verify_date,   
+informix.v_book_verify.book_type,   
+informix.v_book_verify.vrt_class,   
+informix.v_book_verify.start_no,   
+informix.v_book_verify.qty,   
+informix.v_book_verify.end_no,      
+informix.v_book_verify.passed,
+informix.v_book_verify.user_id, 
+informix.v_book_verify.timestamp 
+FROM informix.v_book_verify 
+WHERE informix.v_book_verify.verify_date >= :rd_start 
+AND informix.v_book_verify.verify_date <= :rd_end 
+ORDER BY informix.v_book_verify.verify_date ASC,
+informix.v_book_verify.user_id ASC;
+
+//////////////////////////////////////////////////////////////////////////// Miljan new sql code 13.01.2020
+
+SELECT v_book_verify.book_verify_id, 
+v_book_verify.verify_date,   
+v_book_verify.book_type,   
+v_book_verify.vrt_class,   
+v_book_verify.start_no,   
+v_book_verify.qty,   
+v_book_verify.end_no,      
+v_book_verify.passed,
+v_book_verify.user_id, 
+v_book_verify.timestamp 
+FROM v_book_verify 
+WHERE v_book_verify.verify_date >= :rd_start 
+AND v_book_verify.verify_date <= :rd_end 
+ORDER BY v_book_verify.verify_date ASC,
+v_book_verify.user_id ASC;
+
+*/*/*/*/*/**/*/*/*/*/*/*//**/**/**//*//*/*/*/*/*/*/*/*/*/*/*/*
+
+Update properties 
+
+tabela v_book_verify
+
+1 radio button				*			2 radio button
+							*
+sve kolone	osim prve		*			samo book_verify_id
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> dw_vrt_station
+
+Nema sql upita 
+
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> fg_calc_refund
+
+select percent 
+into :ld_refund 
+from v_return_reason
+where reason_id = :li_reason;
+ 
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> fg_check_book
+
+Neki sql upit koji se pominje u ovoj funkciji 
+
+ls_sql = " FROM v_book WHERE book_type = "+string(ll_i)
+IF ls_class <> "" THEN ls_sql = ls_sql + " AND vrt_class = '"+ls_class+"'"
+IF ll_qty = 1 THEN
+	ls_sql = ls_sql + " AND start_no = "+string(ll_start)
+ELSE
+	ls_sql = ls_sql + " AND start_no >= "+string(ll_start)
+ 	ls_sql = ls_sql + " AND start_no <= "+string(ll_start+((ll_qty - 1)*ll_leaf))
+
+******************************************************************************
+
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> fg_check_book   line 0037
+ls_sql2 = "SELECT COUNT(v_book_pk) "+ls_sql
+
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> fg_check_book   line 0051
+ls_sql2 = "SELECT distinct station_no "+ls_sql
+
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> fg_check_book   line 0060
+
+SELECT stat_name INTO :ls_veriby2
+FROM v_testing_station WHERE stat_id = :ll_station;
+ls_veriby2 = trim(upper(ls_veriby2))
+ls_text = ls_text + " " + ls_veriby2
+		
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> fg_check_book   line 0072
+
+ls_sql = "SELECT user_id,passed,start_no,verify_date "
+ls_sql = ls_sql + "FROM v_book_verify WHERE book_type = "
+ls_sql = ls_sql + string(ll_i)+" AND (vrt_class = '" + ls_class
+ls_sql = ls_sql + "' OR (vrt_class is null OR trim(vrt_class) = '')) "
+ls_sql = ls_sql + " AND start_no >= " + string(ll_start)
+ls_sql = ls_sql + " AND start_no < " + string(ll_start + (ll_qty * ll_leaf))
+
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> fg_check_start  .. = "select count(*) from " + ls_table
+ls_sql = ls_sql + " where " + ls_table + "_no in (" + ls_match + ")"
+if ls_type = "R" or ls_type = "N" then 
+ls_sql = ls_sql + " and vrt_class = '" + ls_class + "'"
+end if
+
+DECLARE kursor DYNAMIC PROCEDURE FOR SQLSA;
+EXECUTE DYNAMIC kursor USING DESCRIPTOR SQLDA;
+
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> fg_delete_row
+
+SELECT vrt_class,book_type 
+INTO :ls_class,:ll_qty 
+FROM v_book
+WHERE v_book_pk = :ll_rec;
+
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> fg_dlv_sql
+
+ls_sql = "SELECT informix.vrt_order_deliver.book_type,"
+ls_sql = ls_sql + "informix.vrt_order_deliver.vrt_class," 
+ls_sql = ls_sql + "informix.vrt_order_deliver.qty,"
+ls_sql = ls_sql + "informix.vrt_order_deliver.delivery," 
+ls_sql = ls_sql + "informix.vrt_order_deliver.bk_order_id "
+ls_sql = ls_sql + "FROM informix.vrt_order_deliver "  
+ls_sql = ls_sql +	ls_where
+
+//////////////////////////////////////////////////////////////////////////// Miljan New sql code 13.01.2020 15 min
+
+ls_sql ="SELECT vrt_order_deliver.book_type,"
+ls_sql = ls_sql + "vrt_order_deliver.vrt_class," 
+ls_sql = ls_sql + "vrt_order_deliver.qty,"
+ls_sql = ls_sql + "vrt_order_deliver.delivery," 
+ls_sql = ls_sql + "vrt_order_deliver.bk_order_id "
+ls_sql = ls_sql + "FROM vrt_order_deliver "  
+ls_sql = ls_sql +	ls_where
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> fg_illum
+
+select today into :ld_date
+from systables 
+where tabname = "systables";
+
+//////////////////////////////////////////////////////////////////////////////// Miljan new sql code 13.01.2020 10 min
+
+select convert(date, getdate())into :ld_date
+from systables 
+where tabname = 'systables';
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> fg_insert_row  line 0045
+
+SELECT v_book_pk INTO :ll_rec_id FROM v_book
+WHERE start_no = :ll_k AND vrt_class = :ls_class
+AND book_type = :ll_type_id;
+	   
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> fg_insert_row  
+
+INSERT INTO v_book (v_book_pk, station_no, vrt_class, book_type, book_price, order_date,
+order_by, start_no, quantity, verified_by, verified_on, sale_date, user_id, receipt_id) 
+VALUES (0, :ll_station, :ls_class, :ll_type_id,
+:ld_price, :ld_order, :ls_order, :ll_k, :li_leaf, :ls_veriby, :ld_verify,
+:ld_sale, :ws_user, :ll_receipt);
+
+//////////////////////////////////////////////////////////////////////////// Miljan new sql code 13.01.2020
+			
+INSERT INTO v_book ( station_no, vrt_class, book_type, book_price, order_date,
+order_by, start_no, quantity, verified_by, verified_on, sale_date, user_id, receipt_id) 
+VALUES ( :ll_station, :ls_class, :ll_type_id,
+:ld_price, :ld_order, :ls_order, :ll_k, :li_leaf, :ls_veriby, :ld_verify,
+:ld_sale, :ws_user, :ll_receipt);			
+----------------------------------------------------------------------------
+vrt_book.pbl -> fg_issa  
+
+select current into :issa 
+from systables where tabname = "systables";
+
+////////////////////////////////////////////////////////////////////////// Miljan new sql code 13.01.2020
+
+select getdate() into :issa 
+from systables where tabname = 'systables';
+
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> fg_new_receipt  line 0014
+
+SELECT last_name,first_name 
+INTO :ls_ad1,:ls_ad2 
+FROM users 
+WHERE lower(trim(user_id)) = :ls_user;
+
+/////////////////////////////////////////////////////////////////////////  new sql code 13.01.2020
+
+SELECT last_name,first_name INTO :ls_ad1,:ls_ad2 
+FROM users WHERE lower(rtrim(ltrim(user_id))) = :ls_user;
+ 
+----------------------------------------------------------------------------
+vrt_book.pbl -> fg_new_receipt  line 0022
+
+SELECT stat_name INTO :ls_name
+FROM v_testing_station WHERE stat_id = :ll_station;
+  
+----------------------------------------------------------------------------
+vrt_book.pbl -> fg_new_receipt  line 0025
+
+SELECT address_1,address_2,area_name,town,post_code
+INTO :ls_ad1,:ls_ad2,:ls_ad3,:ls_ad4,:ls_ad5 
+FROM v_location,v_town
+WHERE loc_stat_id = :ll_station
+AND loc_active_ind = "Y"
+AND loc_town_id = v_town.town_id;
+
+////////////////////////////////////////////////////////////////////   new sql code 13.01.2020
+
+SELECT address_1,address_2,area_name,town,post_code
+INTO :ls_ad1,:ls_ad2,:ls_ad3,:ls_ad4,:ls_ad5 
+FROM v_location,v_town
+WHERE loc_stat_id = :ll_station
+AND loc_active_ind = 'Y'
+AND loc_town_id = v_town.town_id;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> fg_new_receipt  line 0053
+
+select rec_no_stat,rec_no_pref 
+into :ll_receipt_no,:ls_prefix 
+from v_system_par;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> fg_new_receipt  
+
+insert into v_receipt 
+(rec_no,rec_dt_issd,rec_vatno,rec_create_user,rec_canc_ind,rec_verified_ind,
+rec_amount,rec_payer_ind,rec_tstcl_id)
+values (:ls_receipt,:illum,:ls_vat,:ls_user,"N","N",0.0,"S",:ll_station);
+
+///////////////////////////////////////////////////////////////////////// new sql code 13.01.2020
+		 
+----------------------------------------------------------------------------
+vrt_book.pbl -> fg_new_receipt
+
+update v_system_par
+set rec_no_stat = :ll_receipt_no;
+ 
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> fg_populate_order
+
+ls_sql ="SELECT order_date,order_by,v_book_desc,vrt_class,quantity,"
+ls_sql = ls_sql + "start_no,verified_by,verified_on,receipt_id,v_book_pk,sale_date "
+ls_sql = ls_sql + "FROM v_book,v_book_type WHERE book_type = v_book_type_pk AND "
+ls_sql = ls_sql + "station_no = " + string(li_station) + ls_where2 + ls_order_by + ";"
+
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> fg_refresh_status
+
+SELECT v_book_desc,v_class,v_book_name,v_price,v_pages,v_stock,v_minim,
+v_damag,v_book_type_id
+FROM v_book_class,v_book_type WHERE v_book_type_id = v_book_type_pk
+AND date_to is null order by 3,2,1;
+	
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> fg_return_sql
+
+ls_sql = "SELECT informix.vrt_book_return.station_id,"
+ls_sql = ls_sql + "informix.vrt_book_return.return_date,"
+ls_sql = ls_sql + "informix.vrt_book_return.book_type,"
+ls_sql = ls_sql + "informix.vrt_book_return.vrt_class,"
+ls_sql = ls_sql + "informix.vrt_book_return.start_no,"
+ls_sql = ls_sql + "informix.vrt_book_return.end_no,"   
+ls_sql = ls_sql + "informix.vrt_book_return.return_reason,"
+ls_sql = ls_sql + "informix.vrt_book_return.refund_approv "  
+ls_sql = ls_sql + "FROM informix.vrt_book_return "
+
+///////////////////////////////////////////////////////////// New sql code 13.01.2020
+
+ls_sql = "SELECT vrt_book_return.station_id,"
+ls_sql = ls_sql + "vrt_book_return.return_date,"
+ls_sql = ls_sql + "vrt_book_return.book_type,"
+ls_sql = ls_sql + "vrt_book_return.vrt_class,"
+ls_sql = ls_sql + "vrt_book_return.start_no,"
+ls_sql = ls_sql + "vrt_book_return.end_no,"   
+ls_sql = ls_sql + "vrt_book_return.return_reason,"
+ls_sql = ls_sql + "vrt_book_return.refund_approv "  
+ls_sql = ls_sql + "FROM vrt_book_return "
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> fg_set_deliver_sql
+
+ls_sql ="SELECT informix.vrt_order_deliver.book_type,"
+ls_sql = ls_sql + "informix.vrt_order_deliver.vrt_class," 
+ls_sql = ls_sql + "informix.vrt_order_deliver.qty,"
+ls_sql = ls_sql + "informix.vrt_order_deliver.delivery" 
+ls_sql = ls_sql + "FROM informix.vrt_order_deliver"  
+ls_sql = ls_sql +	" "+ls_where+" ;"
+
+///////////////////////////////////////////////////////////////////// New sql code 13.01.2020
+
+ls_sql ="SELECT vrt_order_deliver.book_type,"
+ls_sql = ls_sql + "vrt_order_deliver.vrt_class," 
+ls_sql = ls_sql + "vrt_order_deliver.qty,"
+ls_sql = ls_sql + "vrt_order_deliver.delivery" 
+ls_sql = ls_sql + "FROM vrt_order_deliver" 
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> fg_update_damage
+
+SELECT count(*),book_type,vrt_class
+FROM v_book_verify 
+WHERE upper(passed) <> "Y"
+GROUP BY 2,3;
+
+//////////////////////////////////////////////////////////////// New sql code 13.01.2020
+
+SELECT count(*),book_type,vrt_class
+FROM v_book_verify 
+WHERE upper(passed) <> 'Y'
+GROUP BY 2,3;
+----------------------------------------------------------------------------
+vrt_book.pbl -> fg_update_damage
+
+UPDATE v_book_class
+SET v_damag = :ll_qty
+WHERE v_book_type_id = :ll_book
+AND date_to is null;
+		
+----------------------------------------------------------------------------
+vrt_book.pbl -> fg_update_damage
+
+UPDATE v_book_class
+SET v_damag = :ll_qty
+WHERE v_book_type_id = :ll_book
+AND upper(v_class) = :ls_class
+AND date_to is null;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> fg_update_stock
+
+select v_book_class_pl,v_stock into :ll_id,:ll_stock
+from v_book_class,v_book_type
+where v_book_type.v_book_desc = :ls_type
+and v_book_type.v_book_type_pk = v_book_class.v_book_type_id
+and v_book_class.v_class = :ls_class
+and v_book_class.date_to is null;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> fg_update_stock
+
+UPDATE v_book_class 
+SET v_stock = :ll_fee_qty
+WHERE v_book_class_pl = :ll_id;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> set_deliver_sql
+
+ls_sql = "SELECT informix.vrt_order_deliver.book_type,"
+ls_sql = ls_sql + "informix.vrt_order_deliver.vrt_class," 
+ls_sql = ls_sql + "informix.vrt_order_deliver.qty,"
+ls_sql = ls_sql + "informix.vrt_order_deliver.delivery " 
+ls_sql = ls_sql + "FROM informix.vrt_order_deliver"  
+ls_sql = ls_sql +	ls_where
+
+/////////////////////////////////////////////////////////////////////////////////// New sql code 13.01.2020
+
+ls_sql ="SELECT vrt_order_deliver.book_type,"
+ls_sql = ls_sql + "vrt_order_deliver.vrt_class," 
+ls_sql = ls_sql + "vrt_order_deliver.qty,"
+ls_sql = ls_sql + "vrt_order_deliver.delivery " 
+ls_sql = ls_sql + "FROM vrt_order_deliver"  
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_lane_pay2 -> ue_issue_receipt  line 0033
+
+lb_ok = fg_lock("Select rec_no_tst from v_system_par",2)
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_lane_pay2 -> ue_issue_receipt  line 0037
+
+SELECT rec_no_lane, rec_pref_lane, lane_renew_amnt
+INTO :ll_rec_no,:ls_rec_prefix, :ld_amount
+FROM v_system_par;
+		
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> w_lane_pay2 -> ue_issue_receipt  line 0107
+		
+SELECT ren_id
+INTO :ll_prev_ren_id
+FROM v_lane_renewal
+WHERE ren_lane_id = :ll_ren_lane_id AND
+Trim(ren_last_ind) = "Y" AND
+Trim(ren_term_ind) = "N";
+
+//////////////////////////////////////////////////////////////////////////////  New sql code 13.01.2020
+
+SELECT ren_id
+INTO :ll_prev_ren_id
+FROM v_lane_renewal
+WHERE ren_lane_id = :ll_ren_lane_id AND
+Trim(ren_last_ind) = 'Y' AND
+Trim(ren_term_ind) = 'N';
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_lane_pay2 -> ue_issue_receipt  line 0052
+
+INSERT INTO v_receipt(rec_bank_id,rec_pmthd_id,rec_no,rec_amount,rec_dt_issd,rec_payer_ind,rec_cq_no,rec_create_user,rec_manual_rec_no)
+VALUES  (:ll_bank_id,:ll_pmth_id,:ls_rec_no,:ld_amount,:ld_receipt_date,"L",:ls_cheque_no,:gs_userid,:ls_manual_rec_no);
+
+////////////////////////////////////////////////////////////////////////////  New sql code 13.01.2020
+
+INSERT INTO v_receipt(rec_bank_id,rec_pmthd_id,rec_no,rec_amount,rec_dt_issd,rec_payer_ind,rec_cq_no,rec_create_user,rec_manual_rec_no)
+VALUES  (:ll_bank_id,:ll_pmth_id,:ls_rec_no,:ld_amount,:ld_receipt_date,'L',:ls_cheque_no,:gs_userid,:ls_manual_rec_no);
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_lane_pay2 -> ue_issue_receipt  line 0093
+
+INSERT INTO v_lane_renewal(ren_cont_id,ren_lane_id,ren_rec_id,ren_start_date,ren_end_date,ren_last_ind,ren_rec_issued,ren_amount,ren_term_ind)
+VALUES (:ll_ren_cont_id,:ll_ren_lane_id,:ll_receipt_id,:ld_ren_start_date,:ld_ren_end_date,"Y","Y",:ld_lane_amount,"N");
+
+////////////////////////////////////////////////////////////////////////// New sql code 13.01.2020
+
+INSERT INTO v_lane_renewal(ren_cont_id,ren_lane_id,ren_rec_id,ren_start_date,ren_end_date,ren_last_ind,ren_rec_issued,ren_amount,ren_term_ind)
+VALUES (:ll_ren_cont_id,:ll_ren_lane_id,:ll_receipt_id,:ld_ren_start_date,:ld_ren_end_date,'Y','Y',:ld_lane_amount,'N');
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_lane_pay2 -> ue_issue_receipt  line 0136
+
+INSERT INTO v_lane_renewal(ren_cont_id,ren_lane_id,ren_rec_id,ren_start_date,ren_end_date,ren_last_ind,ren_rec_issued,ren_prev_id,ren_amount,ren_term_ind)
+VALUES(:ll_ren_cont_id,:ll_ren_lane_id,:ll_receipt_id,:ld_ren_start_date,:ld_ren_end_date,"Y","Y",:ll_prev_ren_id,:ld_lane_amount,"N");
+
+////////////////////////////////////////////////////////////////////////// New sql code 13.01.2020
+
+INSERT INTO v_lane_renewal(ren_cont_id,ren_lane_id,ren_rec_id,ren_start_date,ren_end_date,ren_last_ind,ren_rec_issued,ren_prev_id,ren_amount,ren_term_ind)
+VALUES(:ll_ren_cont_id,:ll_ren_lane_id,:ll_receipt_id,:ld_ren_start_date,:ld_ren_end_date,'Y','Y',:ll_prev_ren_id,:ld_lane_amount,'N');
+	
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_lane_pay2 -> ue_issue_receipt  line 0140
+
+UPDATE v_lane_renewal
+SET ren_last_ind ="N"
+WHERE ren_id = :ll_prev_ren_id;
+
+//////////////////////////////////////////////////////////////////////  New sql code 13.01.2020
+
+UPDATE v_lane_renewal
+SET ren_last_ind ='N'
+WHERE ren_id = :ll_prev_ren_id;
+	
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_lane_pay2 -> ue_issue_receipt  line 0154
+
+UPDATE v_system_par
+SET rec_no_lane = :ll_rec_no;
+	
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_lane_pay2 -> ue_issue_receipt  line 0166
+
+UPDATE v_receipt
+SET rec_amount = :ld_lane_total
+WHERE rec_id = :ll_receipt_id;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_lane_pay2 -> open  line 0042
+
+Select first_name,last_name
+INTO :gs_user_name,:gs_user_sname
+FROM informix.users
+WHERE informix.users.user_id = :gs_userid;
+
+/////////////////////////////////////////////////////////////////////////// New sql code 13.01.2020
+
+Select first_name,last_name
+INTO :gs_user_name,:gs_user_sname
+FROM users
+WHERE users.user_id = :gs_userid;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_ltd_order -> ue_start_it  
+
+select max(bk_order_id) 
+into :ll_order_no 
+from vrt_order_hd;
+	
+ ----------------------------------------------------------------------------
+vrt_book.pbl -> w_ltd_order -> open
+
+select max(order_date) 
+into :ld_date
+from vrt_order_hd;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_ltd_order -> cb_6.clicked()  line 0005
+
+select min(bk_order_id) 
+into :ll_order_no 
+from vrt_order_hd;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_ltd_order -> cb_6.clicked()  line 0009
+
+select min(bk_order_id) 
+into :ll_order_no 
+from vrt_order_hd
+where bk_order_id > :ll_order_no;
+		
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_ltd_order -> cb_5.clicked()  line 0005
+
+select max(bk_order_id) 
+into :ll_order_no 
+from vrt_order_hd;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_ltd_order -> cb_5.clicked()  line 0005
+
+select max(bk_order_id) 
+into :ll_order_no 
+from vrt_order_hd
+where bk_order_id < :ll_order_no;
+		
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_ltd_order -> cb_4.clicked()  
+
+select ext_approv_date into :ld_temp
+from vrt_order_hd 
+where bk_order_id = :ll_order_no;
+
+delete from vrt_order_bk
+where bk_order_id = :ll_order_no;
+delete from vrt_order_hd 
+where bk_order_id = :ll_order_no;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_ltd_order -> dw_2.ue_populate()  line 0016
+
+select count(*) 
+into :li_i from vrt_order_hd
+where bk_order_id > :ll_order_no;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_ltd_order -> dw_2.ue_populate()  line 0033
+
+select start_no,qty into :ll_start,:ll_qty_ord
+from vrt_order_bk 
+where bk_order_id = :ll_order_no
+and book_type = :ls_type;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_ltd_order -> dw_2.ue_populate()  line 0037
+
+select start_no,qty 
+into :ll_start,:ll_qty_ord
+from vrt_order_bk where bk_order_id = :ll_order_no
+and book_type = :ls_type
+and vrt_class = :ls_class;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_ltd_order -> dw_2.ue_populate()  line 0043
+
+select sum(qty) 
+into :ll_qty_dlv from vrt_order_deliver
+where bk_order_id = :ll_order_no
+and book_type = :ls_type 
+and (vrt_class = :ls_class or vrt_class = " " or vrt_class is null);
+
+///////////////////////////////////////////////////////////////// New sql code 13.01.2020
+
+select sum(qty) into :ll_qty_dlv from vrt_order_deliver
+where bk_order_id = :ll_order_no
+and book_type = :ls_type 
+and (vrt_class = :ls_class or vrt_class = ' '  or vrt_class is null);
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_ltd_order -> dw_2.ue_populate()  line 0059
+
+select ltd_approv_date into :ld_temp 
+from vrt_order_hd
+where bk_order_id = :ll_order_no;
+ 
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_ltd_order -> cb_2.clicked()  
+
+insert into vrt_order_bk 
+values (0,:ll_order_no,:ls_type,:ls_class,:ll_qty,:ll_start,:ws_user,:ld_stamp);
+
+/////////////////////////////////////////////////////////////////////// new sql code 13.01.2020
+
+insert into vrt_order_bk values 
+(:ll_order_no,:ls_type,:ls_class,:ll_qty,:ll_start,:ws_user,:ld_stamp);
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_order_deliver -> open() line 0012  
+
+select max(bk_order_id) 
+into :ll_order_no 
+from v_order_hd;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_order_deliver -> open() line 0018
+
+select 	order_confir_date,
+order_exp_deliver 
+into :ld_conf,:ld_exp
+from v_order_hd 
+where bk_order_id = :ll_order_no;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_order_deliver -> dw_2.ue_populate() line 0025
+
+select start_no, qty 
+into :ll_start,:ll_qty_ord
+from  v_order_bk 
+where bk_order_id = :ll_order_no
+and book_type = :ls_type;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_order_deliver -> dw_2.ue_populate() line 0033
+
+select	 start_no,qty 
+into :ll_start,:ll_qty_ord
+from v_order_bk 
+where 	bk_order_id = :ll_order_no
+and book_type = :ls_type
+and vrt_class = :ls_class;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_order_deliver -> dw_2.ue_populate() line 0044
+
+select	sum(qty) 
+into :ll_qty_dlv 
+from v_order_deliver
+where bk_order_id = :ll_order_no
+and book_type = :ls_type 
+and (vrt_class = :ls_class or vrt_class = " " or vrt_class is null);
+
+//////////////////////////////////////////////////////////////////////////// New sql code 13.01.2020 
+
+select sum(qty) 
+into :ll_qty_dlv 
+from v_order_deliver
+where bk_order_id = :ll_order_no
+and book_type = :ls_type 
+and (vrt_class = :ls_class or vrt_class = ' ' or vrt_class is null);
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_station_order -> dw_5.itemchanged line 0013
+
+lb_i = fg_lock("select stat_id from v_testing_station where stat_id = "+trim(data),1)
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_station_order -> dw_5.itemchanged line 0016
+
+select max(v_book_pk) INTO :li_i
+from v_book where v_book.station_no = :il_station;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_station_order -> dw_5.itemchanged line 0018
+
+select rec_vatno into :ls_vat from v_receipt,v_book
+where v_receipt.rec_id = v_book.receipt_id
+and v_book.v_book_pk = :li_i;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_station_order -> dw_1.doubleclicked 
+
+select receipt_no into :ls_receipt_no 
+from vrt_bk_receipt where bk_receipt_id = :ll_receipt;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_station_return -> cb_1.Clicked()  line 0019
+
+SELECT max(book_return_id) INTO :ll_min_serial FROM v_book_return;
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_station_return -> cb_1.Clicked()  line 0092
+
+select count(*) into :ll_loop 
+from v_book_return 
+where book_type = :ll_type_id
+and (vrt_class =:ls_class or vrt_class is null or vrt_class = " ") 
+and book_return_id <> :ll_row 
+and ((start_no >= :ll_start and start_no <= :ll_end) 
+or  (end_no >= :ll_start and end_no <= :ll_end) 
+or  (start_no < :ll_start and end_no > :ll_end)); 
+
+////////////////////////////////////////////////////////////////////////// New sql code 13.01.2020
+
+select count(*) into :ll_loop 
+from v_book_return 
+where book_type = :ll_type_id
+and (vrt_class =:ls_class or vrt_class is null or vrt_class = ' ')  
+and book_return_id <> :ll_row 
+and ((start_no >= :ll_start and start_no <= :ll_end) 
+or  (end_no >= :ll_start and end_no <= :ll_end) 
+or  (start_no < :ll_start and end_no > :ll_end)); 
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_station_return -> cb_1.Clicked()  line 0109
+
+select receipt_id into :ll_bk_record from v_book
+where station_no = :ll_station_id
+and book_type = :ll_type_id
+and vrt_class = :ls_class
+and not(sale_date is null) 
+and start_no >= :ll_start2; 
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_verify_book -> cb_3.Clicked()  line 0111
+
+select count(*) into :ll_i from v_book_verify
+where (:ll_row <> book_verify_id)
+and book_type = :ll_type 
+and (lower(vrt_class) = :ls_class or vrt_class is null or vrt_class = "")
+and ((:ll_start >= start_no and :ll_start <= end_no)
+or (:ll_end >= start_no and :ll_end <= end_no)
+or (start_no < :ll_start and end_no > :ll_end));
+
+///////////////////////////////////////////////////////////////////////////// new sql code 13.01.2020
+
+select count(*) into :ll_i from v_book_verify
+where (:ll_row <> book_verify_id)
+and book_type = :ll_type 
+and (lower(vrt_class) = :ls_class or vrt_class is null or vrt_class = '')
+and ((:ll_start >= start_no and :ll_start <= end_no)
+or (:ll_end >= start_no and :ll_end <= end_no)
+or (start_no < :ll_start and end_no > :ll_end));
+
+----------------------------------------------------------------------------
+vrt_book.pbl -> w_verify_book -> cb_3.Clicked()  line 0125
+
+select count(*) into :ll_i from v_book
+where book_type = :ll_type
+and (lower(vrt_class) = :ls_class OR vrt_class is null)
+and start_no >= :ll_start and start_no < :ll_end;
+
+
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+

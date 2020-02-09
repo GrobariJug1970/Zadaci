@@ -1,0 +1,57 @@
+Msufri5.pbl -> fg_data_in_use
+
+IF ab_String THEN
+	ls_sql = "SELECT 'x' FROM " + as_TableName + " WHERE " + as_ColumnName + " = " + &
+					"~'" + as_ColumnValue + "~'"
+ELSE
+	ls_sql = "SELECT 'x' FROM " + as_TableName + " WHERE " + as_ColumnName + " = " + &
+					as_ColumnValue
+END IF
+
+--------------------------------------------------------------------------------------------
+Msufri5.pbl -> fg_ddlb_load
+
+ls_sql = "SELECT " + as_ColumnCode + ", " + as_ColumnDesc + " FROM " + as_TableName
+IF Trim(as_where) <> "" THEN
+   ls_sql = ls_sql + " WHERE " + as_where
+END IF
+
+--------------------------------------------------------------------------------------------
+Msufri5.pbl -> fg_dw_dddw_load
+
+ls_SQLString = "SELECT " + as_ColumnDesc + ", " + as_ColumnCode + " FROM " + as_TableName
+
+IF Trim(as_Where) <> "" THEN
+   ls_SQLString = ls_SQLString + " WHERE " + as_Where
+END IF
+
+--------------------------------------------------------------------------------------------
+Msufri5.pbl -> fg_lb_load
+
+ls_sql = "SELECT " + as_ColumnCode + ", " + as_ColumnDesc + " FROM " + as_TableName
+IF Trim(as_WhereClause) <> "" THEN
+   ls_sql = ls_sql + " WHERE " + as_WhereClause
+END IF
+
+--------------------------------------------------------------------------------------------
+Msufri5.pbl -> fg_search_dddw_load
+
+ls_SQLString = "SELECT " + as_ColumnDesc + ", " + as_ColumnCode + " FROM " + as_TableName
+
+IF Trim(as_Where) <> "" THEN
+   ls_SQLString = ls_SQLString + " WHERE " + as_Where
+END IF
+
+--------------------------------------------------------------------------------------------
+Msufri5.pbl -> fg_security
+
+SELECT status
+	INTO :ls_status
+	FROM users
+	WHERE user_id = :gs_userid ;
+
+	SELECT read_yn, update_yn, delete_yn
+	INTO :ls_readyn, :ls_updateyn, :ls_deleteyn
+	FROM window_access
+	WHERE ( window_ref = :ai_WindowRef )	AND
+			( usergroup_ref = :gi_usergroupref ) ;

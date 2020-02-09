@@ -1,0 +1,73 @@
+lsumnt5.pbl -> fg_lg_load_fk 
+
+ls_sql = "SELECT " + as_ColumnCode + ", " + as_ColumnDesc + ", " + as_CodeForFK + " FROM " + as_TableName
+IF Trim(as_WhereClause) <> "" THEN
+   ls_sql = ls_sql + " WHERE " + as_WhereClause
+END IF
+
+------------------------------------------------------------------------------------------------------------
+lsumnt5.pbl -> uo_lbmaint -> ue_next_key    line 0015
+
+ls_SQL = "SELECT MAX(" + Trim( is_Code ) + ") " + &
+" FROM " + Trim( is_Table )
+
+------------------------------------------------------------------------------------------------------------
+lsumnt5.pbl -> uo_lbmaint -> ue_is_duplicate   line 0026
+
+ls_SQL = "SELECT COUNT(*) FROM " + Trim( is_Table ) + &
+" WHERE " + Trim( is_Desc ) + " = " + &
+"~'" + Trim( ls_Desc ) + "~'"
+
+------------------------------------------------------------------------------------------------------------
+lsumnt5.pbl -> uo_lbmaint -> uf_desc_limit   line 0044
+
+ls_SQL = "SELECT " + ls_SysColLen + &
+" FROM " + ls_SysTable + &
+" WHERE " + ls_SysTabCol + " = '" + Trim( is_Table ) + "'" + &
+" AND " + ls_SysColCol + " = '" + Trim( is_Desc ) + "'" + &
+ls_And
+
+------------------------------------------------------------------------------------------------------------
+lsumnt5.pbl -> uo_lbmaint -> uf_is_field_nimeric 	line 0048
+
+ls_SQL = "SELECT " + ls_SysColType + &
+" FROM " + ls_SysTable + &
+" WHERE " + ls_SysTabCol + " = '" + Trim( is_Table ) + "'" + &
+" AND " + ls_SysColCol + " = '" + Trim( as_Field ) + "'" + &
+ls_And
+
+------------------------------------------------------------------------------------------------------------
+lsumnt5.pbl -> uo_lbmaint -> uf_is_field_mandatory	 line 0028
+
+ls_SQL = "SELECT " + ls_SysColNull + &
+" FROM " + ls_SysTable + &
+" WHERE " + ls_SysTabCol + " = '" + Trim( is_Table ) + "'" + &
+" AND " + ls_SysColCol + " = '" + Trim( as_Field ) + "'" + &
+ls_And
+
+------------------------------------------------------------------------------------------------------------
+lsumnt5.pbl -> uo_lbmaint -> uf_get_add_sql	 line 0041
+
+ls_SQL = "INSERT INTO " + Trim( is_Table ) + "(" + &
+
+------------------------------------------------------------------------------------------------------------
+lsumnt5.pbl -> uo_lbmaint -> uf_get_modify_sql	 line 0039
+
+ls_SQL = "UPDATE " + Trim( is_Table ) + " SET " + &
+
+------------------------------------------------------------------------------------------------------------
+lsumnt5.pbl -> uo_lbmaint_fkddlb -> uf_get_add_sql	
+
+ls_SQL = "INSERT INTO " + Trim( is_Table ) + "(" + &
+
+------------------------------------------------------------------------------------------------------------
+lsumnt5.pbl -> uo_lbmaint_fkddlb -> uf_get_modify_sql	
+
+ls_SQL = "UPDATE " + Trim( is_Table ) + " SET " + &
+	Trim( is_Desc ) + " = '" + &
+	Trim( as_Desc ) + "'," + &
+	Trim( is_CodeForFK ) + " = " + &
+	ls_FKQuotes + Trim( ls_FKCode ) + ls_FKQuotes + &
+	" WHERE " + Trim( is_Code ) + " = " + ls_Quotes + Trim( as_Code ) + ls_Quotes
+
+

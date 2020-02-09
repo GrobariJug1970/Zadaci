@@ -1,0 +1,1821 @@
+vt_rpdw.pbl -> dw_cash_book_indiv
+
+SELECT informix.v_receipt.rec_create_user,   
+informix.v_receipt.rec_amount,   
+informix.v_receipt.rec_canc_ind,   
+informix.v_receipt.rec_id,   
+informix.v_receipt.rec_payer_ind  
+FROM informix.v_receipt  
+WHERE (rec_dt_issd >= :ra_date_from AND rec_dt_issd <= :ra_date_to)
+AND (rec_create_user = :ra_user) 
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 27.01.2020
+
+SELECT v_receipt.rec_create_user,   
+v_receipt.rec_amount,   
+v_receipt.rec_canc_ind,   
+v_receipt.rec_id,   
+v_receipt.rec_payer_ind  
+FROM v_receipt  
+WHERE (rec_dt_issd >= :ra_date_from AND rec_dt_issd <= :ra_date_to)
+AND (rec_create_user = :ra_user) 
+
+----------------------------------------------------------------------------	 
+vt_rpdw.pbl -> dw_cash_book_super
+
+SELECT informix.v_receipt.rec_id,   
+informix.v_receipt.rec_amount,
+informix.users.first_name,
+informix.users.last_name,
+informix.v_receipt.rec_payer_ind
+FROM informix.v_receipt, informix.users
+WHERE (informix.v_receipt.rec_dt_issd >= :ra_from) AND
+(informix.v_receipt.rec_dt_issd <= :ra_to) AND
+(informix.v_receipt.rec_canc_ind = "N") AND
+(v_receipt.rec_create_user = :ra_user_id OR :ra_user_id = "*ALL*") AND
+(v_receipt.rec_create_user = users.user_id)
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 27.01.2020
+
+SELECT v_receipt.rec_id,   
+v_receipt.rec_amount,
+users.first_name,
+users.last_name,
+v_receipt.rec_payer_ind
+FROM v_receipt, users
+WHERE (v_receipt.rec_dt_issd >= :ra_from) AND
+(v_receipt.rec_dt_issd <= :ra_to) AND
+(v_receipt.rec_canc_ind = 'N') AND
+(v_receipt.rec_create_user = :ra_user_id OR :ra_user_id = '*ALL*') AND
+(v_receipt.rec_create_user = users.user_id)
+			
+----------------------------------------------------------------------------	 
+vt_rpdw.pbl -> dw_contract_e
+
+SELECT informix.v_contract.cont_start_date,   
+informix.v_contract.cont_end_date,   
+informix.v_contract.cont_oper_id,   
+informix.v_contract.cont_stat_id,   
+informix.v_operator.oper_org_name,   
+informix.v_testing_station.stat_name,
+informix.v_contract.cont_statloc_id,
+informix.v_operator.oper_org_ind
+FROM informix.v_contract,   
+informix.v_operator,   
+informix.v_testing_station   
+WHERE ( informix.v_operator.oper_id = informix.v_contract.cont_oper_id ) and  
+( informix.v_contract.cont_stat_id = informix.v_testing_station.stat_id ) and
+( informix.v_contract.cont_id = :ra_cont_id ) 
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 27.01.2020
+
+SELECT v_contract.cont_start_date,   
+v_contract.cont_end_date,   
+v_contract.cont_oper_id,   
+v_contract.cont_stat_id,   
+v_operator.oper_org_name,   
+v_testing_station.stat_name,
+v_contract.cont_statloc_id,
+v_operator.oper_org_ind
+FROM v_contract,   
+v_operator,   
+v_testing_station   
+WHERE ( v_operator.oper_id = v_contract.cont_oper_id ) and  
+( v_contract.cont_stat_id = v_testing_station.stat_id ) and
+( v_contract.cont_id = :ra_cont_id ) 
+
+----------------------------------------------------------------------------	 
+vt_rpdw.pbl -> dw_contract_e_bk
+
+SELECT informix.v_contract.cont_start_date,   
+informix.v_contract.cont_end_date,   
+informix.v_contract.cont_oper_id,   
+informix.v_contract.cont_stat_id,   
+informix.v_operator.oper_org_name,   
+informix.v_testing_station.stat_name 
+FROM informix.v_contract,   
+informix.v_operator,   
+informix.v_testing_station   
+WHERE ( informix.v_operator.oper_id = informix.v_contract.cont_oper_id ) and  
+( informix.v_contract.cont_stat_id = informix.v_testing_station.stat_id ) and
+( informix.v_contract.cont_id = :ra_cont_id )   
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 27.01.2020
+
+SELECT v_contract.cont_start_date,   
+v_contract.cont_end_date,   
+v_contract.cont_oper_id,   
+v_contract.cont_stat_id,   
+v_operator.oper_org_name,   
+v_testing_station.stat_name 
+FROM v_contract,   
+v_operator,   
+v_testing_station   
+WHERE ( v_operator.oper_id = v_contract.cont_oper_id ) and  
+( v_contract.cont_stat_id = v_testing_station.stat_id ) and
+( v_contract.cont_id = :ra_cont_id )   
+
+----------------------------------------------------------------------------	 
+vt_rpdw.pbl -> dw_contract_english		
+
+SELECT informix.v_contract.cont_start_date,   
+informix.v_contract.cont_end_date,   
+informix.v_contract.cont_oper_id,   
+informix.v_contract.cont_stat_id,   
+informix.v_operator.oper_org_name,   
+informix.v_testing_station.stat_name,   
+informix.v_class.class_desc,   
+informix.v_lane.lane_desc  
+FROM informix.v_contract,   
+informix.v_operator,   
+informix.v_testing_station,   
+informix.v_cont_lane,   
+informix.v_class,   
+informix.v_lane  
+WHERE ( informix.v_operator.oper_id = informix.v_contract.cont_oper_id ) and  
+( informix.v_cont_lane.contla_cont_id = informix.v_contract.cont_id ) and  
+( informix.v_class.class_id = informix.v_cont_lane.contla_class_id ) and  
+( informix.v_lane.lane_id = informix.v_cont_lane.contla_lane_id ) and  
+( informix.v_lane.lane_stat_id = informix.v_testing_station.stat_id ) and
+( informix.v_contract.cont_id = :ra_cont_id )   
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 27.01.2020
+
+SELECT v_contract.cont_start_date,   
+v_contract.cont_end_date,   
+v_contract.cont_oper_id,   
+v_contract.cont_stat_id,   
+v_operator.oper_org_name,   
+v_testing_station.stat_name,   
+v_class.class_desc,   
+v_lane.lane_desc  
+FROM v_contract,   
+v_operator,   
+v_testing_station,   
+v_cont_lane,   
+v_class,   
+v_lane  
+WHERE ( v_operator.oper_id = v_contract.cont_oper_id ) and  
+( v_cont_lane.contla_cont_id = v_contract.cont_id ) and  
+( v_class.class_id = v_cont_lane.contla_class_id ) and  
+( v_lane.lane_id = v_cont_lane.contla_lane_id ) and  
+( v_lane.lane_stat_id = v_testing_station.stat_id ) and
+( v_contract.cont_id = :ra_cont_id )   
+
+----------------------------------------------------------------------------	 
+vt_rpdw.pbl -> dw_contract_m
+
+SELECT informix.v_contract.cont_start_date,   
+informix.v_contract.cont_end_date,   
+informix.v_contract.cont_oper_id,   
+informix.v_contract.cont_stat_id,   
+informix.v_operator.oper_org_name,   
+informix.v_testing_station.stat_name,
+informix.v_contract.cont_statloc_id,
+informix.v_operator.oper_org_ind
+FROM informix.v_contract,   
+informix.v_operator,   
+informix.v_testing_station   
+ WHERE ( informix.v_operator.oper_id = informix.v_contract.cont_oper_id ) and  
+( informix.v_contract.cont_stat_id = informix.v_testing_station.stat_id ) and
+( informix.v_contract.cont_id = :ra_cont_id )
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 27.01.2020
+
+SELECT v_contract.cont_start_date,   
+v_contract.cont_end_date,   
+v_contract.cont_oper_id,   
+v_contract.cont_stat_id,   
+v_operator.oper_org_name,   
+v_testing_station.stat_name,
+v_contract.cont_statloc_id,
+v_operator.oper_org_ind
+FROM v_contract,   
+v_operator,   
+v_testing_station   
+ WHERE ( v_operator.oper_id = v_contract.cont_oper_id ) and  
+( v_contract.cont_stat_id = v_testing_station.stat_id ) and
+( v_contract.cont_id = :ra_cont_id )
+
+--------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_contract_m_bk
+
+SELECT informix.v_contract.cont_start_date,   
+informix.v_contract.cont_end_date,   
+informix.v_contract.cont_oper_id,   
+informix.v_contract.cont_stat_id,   
+informix.v_operator.oper_org_name,   
+informix.v_testing_station.stat_name 
+FROM informix.v_contract,   
+informix.v_operator,   
+informix.v_testing_station   
+WHERE ( informix.v_operator.oper_id = informix.v_contract.cont_oper_id ) and  
+( informix.v_contract.cont_stat_id = informix.v_testing_station.stat_id ) and
+( informix.v_contract.cont_id = :ra_cont_id )   
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 27.01.2020
+
+SELECT v_contract.cont_start_date,   
+v_contract.cont_end_date,   
+v_contract.cont_oper_id,   
+v_contract.cont_stat_id,   
+v_operator.oper_org_name,   
+v_testing_station.stat_name 
+FROM v_contract,   
+v_operator,   
+v_testing_station   
+WHERE ( v_operator.oper_id = v_contract.cont_oper_id ) and  
+( v_contract.cont_stat_id = v_testing_station.stat_id ) and
+( v_contract.cont_id = :ra_cont_id )  
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_contract_maltese
+
+SELECT informix.v_contract.cont_start_date,   
+informix.v_contract.cont_end_date,   
+informix.v_contract.cont_oper_id,   
+informix.v_contract.cont_stat_id,   
+informix.v_operator.oper_org_name,   
+informix.v_testing_station.stat_name,   
+informix.v_class.class_desc,   
+informix.v_lane.lane_desc  
+FROM informix.v_contract,   
+informix.v_operator,   
+informix.v_testing_station,   
+informix.v_cont_lane,   
+informix.v_class,   
+informix.v_lane  
+WHERE ( informix.v_operator.oper_id = informix.v_contract.cont_oper_id ) and  
+( informix.v_cont_lane.contla_cont_id = informix.v_contract.cont_id ) and  
+( informix.v_class.class_id = informix.v_cont_lane.contla_class_id ) and  
+( informix.v_lane.lane_id = informix.v_cont_lane.contla_lane_id ) and  
+( informix.v_lane.lane_stat_id = informix.v_testing_station.stat_id ) and
+( informix.v_contract.cont_id = :ra_cont_id )   
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 27.01.2020
+
+SELECT v_contract.cont_start_date,   
+v_contract.cont_end_date,   
+v_contract.cont_oper_id,   
+v_contract.cont_stat_id,   
+v_operator.oper_org_name,   
+v_testing_station.stat_name,   
+v_class.class_desc,   
+v_lane.lane_desc  
+FROM v_contract,   
+v_operator,   
+v_testing_station,   
+v_cont_lane,   
+v_class,   
+v_lane  
+WHERE ( v_operator.oper_id = v_contract.cont_oper_id ) and  
+( v_cont_lane.contla_cont_id = v_contract.cont_id ) and  
+( v_class.class_id = v_cont_lane.contla_class_id ) and  
+( v_lane.lane_id = v_cont_lane.contla_lane_id ) and  
+( v_lane.lane_stat_id = v_testing_station.stat_id ) and
+( v_contract.cont_id = :ra_cont_id )   
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_datefrom_dateto_user
+
+Nema sql upita
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_lic_testers
+
+SELECT DISTINCT 	v_tester.tst_id, 
+v_tester.tst_name,   
+v_tester.tst_surname,   
+v_tester.tst_id_no,   
+v_tester.tst_file_no 
+FROM informix.v_tester,
+informix.v_tester_licence, 
+informix.v_class 
+WHERE (informix.v_tester_licence.tstcl_tst_id = informix.v_tester.tst_id ) AND 
+(informix.v_tester_licence.tstcl_dt_lic_iss <= :ra_date_to ) AND 
+(informix.v_tester_licence.tstcl_dt_lic_term Is Null OR  
+informix.v_tester_licence.tstcl_dt_lic_term > :ra_date_from) AND 
+(informix.v_tester_licence.tstcl_lic_issd = "Y") AND 
+(informix.v_tester_licence.tstcl_class_id IN (:ra_class_id)) AND
+(informix.v_tester.tst_id IN 
+( SELECT 	informix.v_tester_licence.tstcl_tst_id 
+FROM 		informix.v_tester_licence 
+WHERE		(informix.v_tester_licence.tstcl_class_id IN (:ra_class_id)) AND
+(informix.v_tester_licence.tstcl_lic_issd = "Y") AND 
+(informix.v_tester_licence.tstcl_dt_lic_iss <= :ra_date_to ) AND 
+(informix.v_tester_licence.tstcl_dt_lic_term Is Null OR  
+informix.v_tester_licence.tstcl_dt_lic_term > :ra_date_from)
+GROUP BY 	informix.v_tester_licence.tstcl_tst_id 
+HAVING 	count(*) = :ra_no_items ))
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza
+
+SELECT DISTINCT 	v_tester.tst_id, 
+v_tester.tst_name,   
+v_tester.tst_surname,   
+v_tester.tst_id_no,   
+v_tester.tst_file_no 
+FROM v_tester,
+v_tester_licence, 
+v_class 
+WHERE (v_tester_licence.tstcl_tst_id = v_tester.tst_id ) AND 
+(v_tester_licence.tstcl_dt_lic_iss <= :ra_date_to ) AND 
+(v_tester_licence.tstcl_dt_lic_term Is Null OR  
+v_tester_licence.tstcl_dt_lic_term > :ra_date_from) AND 
+(v_tester_licence.tstcl_lic_issd = 'Y') AND 
+(v_tester_licence.tstcl_class_id IN (:ra_class_id)) AND
+(v_tester.tst_id IN 
+( SELECT 	v_tester_licence.tstcl_tst_id 
+FROM 		v_tester_licence 
+WHERE		(v_tester_licence.tstcl_class_id IN (:ra_class_id)) AND
+(v_tester_licence.tstcl_lic_issd = 'Y') AND 
+(v_tester_licence.tstcl_dt_lic_iss <= :ra_date_to ) AND 
+(v_tester_licence.tstcl_dt_lic_term Is Null OR  
+v_tester_licence.tstcl_dt_lic_term > :ra_date_from)
+GROUP BY 	v_tester_licence.tstcl_tst_id 
+HAVING 	count(*) = :ra_no_items ))
+							  
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_operator_detail
+
+SELECT DISTINCT informix.v_operator.oper_id,
+informix.v_operator.oper_org_ind, 
+informix.v_operator.oper_reg_no,
+TRIM(informix.v_operator.oper_file_no) oper_file_no
+FROM informix.v_operator, informix.v_contract
+WHERE	(informix.v_contract.cont_oper_id = informix.v_operator.oper_id) AND
+(informix.v_contract.cont_start_date <= :ra_end_date) AND
+(informix.v_contract.cont_end_date > :ra_start_date) AND
+((informix.v_contract.cont_term_date > :ra_start_date) OR
+(informix.v_contract.cont_term_date IS NULL)) AND
+(informix.v_contract.cont_signed_ind="Y")
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza
+
+SELECT DISTINCT v_operator.oper_id,
+v_operator.oper_org_ind, 
+v_operator.oper_reg_no,
+TRIM(v_operator.oper_file_no) oper_file_no
+FROM v_operator, v_contract
+WHERE	(v_contract.cont_oper_id = v_operator.oper_id) AND
+(v_contract.cont_start_date <= :ra_end_date) AND
+(v_contract.cont_end_date > :ra_start_date) AND
+((v_contract.cont_term_date > :ra_start_date) OR
+(v_contract.cont_term_date IS NULL)) AND
+(v_contract.cont_signed_ind='Y')
+			
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_operator_directors
+
+SELECT informix.v_person.per_name,   
+informix.v_person.per_surname,   
+informix.v_oper_official.oper_off_type_ind,   
+informix.v_person.per_idno  
+FROM informix.v_oper_official,   
+informix.v_person  
+WHERE ( informix.v_person.per_id = informix.v_oper_official.oper_off_per_id ) AND
+( informix.v_oper_official.oper_off_app_id = :ra_app_id )
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 27.01.2020
+
+SELECT v_person.per_name,   
+v_person.per_surname,   
+v_oper_official.oper_off_type_ind,   
+v_person.per_idno  
+FROM v_oper_official,   
+v_person  
+WHERE ( v_person.per_id = v_oper_official.oper_off_per_id ) AND
+( v_oper_official.oper_off_app_id = :ra_app_id )
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_operator_report3
+
+SELECT informix.v_operator.oper_id,
+informix.v_application.app_withdrawn_dt
+FROM informix.v_operator, v_application
+WHERE ( informix.v_application.app_withdrawn_dt >= :ra_date_from ) AND
+( informix.v_application.app_withdrawn_dt <= :ra_date_to ) AND 
+( app_oper_id = oper_id) AND
+( app_withdrawn = "Y")
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_operator.oper_id,
+v_application.app_withdrawn_dt
+FROM v_operator, v_application
+WHERE ( v_application.app_withdrawn_dt >= :ra_date_from ) AND
+( v_application.app_withdrawn_dt <= :ra_date_to ) AND 
+( app_oper_id = oper_id) AND
+( app_withdrawn = 'Y')
+			
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_operator_status_report1
+
+SELECT informix.v_operator.oper_id,
+informix.v_contract.cont_start_date, 
+informix.v_contract.cont_end_date,
+informix.v_contract.cont_term_date 
+FROM informix.v_operator, v_contract
+WHERE ( cont_oper_id = oper_id) AND
+(informix.v_contract.cont_start_date <= :ra_date_to) AND
+(informix.v_contract.cont_end_date > :ra_date_from) AND
+((informix.v_contract.cont_term_date > :ra_date_from) OR
+(informix.v_contract.cont_term_date IS NULL)) AND
+(informix.v_contract.cont_signed_ind="Y")
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_operator.oper_id,
+v_contract.cont_start_date, 
+v_contract.cont_end_date,
+v_contract.cont_term_date 
+FROM v_operator, v_contract
+WHERE ( cont_oper_id = oper_id) AND
+(v_contract.cont_start_date <= :ra_date_to) AND
+(v_contract.cont_end_date > :ra_date_from) AND
+((v_contract.cont_term_date > :ra_date_from) OR
+(v_contract.cont_term_date IS NULL)) AND
+(v_contract.cont_signed_ind='Y')
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_operator_status_report2
+
+SELECT informix.v_operator.oper_id,
+informix.v_application.app_date_accp  
+FROM informix.v_operator, v_application
+WHERE ( informix.v_application.app_date_accp >= :ra_date_from ) AND
+( informix.v_application.app_date_accp <= :ra_date_to OR informix.v_application.app_date_accp is null) AND 
+( app_oper_id = oper_id) AND
+( app_stat_ind = "R")
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_operator.oper_id,
+v_application.app_date_accp  
+FROM v_operator, v_application
+WHERE ( v_application.app_date_accp >= :ra_date_from ) AND
+( v_application.app_date_accp <= :ra_date_to OR v_application.app_date_accp is null) AND 
+( app_oper_id = oper_id) AND
+( app_stat_ind = 'R')
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_operator_status_report4
+
+SELECT informix.v_operator.oper_id,
+informix.v_application.app_date_made
+FROM informix.v_operator, v_application
+WHERE ( informix.v_application.app_date_made >= :ra_date_from ) AND
+( informix.v_application.app_date_made <= :ra_date_to ) AND 
+( app_oper_id = oper_id) AND
+( app_stat_ind = "P")
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_operator.oper_id,
+v_application.app_date_made
+FROM v_operator, v_application
+WHERE ( v_application.app_date_made >= :ra_date_from ) AND
+( v_application.app_date_made <= :ra_date_to ) AND 
+( app_oper_id = oper_id) AND
+( app_stat_ind = 'P')
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_operator_status_report5
+
+SELECT informix.v_operator.oper_id,
+informix.v_application.app_date_made
+FROM informix.v_operator, v_application
+WHERE ( informix.v_application.app_date_made >= :ra_date_from ) AND
+( informix.v_application.app_date_made <= :ra_date_to ) AND 
+( app_oper_id = oper_id) AND
+( app_stat_ind = "A") AND
+( oper_id NOT IN (SELECT cont_oper_id FROM v_contract WHERE
+(informix.v_contract.cont_start_date <= :ra_date_to) AND
+(informix.v_contract.cont_end_date > :ra_date_from) AND
+((informix.v_contract.cont_term_date > :ra_date_from) OR
+(informix.v_contract.cont_term_date IS NULL)) AND
+(informix.v_contract.cont_signed_ind = "Y") ) )
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_operator.oper_id,
+v_application.app_date_made
+FROM v_operator, v_application
+WHERE ( v_application.app_date_made >= :ra_date_from ) AND
+( v_application.app_date_made <= :ra_date_to ) AND 
+( app_oper_id = oper_id) AND
+( app_stat_ind = 'A') AND
+( oper_id NOT IN (SELECT cont_oper_id FROM v_contract WHERE
+(v_contract.cont_start_date <= :ra_date_to) AND
+(v_contract.cont_end_date > :ra_date_from) AND
+((v_contract.cont_term_date > :ra_date_from) OR
+(v_contract.cont_term_date IS NULL)) AND
+(v_contract.cont_signed_ind = 'Y') ) )
+								
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_pay_lane_det 
+
+ SELECT (informix.v_lane_renewal.ren_id) ren_id,
+(informix.v_lane_renewal.ren_start_date) ren_start_date,
+(informix.v_lane_renewal.ren_end_date) ren_end_date,
+(informix.v_lane_renewal.ren_cont_id) ren_cont_id,
+(informix.v_lane.lane_id) ren_lane_id,
+Trim(informix.v_lane.lane_desc) lane_desc
+FROM  informix.v_lane,
+OUTER informix.v_lane_renewal
+  
+WHERE ( informix.v_lane.lane_id = informix.v_lane_renewal.ren_lane_id ) AND
+( Trim(informix.v_lane_renewal.ren_last_ind)="Y") AND
+( Trim(informix.v_lane_renewal.ren_term_ind)="N") AND
+( informix.v_lane.lane_id IN (SELECT informix.v_cont_lane.contla_lane_id
+FROM informix.v_cont_lane
+WHERE (informix.v_cont_lane.contla_cont_id = :al_contract_id) AND
+(Trim(informix.v_cont_lane.contla_term_ind)="N")));
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza OUTER na kraju odraditi
+													
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_sc_detail 
+
+SELECT informix.v_spot_check_type.sc_type_desc,   
+informix.v_spot_check_type.sc_type_id,   
+informix.v_spot_check.sc_id,   
+informix.v_spot_check.sc_lane_id,   
+informix.v_spot_check.sc_remarks,   
+informix.v_spot_check.sc_passed_ind,   
+informix.v_spot_check.sc_date,   
+informix.v_spot_check.sc_sc_type_id,   
+informix.v_spot_check.sc_breach,   
+informix.v_testing_station.stat_id,   
+informix.v_testing_station.stat_name,   
+informix.v_lane.lane_id,   
+informix.v_lane.lane_stat_id
+FROM informix.v_spot_check_type,   
+informix.v_spot_check,   
+informix.v_testing_station,   
+informix.v_lane 
+WHERE ( informix.v_spot_check.sc_sc_type_id = informix.v_spot_check_type.sc_type_id ) and  
+( informix.v_lane.lane_stat_id = informix.v_testing_station.stat_id ) and  
+( informix.v_lane.lane_id = informix.v_spot_check.sc_lane_id ) and
+( informix.v_spot_check.sc_date between :ra_date_from and :ra_date_to ) and
+( informix.v_spot_check_type.sc_type_id = :ra_sc_type_id or :ra_sc_type_id = -1) and 
+( informix.v_testing_station.stat_id = :ra_ts_id  or :ra_ts_id = -1) 
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_spot_check_type.sc_type_desc,   
+v_spot_check_type.sc_type_id,   
+v_spot_check.sc_id,   
+v_spot_check.sc_lane_id,   
+v_spot_check.sc_remarks,   
+v_spot_check.sc_passed_ind,   
+v_spot_check.sc_date,   
+v_spot_check.sc_sc_type_id,   
+v_spot_check.sc_breach,   
+v_testing_station.stat_id,   
+v_testing_station.stat_name,   
+v_lane.lane_id,   
+v_lane.lane_stat_id
+FROM v_spot_check_type,   
+v_spot_check,   
+v_testing_station,   
+v_lane 
+WHERE ( v_spot_check.sc_sc_type_id = v_spot_check_type.sc_type_id ) and  
+( v_lane.lane_stat_id = v_testing_station.stat_id ) and  
+( v_lane.lane_id = v_spot_check.sc_lane_id ) and
+( v_spot_check.sc_date between :ra_date_from and :ra_date_to ) and
+( v_spot_check_type.sc_type_id = :ra_sc_type_id or :ra_sc_type_id = -1) and 
+( v_testing_station.stat_id = :ra_ts_id  or :ra_ts_id = -1) 
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_sc_insp_det_rep 	
+
+SELECT informix.v_insp_spt_chk.insp_id,   
+informix.v_insp_spt_chk.insp_per_id,   
+informix.v_person.per_id,   
+informix.v_person.per_name,   
+informix.v_person.per_surname,   
+informix.v_person.per_idno 
+FROM informix.v_insp_spt_chk, 
+informix.v_person 
+WHERE 	( informix.v_person.per_id = informix.v_insp_spt_chk.insp_per_id ) and  
+( informix.v_insp_spt_chk.insp_sc_id = :ra_sc_id ) 
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_insp_spt_chk.insp_id,   
+v_insp_spt_chk.insp_per_id,   
+v_person.per_id,   
+v_person.per_name,   
+v_person.per_surname,   
+v_person.per_idno 
+FROM v_insp_spt_chk, 
+v_person 
+WHERE 	( v_person.per_id = v_insp_spt_chk.insp_per_id ) and  
+( v_insp_spt_chk.insp_sc_id = :ra_sc_id ) 
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_sc_summary	
+
+SELECT informix.v_spot_check_type.sc_type_desc,   
+informix.v_spot_check.sc_passed_ind passed1,   
+informix.v_spot_check.sc_passed_ind passed2,   
+informix.v_spot_check.sc_breach
+FROM informix.v_spot_check_type,   
+informix.v_spot_check
+WHERE ( informix.v_spot_check.sc_sc_type_id = informix.v_spot_check_type.sc_type_id ) and  
+( informix.v_spot_check.sc_date between :ra_date_from and :ra_date_to ) and
+( informix.v_spot_check_type.sc_type_id = :ra_sc_type_id or :ra_sc_type_id = -1)
+ORDER BY 1 ASC
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_spot_check_type.sc_type_desc,   
+v_spot_check.sc_passed_ind passed1,   
+v_spot_check.sc_passed_ind passed2,   
+v_spot_check.sc_breach
+FROM v_spot_check_type,   
+v_spot_check
+WHERE ( v_spot_check.sc_sc_type_id = v_spot_check_type.sc_type_id ) and  
+( v_spot_check.sc_date between :ra_date_from and :ra_date_to ) and
+( v_spot_check_type.sc_type_id = :ra_sc_type_id or :ra_sc_type_id = -1)
+ORDER BY 1 ASC
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_sc_tot_breaches	
+
+SELECT	count(*) tot_breaches 
+FROM informix.v_spot_check 
+WHERE	( informix.v_spot_check.sc_sc_type_id = :ra_sc_type_id OR :ra_sc_type_id = -1) and 
+( informix.v_spot_check.sc_date between :ra_date_from and :ra_date_to ) and 
+( informix.v_spot_check.sc_passed_ind = "N" ) and
+( informix.v_spot_check.sc_breach = "Y" )
+			
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT	count(*) tot_breaches 
+FROM v_spot_check 
+WHERE	( v_spot_check.sc_sc_type_id = :ra_sc_type_id OR :ra_sc_type_id = -1) and 
+( v_spot_check.sc_date between :ra_date_from and :ra_date_to ) and 
+( v_spot_check.sc_passed_ind = 'N' ) and
+( v_spot_check.sc_breach = 'Y' )
+		
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_sc_tot_failed	
+
+SELECT	count(*) tot_failed 
+FROM		informix.v_spot_check 
+WHERE	( informix.v_spot_check.sc_sc_type_id = :ra_sc_type_id OR :ra_sc_type_id = -1) and 
+( informix.v_spot_check.sc_date between :ra_date_from and :ra_date_to ) and 
+( informix.v_spot_check.sc_passed_ind = "N" ) and
+( informix.v_spot_check.sc_breach = "N" )
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT	count(*) tot_failed 
+FROM v_spot_check 
+WHERE	( v_spot_check.sc_sc_type_id = :ra_sc_type_id OR :ra_sc_type_id = -1) and 
+( v_spot_check.sc_date between :ra_date_from and :ra_date_to ) and 
+( v_spot_check.sc_passed_ind = 'N' ) and
+( v_spot_check.sc_breach = 'N' )
+		
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_sc_tot_passed	
+
+SELECT	count(*) tot_passed 
+FROM informix.v_spot_check 
+WHERE ( informix.v_spot_check.sc_sc_type_id = :ra_sc_type_id OR :ra_sc_type_id = -1) and 
+ ( informix.v_spot_check.sc_date between :ra_date_from and :ra_date_to ) and 
+( informix.v_spot_check.sc_passed_ind = "Y" )
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT	count(*) tot_passed 
+FROM v_spot_check 
+WHERE ( v_spot_check.sc_sc_type_id = :ra_sc_type_id OR :ra_sc_type_id = -1) and 
+ ( v_spot_check.sc_date between :ra_date_from and :ra_date_to ) and 
+( v_spot_check.sc_passed_ind = 'Y' )
+			
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_sel_classes
+
+SELECT informix.v_class.class_desc,   
+informix.v_class.class_id  
+FROM informix.v_class   
+WHERE informix.v_class.class_id In(:al_class_id);
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_class.class_desc,   
+v_class.class_id  
+FROM v_class   
+WHERE v_class.class_id In(:al_class_id);
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_station_contract_detail 
+
+SELECT informix.v_contract.cont_id,   
+informix.v_contract.cont_oper_id,   
+informix.v_contract.cont_stat_id, 
+informix.v_contract.cont_start_date,   
+informix.v_contract.cont_end_date,   
+informix.v_contract.cont_term_ind,   
+informix.v_contract.cont_term_date,   
+informix.v_contract.cont_signed_ind,   
+informix.v_contract.cont_signed_date,
+informix.v_contract.cont_statloc_id,   
+Trim(informix.v_operator.oper_auth_no) oper_auth_no,
+Trim(informix.v_operator.oper_file_no) oper_file_no,   
+Trim(informix.v_operator.oper_reg_no) oper_reg_no,   
+informix.v_operator.oper_org_name,   
+informix.v_operator.oper_org_ind 
+FROM 	informix.v_contract,   
+informix.v_operator,
+informix.v_testing_station 
+WHERE( v_contract.cont_oper_id = v_operator.oper_id ) AND 
+( v_contract.cont_stat_id = v_testing_station.stat_id ) AND 
+( v_testing_station.stat_id = :ra_stat_id ) AND 
+(v_contract.cont_start_date <= :ra_end_date) AND 
+(v_contract.cont_end_date > :ra_start_date) AND 
+((v_contract.cont_term_date > :ra_start_date) OR 
+(v_contract.cont_term_date IS NULL)) AND
+(informix.v_contract.cont_signed_ind="Y")
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_contract.cont_id,   
+v_contract.cont_oper_id,   
+v_contract.cont_stat_id, 
+v_contract.cont_start_date,   
+v_contract.cont_end_date,   
+v_contract.cont_term_ind,   
+v_contract.cont_term_date,   
+v_contract.cont_signed_ind,   
+v_contract.cont_signed_date,
+v_contract.cont_statloc_id,   
+Trim(v_operator.oper_auth_no) oper_auth_no,
+Trim(v_operator.oper_file_no) oper_file_no,   
+Trim(v_operator.oper_reg_no) oper_reg_no,   
+v_operator.oper_org_name,   
+v_operator.oper_org_ind 
+FROM 	v_contract,   
+v_operator,
+v_testing_station 
+WHERE( v_contract.cont_oper_id = v_operator.oper_id ) AND 
+( v_contract.cont_stat_id = v_testing_station.stat_id ) AND 
+( v_testing_station.stat_id = :ra_stat_id ) AND 
+(v_contract.cont_start_date <= :ra_end_date) AND 
+(v_contract.cont_end_date > :ra_start_date) AND 
+((v_contract.cont_term_date > :ra_start_date) OR 
+(v_contract.cont_term_date IS NULL)) AND
+(v_contract.cont_signed_ind='Y')
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_station_lane_detail		
+
+SELECT informix.v_class.class_desc,   
+informix.v_cont_lane.contla_id,   
+informix.v_contract.cont_id,   
+informix.v_cont_lane.contla_class_id,   
+informix.v_cont_lane.contla_lane_id,   
+informix.v_cont_lane.contla_cont_id,   
+informix.v_cont_lane.contla_start_date,   
+informix.v_cont_lane.contla_end_date,   
+(informix.v_cont_lane.contla_term_ind) contla_term_ind,   
+informix.v_lane.lane_id,   
+informix.v_lane.lane_desc,
+informix.v_contract.cont_start_date,
+informix.v_contract.cont_end_date,
+informix.v_contract.cont_term_ind,
+informix.v_contract.cont_term_date
+FROM informix.v_class,   
+informix.v_cont_lane,   
+informix.v_contract,   
+informix.v_lane  
+WHERE ( informix.v_cont_lane.contla_class_id = informix.v_class.class_id ) and  
+( informix.v_contract.cont_id = informix.v_cont_lane.contla_cont_id ) and  
+( informix.v_lane.lane_id = informix.v_cont_lane.contla_lane_id ) and
+( informix.v_contract.cont_id = :ra_cont_id )    
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_class.class_desc,   
+v_cont_lane.contla_id,   
+v_contract.cont_id,   
+v_cont_lane.contla_class_id,   
+v_cont_lane.contla_lane_id,   
+v_cont_lane.contla_cont_id,   
+v_cont_lane.contla_start_date,   
+v_cont_lane.contla_end_date,   
+(v_cont_lane.contla_term_ind) contla_term_ind,   
+v_lane.lane_id,   
+v_lane.lane_desc,
+v_contract.cont_start_date,
+v_contract.cont_end_date,
+v_contract.cont_term_ind,
+v_contract.cont_term_date
+FROM v_class,   
+v_cont_lane,   
+v_contract,   
+v_lane  
+WHERE ( v_cont_lane.contla_class_id = v_class.class_id ) and  
+( v_contract.cont_id = v_cont_lane.contla_cont_id ) and  
+( v_lane.lane_id = v_cont_lane.contla_lane_id ) and
+( v_contract.cont_id = :ra_cont_id ) 
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_station_lanes_tested_summary		
+
+SELECT informix.v_class.class_desc,   
+informix.v_cont_lane.contla_id,   
+informix.v_contract.cont_id,   
+informix.v_cont_lane.contla_class_id,   
+informix.v_cont_lane.contla_lane_id,   
+informix.v_cont_lane.contla_cont_id,   
+informix.v_cont_lane.contla_start_date,   
+informix.v_cont_lane.contla_end_date,   
+(informix.v_cont_lane.contla_term_ind) contla_term_ind,   
+informix.v_lane.lane_id,   
+informix.v_lane.lane_desc,
+informix.v_contract.cont_start_date,
+informix.v_contract.cont_end_date,
+informix.v_contract.cont_term_ind,
+informix.v_contract.cont_term_date
+FROM informix.v_class,   
+informix.v_cont_lane,   
+informix.v_contract,   
+informix.v_lane  
+WHERE ( informix.v_cont_lane.contla_class_id = informix.v_class.class_id ) and  
+( informix.v_contract.cont_id = informix.v_cont_lane.contla_cont_id ) and  
+( informix.v_lane.lane_id = informix.v_cont_lane.contla_lane_id ) and
+( informix.v_contract.cont_id = :ra_cont_id )    
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_class.class_desc,   
+v_cont_lane.contla_id,   
+v_contract.cont_id,   
+v_cont_lane.contla_class_id,   
+v_cont_lane.contla_lane_id,   
+v_cont_lane.contla_cont_id,   
+v_cont_lane.contla_start_date,   
+v_cont_lane.contla_end_date,   
+(v_cont_lane.contla_term_ind) contla_term_ind,   
+v_lane.lane_id,   
+v_lane.lane_desc,
+v_contract.cont_start_date,
+v_contract.cont_end_date,
+v_contract.cont_term_ind,
+v_contract.cont_term_date
+FROM v_class,   
+v_cont_lane,   
+v_contract,   
+v_lane  
+WHERE ( v_cont_lane.contla_class_id = v_class.class_id ) and  
+( v_contract.cont_id = v_cont_lane.contla_cont_id ) and  
+( v_lane.lane_id = v_cont_lane.contla_lane_id ) and
+( v_contract.cont_id = :ra_cont_id )    
+	
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_station_operator_det_report
+
+SELECT informix.v_application.app_id,   
+informix.v_application.app_stat_id,   
+informix.v_application.app_date_made,   
+informix.v_application.app_date_accp,
+informix.v_application.app_no,    
+informix.v_application.app_year, 
+(informix.v_application.app_stat_ind) app_status_ind,
+(informix.v_application.app_withdrawn) app_wdrwn,
+informix.v_application.app_withdrawn_dt, 
+informix.v_testing_station.stat_id,   
+informix.v_application.app_statloc_id,
+informix.v_testing_station.stat_name
+FROM informix.v_application,   
+informix.v_testing_station
+WHERE ( informix.v_testing_station.stat_id = informix.v_application.app_stat_id ) AND
+(informix.v_application.app_oper_id = :ra_oper_id)	  
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_application.app_id,   
+v_application.app_stat_id,   
+v_application.app_date_made,   
+v_application.app_date_accp,
+v_application.app_no,    
+v_application.app_year, 
+(v_application.app_stat_ind) app_status_ind,
+(v_application.app_withdrawn) app_wdrwn,
+v_application.app_withdrawn_dt, 
+v_testing_station.stat_id,   
+v_application.app_statloc_id,
+v_testing_station.stat_name
+FROM v_application,   
+v_testing_station
+WHERE ( v_testing_station.stat_id = v_application.app_stat_id ) AND
+(v_application.app_oper_id = :ra_oper_id)	  
+			
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_station_status_report1	
+
+SELECT DISTINCT informix.v_testing_station.stat_id,
+informix.v_testing_station.stat_name
+FROM informix.v_testing_station, 
+informix.v_contract
+WHERE 	(informix.v_contract.cont_stat_id = informix.v_testing_station.stat_id) AND
+(informix.v_contract.cont_start_date <= :ra_date_to) AND
+(informix.v_contract.cont_end_date > :ra_date_from) AND
+((informix.v_contract.cont_term_date > :ra_date_from) OR
+(informix.v_contract.cont_term_date IS NULL)) AND
+(informix.v_contract.cont_signed_ind="Y")
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT DISTINCT v_testing_station.stat_id,
+v_testing_station.stat_name
+FROM v_testing_station, 
+v_contract
+WHERE 	(v_contract.cont_stat_id = v_testing_station.stat_id) AND
+(v_contract.cont_start_date <= :ra_date_to) AND
+(v_contract.cont_end_date > :ra_date_from) AND
+((v_contract.cont_term_date > :ra_date_from) OR
+(v_contract.cont_term_date IS NULL)) AND
+(v_contract.cont_signed_ind='Y')
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_station_status_report2
+
+SELECT informix.v_testing_station.stat_id,
+informix.v_testing_station.stat_name, 
+informix.v_application.app_date_accp,
+informix.v_rejreas.rejreas_desc  
+FROM informix.v_testing_station, v_application, v_rejreas
+WHERE ( informix.v_application.app_date_accp >= :ra_date_from ) AND
+( informix.v_application.app_date_accp <= :ra_date_to ) AND 
+( app_stat_id = stat_id) AND
+( app_stat_ind = "R") AND
+( rejreas_id = app_rejreas_id )
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_testing_station.stat_id,
+v_testing_station.stat_name, 
+v_application.app_date_accp,
+v_rejreas.rejreas_desc  
+FROM v_testing_station, v_application, v_rejreas
+WHERE ( v_application.app_date_accp >= :ra_date_from ) AND
+( v_application.app_date_accp <= :ra_date_to ) AND 
+( app_stat_id = stat_id) AND
+( app_stat_ind = 'R') AND
+( rejreas_id = app_rejreas_id )
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_station_status_report3
+
+SELECT informix.v_testing_station.stat_id,
+informix.v_testing_station.stat_name, 
+informix.v_application.app_withdrawn_dt
+FROM informix.v_testing_station, v_application
+WHERE ( informix.v_application.app_withdrawn_dt >= :ra_date_from ) AND
+( informix.v_application.app_withdrawn_dt <= :ra_date_to ) AND 
+( app_stat_id = stat_id) AND
+( app_withdrawn = "Y")
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_testing_station.stat_id,
+v_testing_station.stat_name, 
+v_application.app_withdrawn_dt
+FROM v_testing_station, v_application
+WHERE ( v_application.app_withdrawn_dt >= :ra_date_from ) AND
+( v_application.app_withdrawn_dt <= :ra_date_to ) AND 
+( app_stat_id = stat_id) AND
+( app_withdrawn = 'Y')
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_station_status_report4
+
+SELECT informix.v_testing_station.stat_id,
+informix.v_testing_station.stat_name, 
+informix.v_application.app_date_made
+FROM informix.v_testing_station, v_application
+WHERE ( informix.v_application.app_date_made >= :ra_date_from ) AND
+( informix.v_application.app_date_made <= :ra_date_to ) AND 
+( app_stat_id = stat_id) AND
+( app_stat_ind = "P")
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_testing_station.stat_id,
+v_testing_station.stat_name, 
+v_application.app_date_made
+FROM v_testing_station, v_application
+WHERE ( v_application.app_date_made >= :ra_date_from ) AND
+( v_application.app_date_made <= :ra_date_to ) AND 
+( app_stat_id = stat_id) AND
+( app_stat_ind = 'P')
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_station_status_report5	
+			
+SELECT informix.v_testing_station.stat_id,
+informix.v_testing_station.stat_name, 
+informix.v_application.app_date_made
+FROM informix.v_testing_station, v_application
+WHERE ( informix.v_application.app_date_made >= :ra_date_from ) AND
+( informix.v_application.app_date_made <= :ra_date_to ) AND 
+( app_stat_id = stat_id) AND
+NOT ( app_stat_ind = "P") AND
+stat_id NOT IN (select cont_stat_id FROM v_contract
+WHERE cont_signed_ind = "Y" AND
+cont_start_date >= :ra_date_from AND
+cont_start_date <= :ra_date_to);
+						   
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_testing_station.stat_id,
+v_testing_station.stat_name, 
+v_application.app_date_made
+FROM v_testing_station, v_application
+WHERE ( v_application.app_date_made >= :ra_date_from ) AND
+( v_application.app_date_made <= :ra_date_to ) AND 
+( app_stat_id = stat_id) AND
+NOT ( app_stat_ind = 'P') AND
+stat_id NOT IN (select cont_stat_id FROM v_contract
+WHERE cont_signed_ind = 'Y' AND
+cont_start_date >= :ra_date_from AND
+cont_start_date <= :ra_date_to);
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_station_tester_detail
+
+SELECT informix.v_employ_hist.emphis_id,   
+TRIM(informix.v_tester.tst_name) tst_name,   
+TRIM(informix.v_tester.tst_surname) tst_surname,   
+TRIM(informix.v_tester.tst_id_no) tst_id_no,   
+TRIM(informix.v_tester.tst_remarks) tst_remarks, 
+informix.v_testing_station.stat_id  
+FROM informix.v_employ_hist,   
+informix.v_tester,   
+informix.v_testing_station  
+WHERE ( informix.v_tester.tst_id = informix.v_employ_hist.emphis_tst_id ) AND  
+( informix.v_testing_station.stat_id = informix.v_employ_hist.emphis_stat_id ) AND
+( informix.v_testing_station.stat_id = :ra_stat_id ) AND
+( informix.v_employ_hist.emphis_start_dt >= :ra_start_date ) AND
+( informix.v_employ_hist.emphis_end_dt <= :ra_end_date )
+
+//////////////////////////////////////////////////////////////////////////// New sql code 24.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT v_employ_hist.emphis_id,   
+TRIM(v_tester.tst_name) tst_name,   
+TRIM(v_tester.tst_surname) tst_surname,   
+TRIM(v_tester.tst_id_no) tst_id_no,   
+TRIM(v_tester.tst_remarks) tst_remarks, 
+v_testing_station.stat_id  
+FROM v_employ_hist,   
+v_tester,   
+v_testing_station  
+WHERE ( v_tester.tst_id = v_employ_hist.emphis_tst_id ) AND  
+( v_testing_station.stat_id = v_employ_hist.emphis_stat_id ) AND
+( v_testing_station.stat_id = :ra_stat_id ) AND
+( v_employ_hist.emphis_start_dt >= :ra_start_date ) AND
+( v_employ_hist.emphis_end_dt <= :ra_end_date )
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_stationary_sales
+
+SELECT stat_name,v_book_name,vrt_class,book_price,order_date,start_no,
+sale_date,user_id,rec_no
+FROM v_book,v_book_type,v_receipt,v_testing_station
+WHERE v_testing_station.stat_id = v_book.station_no
+AND v_book.book_type = v_book_type.v_book_type_pk 
+AND order_date >= :ra_from 
+AND order_date <= :ra_to 
+AND (receipt_id = rec_id OR :ra_outstanding = "Y") 
+AND (book_type = :ra_type OR :ra_type = 0) 
+AND (vrt_class = :ra_class OR :ra_class = "") 
+AND (user_id = :ra_user OR :ra_user = "") 
+AND (station_no = :ra_station OR :ra_station = 0)
+ORDER BY start_no ASC, v_book_name ASC, 
+vrt_class ASC, order_date ASC, stat_name ASC, rec_no ASC; 
+
+//////////////////////////////////////////////////////////////////////////// New sql code 25.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT stat_name,v_book_name,vrt_class,book_price,order_date,start_no,
+sale_date,user_id,rec_no
+FROM v_book,v_book_type,v_receipt,v_testing_station
+WHERE v_testing_station.stat_id = v_book.station_no
+AND v_book.book_type = v_book_type.v_book_type_pk 
+AND order_date >= :ra_from 
+AND order_date <= :ra_to 
+AND (receipt_id = rec_id OR :ra_outstanding = 'Y') 
+AND (book_type = :ra_type OR :ra_type = 0) 
+AND (vrt_class = :ra_class OR :ra_class = '') 
+AND (user_id = :ra_user OR :ra_user = '') 
+AND (station_no = :ra_station OR :ra_station = 0)
+ORDER BY start_no ASC, v_book_name ASC, 
+vrt_class ASC, order_date ASC, stat_name ASC, rec_no ASC; 
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_test_station_detail
+
+SELECT DISTINCT informix.v_testing_station.stat_id,   
+informix.v_testing_station.stat_name,   
+informix.v_testing_station.stat_cnt_name,   
+informix.v_testing_station.stat_cnt_surname, 
+informix.v_testing_station.stat_auth_no, 
+TRIM(informix.v_testing_station.stat_file_no) cstat_fileno 
+FROM informix.v_testing_station,
+informix.v_contract
+WHERE	( stat_name = :ra_stat_desc OR :ra_stat_desc MATCHES "-1") AND
+( cont_stat_id = stat_id ) AND
+(informix.v_contract.cont_start_date <= :ra_end_date) AND
+(informix.v_contract.cont_end_date > :ra_start_date) AND
+((informix.v_contract.cont_term_date > :ra_start_date) OR
+(informix.v_contract.cont_term_date IS NULL)) AND
+(informix.v_contract.cont_signed_ind="Y")
+
+//////////////////////////////////////////////////////////////////////////// New sql code 25.01.2020 Miljan namestiti posle u aplikaciji kada proradi baza ubacen 28.01.2020
+
+SELECT DISTINCT v_testing_station.stat_id,   
+v_testing_station.stat_name,   
+v_testing_station.stat_cnt_name,   
+v_testing_station.stat_cnt_surname, 
+v_testing_station.stat_auth_no, 
+TRIM(v_testing_station.stat_file_no) cstat_fileno 
+FROM v_testing_station,
+v_contract
+WHERE	( stat_name = :ra_stat_desc OR :ra_stat_desc LIKE '-1') AND
+( cont_stat_id = stat_id ) AND
+(v_contract.cont_start_date <= :ra_end_date) AND
+(v_contract.cont_end_date > :ra_start_date) AND
+((v_contract.cont_term_date > :ra_start_date) OR
+(v_contract.cont_term_date IS NULL)) AND
+(v_contract.cont_signed_ind='Y')
+		
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_test_station_summary2		
+
+SELECT	DISTINCT (informix.v_testing_station.stat_name) station_name, 
+informix.v_testing_station.stat_id, 
+informix.v_town.town, 
+informix.v_country.long_name, 
+informix.v_contract.cont_id, 
+Trim(informix.v_operator.oper_org_name) oper_org_name, 
+Trim(informix.v_operator.oper_org_ind) oper_org_ind, 
+Trim(informix.v_person.per_surname) per_surname, 
+Trim(informix.v_person.per_name) per_name, 
+Trim(informix.v_person.per_idno) per_idno,
+(informix.v_operator.oper_id) oper_id,
+(informix.v_contract.cont_start_date) cont_start 
+FROM informix.v_testing_station, 
+informix.v_contract, 
+informix.v_location,  
+informix.v_town, 
+informix.v_country, 
+informix.v_operator, 
+OUTER informix.v_person 
+WHERE		(v_contract.cont_start_date <= :ra_end_date ) AND 
+(v_contract.cont_end_date > :ra_start_date) AND 
+((v_contract.cont_term_date > :ra_start_date) OR 
+(v_contract.cont_term_date is null )) AND 
+(informix.v_contract.cont_signed_ind="Y") AND
+(v_town.town_id = :ra_town_id OR :ra_town_id = -1 ) AND 
+(v_contract.cont_statloc_id = v_location.loc_id ) AND 
+(v_contract.cont_stat_id = v_testing_station.stat_id ) AND 
+(v_location.loc_town_id = v_town.town_id) AND 
+(v_country.ctry_id = v_town.town_ctry_id) AND 
+(v_contract.cont_oper_id = v_operator.oper_id) AND 
+(v_operator.oper_per_id = v_person.per_id)
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan OUTER na kraju ovo odraditi 
+			
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_tester_his_report
+
+SELECT 	tst_id,
+tst_name, 
+tst_surname, 
+tst_id_no, 
+tst_file_no, 
+stat_name,
+emphis_start_dt,
+emphis_end_dt, 
+class_desc 
+FROM informix.v_testing_station,   
+informix.v_employ_hist, 
+informix.v_tester,
+informix.v_class
+WHERE    ((informix.v_testing_station.stat_name = :ra_stat_desc) OR (:ra_stat_desc = "-1" )) AND 
+(informix.v_testing_station.stat_id = informix.v_employ_hist.emphis_stat_id ) AND 
+(informix.v_tester.tst_id = v_employ_hist.emphis_tst_id ) AND 
+(informix.v_employ_hist.emphis_start_dt <= :ra_date_to) AND 
+((informix.v_employ_hist.emphis_end_dt > :ra_date_from) OR 
+(emphis_end_dt is null)) AND 
+(informix.v_class.class_id = informix.v_employ_hist.emphis_class_id)
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan ubacen 28.01.2020 - na kraju ovo srediti
+
+SELECT 	tst_id,
+tst_name, 
+tst_surname, 
+tst_id_no, 
+tst_file_no, 
+stat_name,
+emphis_start_dt,
+emphis_end_dt, 
+class_desc 
+FROM v_testing_station,   
+v_employ_hist, 
+v_tester,
+v_class
+WHERE    ((v_testing_station.stat_name = :ra_stat_desc) OR (:ra_stat_desc = '-1' )) AND 
+(v_testing_station.stat_id = v_employ_hist.emphis_stat_id ) AND 
+(v_tester.tst_id = v_employ_hist.emphis_tst_id ) AND 
+(v_employ_hist.emphis_start_dt <= :ra_date_to) AND 
+((v_employ_hist.emphis_end_dt > :ra_date_from) OR 
+(emphis_end_dt is null)) AND 
+(v_class.class_id = v_employ_hist.emphis_class_id)
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_tester_stat_dets_rep
+
+SELECT informix.v_employ_hist.emphis_stat_id,   
+informix.v_employ_hist.emphis_tst_id,   
+informix.v_employ_hist.emphis_id,   
+informix.v_employ_hist.emphis_start_dt,   
+informix.v_employ_hist.emphis_end_dt,   
+informix.v_tester.tst_id,   
+informix.v_tester.tst_name,   
+informix.v_tester.tst_surname,   
+informix.v_tester.tst_id_no,   
+informix.v_testing_station.stat_id  
+FROM informix.v_employ_hist,   
+informix.v_tester,   
+informix.v_testing_station  
+WHERE ( informix.v_tester.tst_id = informix.v_employ_hist.emphis_tst_id ) and  
+( informix.v_testing_station.stat_id = informix.v_employ_hist.emphis_stat_id ) and
+( informix.v_testing_station.stat_id = :ra_stat_id )  
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan ubacen 28.01.2020
+
+ SELECT v_employ_hist.emphis_stat_id,   
+v_employ_hist.emphis_tst_id,   
+v_employ_hist.emphis_id,   
+v_employ_hist.emphis_start_dt,   
+v_employ_hist.emphis_end_dt,   
+v_tester.tst_id,   
+v_tester.tst_name,   
+v_tester.tst_surname,   
+v_tester.tst_id_no,   
+v_testing_station.stat_id  
+FROM v_employ_hist,   
+v_tester,   
+v_testing_station  
+WHERE ( v_tester.tst_id = v_employ_hist.emphis_tst_id ) and  
+( v_testing_station.stat_id = v_employ_hist.emphis_stat_id ) and
+( v_testing_station.stat_id = :ra_stat_id )  
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_tester_report_summary
+
+SELECT COUNT(DISTINCT informix.v_tester_licence.tstcl_tst_id) AS testers_no
+FROM informix.v_tester_licence
+WHERE (informix.v_tester_licence.tstcl_dt_lic_iss <=:ra_date_to) AND
+(informix.v_tester_licence.tstcl_lic_issd = "Y") AND
+((informix.v_tester_licence.tstcl_dt_lic_term IS NULL ) OR
+(informix.v_tester_licence.tstcl_dt_lic_term > :ra_date_from)) AND
+((informix.v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) 
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan ubacen 28.01.2020
+
+SELECT COUNT(DISTINCT v_tester_licence.tstcl_tst_id) AS testers_no
+FROM v_tester_licence
+WHERE (v_tester_licence.tstcl_dt_lic_iss <=:ra_date_to) AND
+(v_tester_licence.tstcl_lic_issd = 'Y') AND
+((v_tester_licence.tstcl_dt_lic_term IS NULL ) OR
+(v_tester_licence.tstcl_dt_lic_term > :ra_date_from)) AND
+((v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) 
+		
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_tester_report1
+
+SELECT 	informix.v_tester_licence.tstcl_id,     
+informix.v_tester_licence.tstcl_tst_id,   
+informix.v_tester.tst_name,   
+informix.v_tester.tst_surname,   
+informix.v_tester.tst_id_no,   
+informix.v_tester.tst_id, 
+informix.v_class.class_desc, 
+informix.v_tester.tst_file_no
+FROM informix.v_tester_licence,   
+informix.v_tester,
+informix.v_class 
+WHERE (informix.v_tester_licence.tstcl_dt_lic_iss <=:ra_date_to) AND
+(informix.v_tester_licence.tstcl_lic_issd = "Y") AND
+((informix.v_tester_licence.tstcl_dt_lic_term IS NULL ) OR
+(informix.v_tester_licence.tstcl_dt_lic_term > :ra_date_from)) AND
+((informix.v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) AND
+(informix.v_tester_licence.tstcl_class_id = informix.v_class.class_id) AND
+(informix.v_tester.tst_id = informix.v_tester_licence.tstcl_tst_id)
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan ubacen 28.01.2020
+
+SELECT 	v_tester_licence.tstcl_id,     
+v_tester_licence.tstcl_tst_id,   
+v_tester.tst_name,   
+v_tester.tst_surname,   
+v_tester.tst_id_no,   
+v_tester.tst_id, 
+v_class.class_desc, 
+v_tester.tst_file_no
+FROM v_tester_licence,   
+v_tester,
+v_class 
+WHERE (v_tester_licence.tstcl_dt_lic_iss <=:ra_date_to) AND
+(v_tester_licence.tstcl_lic_issd = 'Y') AND
+((v_tester_licence.tstcl_dt_lic_term IS NULL ) OR
+(v_tester_licence.tstcl_dt_lic_term > :ra_date_from)) AND
+((v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) AND
+(v_tester_licence.tstcl_class_id = v_class.class_id) AND
+(v_tester.tst_id = v_tester_licence.tstcl_tst_id)
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_tester_report2		
+
+SELECT informix.v_tester_licence.tstcl_id,     
+informix.v_tester_licence.tstcl_tst_id,   
+informix.v_tester.tst_name,   
+informix.v_tester.tst_surname,   
+informix.v_tester.tst_file_no, 
+informix.v_tester.tst_id_no,   
+informix.v_tester.tst_id, 
+informix.v_class.class_desc
+FROM informix.v_tester_licence,   
+informix.v_tester,
+informix.v_class
+WHERE (informix.v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(informix.v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND
+(informix.v_tester_licence.tstcl_passed_ind = "N") AND
+(informix.v_tester_licence.tstcl_resitmrk Is not Null) AND
+(informix.v_tester_licence.tstcl_app_accptd = "A") AND
+(informix.v_tester_licence.tstcl_crse_comp = "Y") AND
+(informix.v_tester_licence.tstcl_wdrw_ind = "N") AND
+((informix.v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) AND
+(informix.v_tester_licence.tstcl_tst_id = informix.v_tester.tst_id) AND
+(informix.v_tester_licence.tstcl_class_id = informix.v_class.class_id)
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan ubacen 28.01.2020
+
+SELECT v_tester_licence.tstcl_id,     
+v_tester_licence.tstcl_tst_id,   
+v_tester.tst_name,   
+v_tester.tst_surname,   
+v_tester.tst_file_no, 
+v_tester.tst_id_no,   
+v_tester.tst_id, 
+v_class.class_desc
+FROM v_tester_licence,   
+v_tester,
+v_class
+WHERE (v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND
+(v_tester_licence.tstcl_passed_ind = 'N') AND
+(v_tester_licence.tstcl_resitmrk Is not Null) AND
+(v_tester_licence.tstcl_app_accptd = 'A') AND
+(v_tester_licence.tstcl_crse_comp = 'Y') AND
+(v_tester_licence.tstcl_wdrw_ind = 'N') AND
+((v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) AND
+(v_tester_licence.tstcl_tst_id = v_tester.tst_id) AND
+(v_tester_licence.tstcl_class_id = v_class.class_id)
+			
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_tester_report2_summary	
+
+SELECT count(Distinct informix.v_tester_licence.tstcl_tst_id) AS testers_no
+FROM informix.v_tester_licence   
+WHERE (informix.v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(informix.v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(informix.v_tester_licence.tstcl_passed_ind = "N") AND
+(informix.v_tester_licence.tstcl_resitmrk Is not Null) AND
+(informix.v_tester_licence.tstcl_app_accptd = "A") AND
+(informix.v_tester_licence.tstcl_wdrw_ind = "N") AND
+(informix.v_tester_licence.tstcl_crse_comp = "Y") AND
+((informix.v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1))
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan ubacen 28.01.2020
+
+SELECT count(Distinct v_tester_licence.tstcl_tst_id) AS testers_no
+FROM v_tester_licence   
+WHERE (v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(v_tester_licence.tstcl_passed_ind = 'N') AND
+(v_tester_licence.tstcl_resitmrk Is not Null) AND
+(v_tester_licence.tstcl_app_accptd = 'A') AND
+(v_tester_licence.tstcl_wdrw_ind = 'N') AND
+(v_tester_licence.tstcl_crse_comp = 'Y') AND
+((v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1))
+			
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_tester_report3	
+
+SELECT  informix.v_tester_licence.tstcl_id,     
+informix.v_tester_licence.tstcl_tst_id,   
+informix.v_tester.tst_name,   
+informix.v_tester.tst_surname,   
+informix.v_tester.tst_id_no,   
+informix.v_tester.tst_id, 
+informix.v_tester.tst_file_no, 
+informix.v_class.class_desc
+FROM informix.v_tester_licence,   
+informix.v_tester,
+informix.v_class 
+WHERE 	(informix.v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(informix.v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(informix.v_tester_licence.tstcl_crse_comp = "N") AND
+(informix.v_tester_licence.tstcl_app_accptd = "A") AND
+(informix.v_tester_licence.tstcl_wdrw_ind = "N") AND
+(informix.v_tester_licence.tstcl_sess_id is not null) AND
+((informix.v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) AND
+(informix.v_tester_licence.tstcl_tst_id = informix.v_tester.tst_id) AND
+(informix.v_tester_licence.tstcl_class_id = informix.v_class.class_id)
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan ubacen 28.01.2020
+
+SELECT  v_tester_licence.tstcl_id,     
+v_tester_licence.tstcl_tst_id,   
+v_tester.tst_name,   
+v_tester.tst_surname,   
+v_tester.tst_id_no,   
+v_tester.tst_id, 
+v_tester.tst_file_no, 
+v_class.class_desc
+FROM v_tester_licence,   
+v_tester,
+v_class 
+WHERE 	(v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(v_tester_licence.tstcl_crse_comp = 'N') AND
+(v_tester_licence.tstcl_app_accptd = 'A') AND
+(v_tester_licence.tstcl_wdrw_ind = 'N') AND
+(v_tester_licence.tstcl_sess_id is not null) AND
+((v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) AND
+(v_tester_licence.tstcl_tst_id = v_tester.tst_id) AND
+(v_tester_licence.tstcl_class_id = v_class.class_id)
+			
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_tester_report3_summary	
+
+SELECT count(Distinct informix.v_tester_licence.tstcl_tst_id) AS testers_no
+FROM informix.v_tester_licence  
+WHERE ( informix.v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+( informix.v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(informix.v_tester_licence.tstcl_crse_comp = "N") AND
+(informix.v_tester_licence.tstcl_app_accptd = "A") AND
+(informix.v_tester_licence.tstcl_wdrw_ind = "N") AND
+(informix.v_tester_licence.tstcl_sess_id is not null) AND
+((informix.v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1))
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan ubacen 28.01.2020
+
+SELECT count(Distinct v_tester_licence.tstcl_tst_id) AS testers_no
+FROM v_tester_licence  
+WHERE ( v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+( v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(v_tester_licence.tstcl_crse_comp = 'N') AND
+(v_tester_licence.tstcl_app_accptd = 'A') AND
+(v_tester_licence.tstcl_wdrw_ind = 'N') AND
+(v_tester_licence.tstcl_sess_id is not null) AND
+((v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1))
+
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_tester_report4
+
+SELECT 	informix.v_tester_licence.tstcl_id,     
+informix.v_tester_licence.tstcl_tst_id,   
+informix.v_tester.tst_name,   
+informix.v_tester.tst_surname,   
+informix.v_tester.tst_id_no,   
+informix.v_tester.tst_id, 
+informix.v_class.class_desc,
+informix.v_tester.tst_file_no 
+FROM informix.v_tester_licence,   
+informix.v_tester,
+informix.v_class 
+WHERE (informix.v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(informix.v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(informix.v_tester_licence.tstcl_app_accptd = "A") AND
+(informix.v_tester_licence.tstcl_wdrw_ind = "N") AND
+(informix.v_tester_licence.tstcl_sess_id is null) AND
+(informix.v_tester_licence.tstcl_crse_comp = "N") AND
+((informix.v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) AND
+(informix.v_tester_licence.tstcl_tst_id = informix.v_tester.tst_id) AND
+(informix.v_tester_licence.tstcl_class_id = informix.v_class.class_id)
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan ubacen 28.01.2020
+
+SELECT 	v_tester_licence.tstcl_id,     
+v_tester_licence.tstcl_tst_id,   
+v_tester.tst_name,   
+v_tester.tst_surname,   
+v_tester.tst_id_no,   
+v_tester.tst_id, 
+v_class.class_desc,
+v_tester.tst_file_no 
+FROM v_tester_licence,   
+v_tester,
+v_class 
+WHERE (v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(v_tester_licence.tstcl_app_accptd = 'A') AND
+(v_tester_licence.tstcl_wdrw_ind = 'N') AND
+(v_tester_licence.tstcl_sess_id is null) AND
+(v_tester_licence.tstcl_crse_comp = 'N') AND
+((v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) AND
+(v_tester_licence.tstcl_tst_id = v_tester.tst_id) AND
+(v_tester_licence.tstcl_class_id = v_class.class_id)
+			
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_tester_report4_summary
+
+SELECT count(Distinct informix.v_tester_licence.tstcl_tst_id) AS testers_no
+FROM informix.v_tester_licence   
+WHERE (informix.v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(informix.v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(informix.v_tester_licence.tstcl_app_accptd = "A") AND
+(informix.v_tester_licence.tstcl_sess_id is null) AND
+(informix.v_tester_licence.tstcl_wdrw_ind = "N") AND
+(informix.v_tester_licence.tstcl_crse_comp = "N") AND
+((informix.v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1))
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan ubacen 28.01.2020
+
+SELECT count(Distinct v_tester_licence.tstcl_tst_id) AS testers_no
+FROM v_tester_licence   
+WHERE (v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(v_tester_licence.tstcl_app_accptd = 'A') AND
+(v_tester_licence.tstcl_sess_id is null) AND
+(v_tester_licence.tstcl_wdrw_ind = 'N') AND
+(v_tester_licence.tstcl_crse_comp = 'N') AND
+((v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1))
+		
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_tester_report5
+
+SELECT 	informix.v_tester_licence.tstcl_id,     
+informix.v_tester_licence.tstcl_tst_id,   
+informix.v_tester.tst_name,   
+informix.v_tester.tst_surname,   
+informix.v_tester.tst_id_no,   
+informix.v_tester.tst_id, 
+informix.v_tester.tst_file_no, 
+informix.v_class.class_desc
+FROM  informix.v_tester_licence,   
+informix.v_tester,
+informix.v_class 
+WHERE  	(informix.v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(informix.v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(informix.v_tester_licence.tstcl_app_accptd = "R") AND
+((informix.v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) AND
+(informix.v_tester_licence.tstcl_tst_id = informix.v_tester.tst_id) AND
+(informix.v_tester_licence.tstcl_class_id = informix.v_class.class_id)
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan ubacen 28.01.2020
+
+SELECT 	v_tester_licence.tstcl_id,     
+v_tester_licence.tstcl_tst_id,   
+v_tester.tst_name,   
+v_tester.tst_surname,   
+v_tester.tst_id_no,   
+v_tester.tst_id, 
+v_tester.tst_file_no, 
+v_class.class_desc
+FROM  v_tester_licence,   
+v_tester,
+v_class 
+WHERE  	(v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(v_tester_licence.tstcl_app_accptd = 'R') AND
+((v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) AND
+(v_tester_licence.tstcl_tst_id = v_tester.tst_id) AND
+(v_tester_licence.tstcl_class_id = v_class.class_id)
+			
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_tester_report5_summary
+
+SELECT count(Distinct informix.v_tester_licence.tstcl_tst_id) AS testers_no
+FROM informix.v_tester_licence 
+WHERE ( informix.v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+( informix.v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(informix.v_tester_licence.tstcl_app_accptd = "R") AND
+((informix.v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1))
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan ubacen 28.01.2020
+
+SELECT count(Distinct v_tester_licence.tstcl_tst_id) AS testers_no
+FROM v_tester_licence 
+WHERE ( v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+( v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(v_tester_licence.tstcl_app_accptd = 'R') AND
+((v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1))
+			
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_tester_report6
+
+SELECT 	informix.v_tester_licence.tstcl_id,     
+informix.v_tester_licence.tstcl_tst_id,   
+informix.v_tester.tst_name,   
+informix.v_tester.tst_surname,   
+informix.v_tester.tst_id_no,   
+informix.v_tester.tst_file_no, 
+informix.v_tester.tst_id, 
+informix.v_class.class_desc
+FROM  informix.v_tester_licence,   
+informix.v_tester,
+informix.v_class 
+WHERE 	(informix.v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(informix.v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(informix.v_tester_licence.tstcl_wdrw_ind = "Y") AND
+((informix.v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) AND
+(informix.v_tester_licence.tstcl_tst_id = informix.v_tester.tst_id) AND
+(informix.v_tester_licence.tstcl_class_id = informix.v_class.class_id)
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan
+
+SELECT 	v_tester_licence.tstcl_id,     
+v_tester_licence.tstcl_tst_id,   
+v_tester.tst_name,   
+v_tester.tst_surname,   
+v_tester.tst_id_no,   
+v_tester.tst_file_no, 
+v_tester.tst_id, 
+v_class.class_desc
+FROM  v_tester_licence,   
+v_tester,
+v_class 
+WHERE 	(v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(v_tester_licence.tstcl_wdrw_ind = 'Y') AND
+((v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) AND
+(v_tester_licence.tstcl_tst_id = v_tester.tst_id) AND
+(v_tester_licence.tstcl_class_id = v_class.class_id)
+			
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_tester_report6_summary
+
+SELECT count(informix.v_tester_licence.tstcl_tst_id) AS testers_no
+FROM informix.v_tester_licence  
+WHERE (informix.v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(informix.v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(informix.v_tester_licence.tstcl_wdrw_ind = "Y") AND
+((informix.v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1))
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan
+
+SELECT count(v_tester_licence.tstcl_tst_id) AS testers_no
+FROM v_tester_licence  
+WHERE (v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(v_tester_licence.tstcl_wdrw_ind = 'Y') AND
+((v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1))
+			
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_tester_report7
+
+SELECT 	informix.v_tester_licence.tstcl_id,     
+informix.v_tester_licence.tstcl_tst_id,   
+informix.v_tester.tst_name,   
+informix.v_tester.tst_surname,   
+informix.v_tester.tst_id_no,   
+informix.v_tester.tst_id, 
+informix.v_class.class_desc,
+informix.v_tester.tst_file_no 
+FROM informix.v_tester_licence,   
+informix.v_tester,
+informix.v_class 
+WHERE 	(informix.v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(informix.v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(informix.v_tester_licence.tstcl_app_accptd = "P") AND
+(informix.v_tester_licence.tstcl_wdrw_ind = "N") AND
+((informix.v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) AND
+(informix.v_tester_licence.tstcl_tst_id = informix.v_tester.tst_id) AND
+(informix.v_tester_licence.tstcl_class_id = informix.v_class.class_id)
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan
+
+SELECT 	v_tester_licence.tstcl_id,     
+v_tester_licence.tstcl_tst_id,   
+v_tester.tst_name,   
+v_tester.tst_surname,   
+v_tester.tst_id_no,   
+v_tester.tst_id, 
+v_class.class_desc,
+v_tester.tst_file_no 
+FROM v_tester_licence,   
+v_tester,
+v_class 
+WHERE 	(v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(v_tester_licence.tstcl_app_accptd = 'P') AND
+(v_tester_licence.tstcl_wdrw_ind = 'N') AND
+((v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1)) AND
+(v_tester_licence.tstcl_tst_id = v_tester.tst_id) AND
+(v_tester_licence.tstcl_class_id = v_class.class_id)
+			
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_tester_report7_summary
+
+SELECT count(Distinct informix.v_tester_licence.tstcl_tst_id) AS testers_no
+FROM informix.v_tester_licence  
+WHERE (informix.v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(informix.v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(informix.v_tester_licence.tstcl_app_accptd = "P") AND
+(informix.v_tester_licence.tstcl_wdrw_ind = "N") AND
+((informix.v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1))
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan
+
+SELECT count(Distinct v_tester_licence.tstcl_tst_id) AS testers_no
+FROM v_tester_licence  
+WHERE (v_tester_licence.tstcl_app_dte >= :ra_date_from ) AND
+(v_tester_licence.tstcl_app_dte <= :ra_date_to ) AND 
+(v_tester_licence.tstcl_app_accptd = 'P') AND
+(v_tester_licence.tstcl_wdrw_ind = 'N') AND
+((v_tester_licence.tstcl_class_id = :ra_class_desc) OR (:ra_class_desc = -1))
+			
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_unpad_lanes
+
+SELECT DISTINCT cont_id,
+cont_stat_id,
+cont_oper_id
+FROM v_lane_renewal,
+v_lane,
+v_testing_station,
+v_contract,
+v_cont_lane
+WHERE v_lane_renewal.ren_lane_id = v_lane.lane_id AND 
+v_lane.lane_stat_id = v_testing_station.stat_id AND 
+v_contract.cont_stat_id = v_testing_station.stat_id AND 
+v_cont_lane.contla_cont_id = v_contract.cont_id AND
+v_cont_lane.contla_lane_id = v_lane.lane_id AND
+v_lane_renewal.ren_last_ind="Y" AND 
+v_lane_renewal.ren_term_ind="N" AND 
+v_contract.cont_last_ind="Y" AND 
+v_contract.cont_term_ind="N" AND 
+v_contract.cont_signed_ind="Y" AND
+v_contract.cont_end_date > TODAY AND
+v_cont_lane.contla_term_ind="N" AND 
+v_contract.cont_end_date > v_lane_renewal.ren_end_date AND
+v_lane_renewal.ren_end_date < TODAY ;
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan
+
+SELECT DISTINCT cont_id,
+cont_stat_id,
+cont_oper_id
+FROM v_lane_renewal,
+v_lane,
+v_testing_station,
+v_contract,
+v_cont_lane
+WHERE v_lane_renewal.ren_lane_id = v_lane.lane_id AND 
+v_lane.lane_stat_id = v_testing_station.stat_id AND 
+v_contract.cont_stat_id = v_testing_station.stat_id AND 
+v_cont_lane.contla_cont_id = v_contract.cont_id AND
+v_cont_lane.contla_lane_id = v_lane.lane_id AND
+v_lane_renewal.ren_last_ind='Y' AND 
+v_lane_renewal.ren_term_ind='N' AND 
+v_contract.cont_last_ind='Y' AND 
+v_contract.cont_term_ind='N' AND 
+v_contract.cont_signed_ind="Y" AND
+v_contract.cont_end_date > CONVERT(date, getdate()) AND
+v_cont_lane.contla_term_ind='N' AND 
+v_contract.cont_end_date > v_lane_renewal.ren_end_date AND
+v_lane_renewal.ren_end_date < CONVERT(date, getdate()) ;
+		
+---------------------------------------------------------------------------------------
+vt_rpdw.pbl -> dw_unpad_lanes_det
+
+SELECT informix.v_lane.lane_desc,
+informix.v_lane_renewal.ren_end_date,
+informix.v_lane_renewal.ren_lttr_date
+FROM informix.v_lane_renewal,
+informix.v_lane 
+WHERE v_lane_renewal.ren_cont_id = :an_cont_id AND 
+v_lane_renewal.ren_lane_id = v_lane.lane_id AND 
+v_lane_renewal.ren_end_date < TODAY  AND
+v_lane_renewal.ren_last_ind = 'Y';   
+
+////////////////////////////////////////////////////////////// 25.01.2020 New sql code Miljan
+
+SELECT v_lane.lane_desc,
+v_lane_renewal.ren_end_date,
+v_lane_renewal.ren_lttr_date
+FROM v_lane_renewal,
+v_lane 
+WHERE v_lane_renewal.ren_cont_id = :an_cont_id AND 
+v_lane_renewal.ren_lane_id = v_lane.lane_id AND 
+v_lane_renewal.ren_end_date < CONVERT(date, getdate())  AND
+v_lane_renewal.ren_last_ind = 'Y';   

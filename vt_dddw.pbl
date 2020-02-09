@@ -1,0 +1,472 @@
+vt_dddw.pbl -> dddw_bank 
+
+SELECT informix.v_bank.bank_id,   
+Trim(informix.v_bank.bank_name) bank_name  
+FROM informix.v_bank   
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  4 min
+
+SELECT v_bank.bank_id,   
+Trim(v_bank.bank_name) bank_name  
+FROM v_bank   
+
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
+Update properties 
+
+v_bank 
+
+1.rb - sve, 2rb - bank_id	
+--------------------------------------------------------------------------
+vt_dddw.pbl -> dddw_bank_branch 
+
+SELECT (informix.v_bank_branch.bbr_id) bbr_id,
+(informix.v_bank_branch.bbr_bank_id) bbr_bank_id,  
+Trim(informix.v_bank_branch.bbr_street_name) bbr_street_name,
+Trim(informix.v_town.town) town
+FROM  informix.v_bank_branch,informix.v_town
+WHERE (informix.v_bank_branch.bbr_town_id = informix.v_town.town_id)
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  4 min
+
+SELECT (v_bank_branch.bbr_id) bbr_id,
+(v_bank_branch.bbr_bank_id) bbr_bank_id,  
+Trim(v_bank_branch.bbr_street_name) bbr_street_name,
+Trim(v_town.town) town
+FROM  v_bank_branch,v_town	
+WHERE (v_bank_branch.bbr_town_id = v_town.town_id)
+
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_class
+
+SELECT  informix.v_class.class_id ,
+informix.v_class.class_desc 
+FROM informix.v_class   
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT  v_class.class_id ,
+v_class.class_desc
+FROM v_class    
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
+Update properties 
+
+v_class 
+
+2.rb - sve, 1rb - class_id	
+
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_classes  
+
+SELECT  informix.v_class.class_id ,   
+informix.v_class.class_desc   
+FROM informix.v_class 
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT  v_class.class_id ,
+v_class.class_desc
+FROM  v_class    
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
+Update properties 
+
+v_class 
+
+2.rb - sve, 1rb - class_id	
+
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_course_type   
+
+SELECT informix.v_course_type.crse_type_id,   
+informix.v_course_type.crse_type_name,   
+informix.v_class.class_desc  
+FROM informix.v_course_type,   
+informix.v_class   
+WHERE v_course_type.crse_class_id = v_class.class_id
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT v_course_type.crse_type_id,   
+v_course_type.crse_type_name,   
+v_class.class_desc  
+FROM v_course_type,   
+v_class   
+WHERE v_course_type.crse_class_id = v_class.class_id
+
+	
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_fault_type 
+
+SELECT informix.v_fault_type.ftype_desc,   
+informix.v_fault_type.ftype_id  
+FROM informix.v_fault_type     
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT v_fault_type.ftype_desc,   
+v_fault_type.ftype_id  
+FROM v_fault_type   
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
+Update properties 
+
+v_fault_type 
+
+2.rb - sve, 1rb - ftype_id	
+	
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_fault_types
+
+SELECT  informix.v_fault_type.ftype_id ,
+informix.v_fault_type.ftype_desc
+FROM informix.v_fault_type  
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT  v_fault_type.ftype_id ,
+v_fault_type.ftype_desc
+FROM v_fault_type    
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
+Update properties 
+
+v_fault_type 
+
+2.rb - sve, 1rb - ftype_id	
+
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_lane  
+
+SELECT  informix.v_lane.lane_id ,
+informix.v_lane.lane_desc
+FROM informix.v_lane    
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT  v_lane.lane_id ,
+v_lane.lane_desc
+FROM v_lane   
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
+Update properties 
+
+v_lane 
+
+2.rb - sve, 1rb - lane_id	 
+  
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_operator  
+
+SELECT informix.v_operator.oper_id,   
+informix.v_operator.oper_org_name,
+informix.v_operator.oper_per_id,  
+informix.v_operator.oper_file_no,   
+informix.v_person.per_surname,   
+informix.v_person.per_name
+FROM informix.v_operator,   
+OUTER informix.v_person  
+WHERE ( informix.v_person.per_id = informix.v_operator.oper_per_id )  AND
+( informix.v_operator.oper_id In (Select Distinct informix.v_contract.cont_oper_id
+FROM v_contract 
+WHERE informix.v_contract.cont_signed_ind ="Y"))
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT v_operator.oper_id,   
+v_operator.oper_org_name,
+v_operator.oper_per_id,  
+v_operator.oper_file_no,   
+v_person.per_surname,   
+v_person.per_name
+FROM v_operator,   v_person  
+WHERE ( v_person.per_id = v_operator.oper_per_id )  AND
+( v_operator.oper_id In (Select Distinct v_contract.cont_oper_id
+FROM v_contract 
+WHERE v_contract.cont_signed_ind ='Y'))
+												 
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_pend_reas
+
+SELECT  informix.v_pending_reas.pending_id ,
+informix.v_pending_reas.pending_reason
+FROM informix.v_pending_reas  
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT  v_pending_reas.pending_id ,
+v_pending_reas.pending_reason
+FROM v_pending_reas    
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
+Update properties 
+
+v_pending_reas 
+
+2.rb - sve, 1rb - pending_id
+
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_person_details  
+
+SELECT  informix.v_person.per_id ,
+informix.v_person.per_name ,
+informix.v_person.per_surname ,
+informix.v_person.per_idno
+FROM informix.v_person  
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT  v_person.per_id ,
+ v_person.per_name ,  
+ v_person.per_surname , 
+ v_person.per_idno   
+ FROM v_person    
+ 
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
+Update properties 
+
+v_person 
+
+2.rb - sve, 1rb - rep_idno
+
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_person_details_signatory  
+
+SELECT informix.v_person.per_id,   
+informix.v_person.per_name,   
+informix.v_person.per_surname,   
+informix.v_person.per_idno  
+FROM informix.v_person   
+WHERE ( v_person.per_id NOT IN (SELECT cont_off_per_id FROM v_cont_official WHERE cont_off_cont_id = :ra_cont_id AND cont_off_type_ind = 'S') )
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT v_person.per_id,   
+v_person.per_name,   
+v_person.per_surname,   
+v_person.per_idno  
+FROM v_person   
+WHERE ( v_person.per_id NOT IN (SELECT cont_off_per_id FROM v_cont_official WHERE cont_off_cont_id = :ra_cont_id AND cont_off_type_ind = 'S') )
+
+Update properties isti kao gore
+	
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_provider  
+
+SELECT informix.v_provider.provider_name,   
+informix.v_provider.provider_id  
+FROM informix.v_provider   
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT v_provider.provider_name,   
+v_provider.provider_id  
+FROM v_provider   
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
+Update properties 
+
+v_provider 
+
+2.rb - sve, 1rb - provider_id
+
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_rejreas
+
+SELECT v_rejreas.rejreas_desc,   
+v_rejreas.rejreas_id  
+FROM v_rejreas 
+
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_spot_check_type
+
+SELECT informix.v_spot_check_type.sc_type_id,   
+informix.v_spot_check_type.sc_type_desc  
+FROM informix.v_spot_check_type   
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT v_spot_check_type.sc_type_id,   
+v_spot_check_type.sc_type_desc  
+FROM v_spot_check_type   
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
+Update properties 
+
+v_spot_check_type 
+
+2.rb - sve, 1rb - sc_type_id
+
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_st_class
+
+SELECT informix.v_st_class.st_class_id,   
+informix.v_st_class.st_class_desc  
+FROM informix.v_st_class   
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT v_st_class.st_class_id,   
+v_st_class.st_class_desc  
+FROM v_st_class   
+	
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_station
+
+SELECT  informix.v_testing_station.stat_id ,
+informix.v_testing_station.stat_name
+FROM informix.v_testing_station    
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT  v_testing_station.stat_id ,
+v_testing_station.stat_name
+FROM v_testing_station    
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
+Update properties 
+
+v_testing_station 
+
+2.rb - sve, 1rb - stat_id
+  
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_station_cont
+
+SELECT informix.v_testing_station.stat_id, 
+informix.v_testing_station.stat_name 
+FROM informix.v_testing_station 
+WHERE informix.v_testing_station.stat_id IN (SELECT DISTINCT v_contract.cont_stat_id 
+FROM v_contract 
+WHERE v_contract.cont_signed_ind = "Y")
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT v_testing_station.stat_id, 
+v_testing_station.stat_name 
+FROM v_testing_station 
+WHERE v_testing_station.stat_id IN (SELECT DISTINCT v_contract.cont_stat_id 
+FROM v_contract 
+WHERE v_contract.cont_signed_ind = 'Y')
+															  
+		Update kao gore 														 
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_tester
+
+SELECT Distinct tst_id,
+tst_name,
+tst_surname,
+tst_lic_no 
+FROM informix.v_tester,   
+informix.v_tester_licence  
+WHERE ( informix.v_tester_licence.tstcl_tst_id = informix.v_tester.tst_id ) AND
+( informix.v_tester_licence.tstcl_lic_issd = "Y"); 
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT Distinct tst_id,
+tst_name,
+tst_surname,
+tst_lic_no 
+FROM v_tester,   
+v_tester_licence  
+WHERE ( v_tester_licence.tstcl_tst_id = v_tester.tst_id ) AND
+( v_tester_licence.tstcl_lic_issd = 'Y');  
+
+
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_town
+
+SELECT  informix.v_country.ctry_id ,
+informix.v_country.long_name ,
+informix.v_town.town_id ,
+informix.v_town.town_ctry_id ,
+informix.v_town.town
+FROM informix.v_country ,
+informix.v_town
+WHERE ( informix.v_town.town_ctry_id = informix.v_country.ctry_id )  
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min 
+
+SELECT  v_country.ctry_id ,
+v_country.long_name ,
+v_town.town_id ,
+v_town.town_ctry_id ,
+v_town.town
+FROM v_country ,
+v_town WHERE ( v_town.town_ctry_id = v_country.ctry_id )   	
+
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_town_ctry
+
+SELECT informix.v_country.ctry_id,   
+informix.v_country.long_name,   
+informix.v_town.town_id,   
+informix.v_town.town,   
+informix.v_town.town_ctry_id  
+FROM informix.v_country,   
+informix.v_town  
+WHERE ( informix.v_town.town_ctry_id = informix.v_country.ctry_id )    
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT v_country.ctry_id,   
+v_country.long_name,   
+v_town.town_id,   
+v_town.town,   
+v_town.town_ctry_id  
+FROM  v_country,   
+v_town  
+WHERE (  v_town.town_ctry_id = v_country.ctry_id )    
+
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_tstrejreas 
+
+SELECT informix.v_tst_rejreas.tst_rejreas_id,   
+informix.v_tst_rejreas.tst_rejreas_desc  
+FROM informix.v_tst_rejreas   
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT v_tst_rejreas.tst_rejreas_id,   
+v_tst_rejreas.tst_rejreas_desc  
+FROM v_tst_rejreas  
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
+Update properties 
+
+v_tst_rejreas 
+
+2.rb - sve, 1rb - tst_rejreas_id
+
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_users 
+  
+SELECT DISTINCT informix.v_receipt.rec_create_user  
+FROM informix.v_receipt   
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+SELECT DISTINCT v_receipt.rec_create_user  
+FROM v_receipt   
+
+--------------------------------------------------------------------------	
+vt_dddw.pbl -> dddw_users_list 															  
+
+SELECT  informix.users.user_id ,
+informix.users.first_name ,
+informix.users.last_name
+FROM informix.users    
+
+/////////////////////////////////////////////////////////////////////////////////////// New SQL Code  15.01.2020  3 min
+
+  SELECT  users.user_id ,
+  users.first_name ,
+  users.last_name
+  ........
+  .FROM users    
+
+
+
+ 

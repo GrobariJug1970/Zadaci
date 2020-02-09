@@ -1,0 +1,362 @@
+vt_rfwin.pbl -> w_application_pend_doc_add -> cb_add.clicked
+
+Select Count(*) 
+Into :ll_count
+From v_pending_docs
+Where :ls_param1=Trim(pendoc_desc);
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_application_pend_docs -> ue_insert 
+
+SELECT app_id,oper_org_ind
+FROM v_application,v_operator
+WHERE app_stat_ind = "P" AND 
+app_withdrawn = "N" AND
+app_oper_id = oper_id;
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubaceno 27.01.2020
+
+SELECT app_id,oper_org_ind
+FROM v_application,v_operator
+WHERE app_stat_ind = 'P' AND 
+app_withdrawn = 'N' AND
+app_oper_id = oper_id;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_application_pend_docs-> ue_insert()  line 0009 
+
+INSERT INTO v_pending_docs (pendoc_id, pendoc_desc,pendoc_show_ind,pendoc_comp_ind,pendoc_par_ind,pendoc_per_ind)
+VALUES (0,:as_arg1,:as_arg2,:as_arg3,:as_arg4,:as_arg5) ;
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubaceno 27.01.2020
+
+INSERT INTO v_pending_docs ( pendoc_desc,pendoc_show_ind,pendoc_comp_ind,pendoc_par_ind,pendoc_per_ind)
+VALUES (:as_arg1,:as_arg2,:as_arg3,:as_arg4,:as_arg5) ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_application_pend_docs_add -> ue_insert()   line  0050
+
+INSERT INTO v_app_pend_doc
+(app_doc_app_id, app_doc_pendoc_id, app_doc_ind)
+VALUES ( :ll_app_id, :ll_pendoc_id, "N") ;
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubaceno 27.01.2020
+
+INSERT INTO v_app_pend_doc
+(app_doc_app_id, app_doc_pendoc_id, app_doc_ind)
+VALUES ( :ll_app_id, :ll_pendoc_id, 'N') ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_application_pending_process -> ue_insert_row()   line  0007
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_process_pending
+WHERE process_pend_desc = :as_arg1 ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_application_pending_process -> ue_insert_row()   line  0040
+
+SELECT app_id
+FROM v_application
+WHERE app_stat_ind = "P" AND
+app_withdrawn = "N";
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubaceno 27.01.2020
+
+SELECT app_id
+FROM v_application
+WHERE app_stat_ind = 'P' AND
+app_withdrawn = 'N';
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_application_pending_process -> dw_details.ue_update()   line  0031
+
+SELECT app_id
+FROM v_application
+WHERE app_stat_ind = "P" AND
+app_withdrawn = "N" ;
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubaceno 27.01.2020
+
+SELECT app_id
+FROM v_application
+WHERE app_stat_ind = 'P' AND
+app_withdrawn = 'N' ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_application_pending_process -> dw_details.ue_update()   line  0087
+
+DELETE FROM v_app_process
+WHERE (app_proc_pend_id = :ll_process_pend_id) AND
+(app_proc_app_id IN (SELECT app_id FROM v_application WHERE app_stat_ind = "P"));
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubaceno 27.01.2020
+
+DELETE FROM v_app_process
+WHERE (app_proc_pend_id = :ll_process_pend_id) AND
+(app_proc_app_id IN (SELECT app_id FROM v_application WHERE app_stat_ind = 'P'));
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_application_pending_process -> ue_insert_row()   line  0024
+
+INSERT INTO v_process_pending (process_pend_id, process_pend_desc,process_pend_ind)
+VALUES (0,:as_arg1,:as_arg2) ;
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubaceno 27.01.2020
+
+INSERT INTO v_process_pending ( process_pend_desc,process_pend_ind)
+VALUES (:as_arg1,:as_arg2) ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_application_pending_process -> ue_insert_row()   line  0064
+
+INSERT INTO v_app_process
+(app_proc_app_id, app_proc_pend_id, app_proc_ind)
+VALUES ( :ll_app_id, :ll_pendproc_id, "N") ;
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubaceno 27.01.2020
+
+INSERT INTO v_app_process
+(app_proc_app_id, app_proc_pend_id, app_proc_ind)
+VALUES ( :ll_app_id, :ll_pendproc_id, 'N') ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_application_pending_process -> dw_details.ue_update()   line  0059
+
+INSERT INTO v_app_process
+(app_proc_app_id, app_proc_pend_id, app_proc_ind)
+VALUES ( :ll_app_id, :ll_process_pend_id, "N") ;
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubaceno 27.01.2020
+
+INSERT INTO v_app_process
+(app_proc_app_id, app_proc_pend_id, app_proc_ind)
+VALUES ( :ll_app_id, :ll_process_pend_id, 'N') ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_bank_branch  -> ue_insert_row()
+
+SELECT COUNT(*)
+INTO	:li_count
+FROM v_bank_branch
+WHERE bbr_bank_id = :ll_bbr_bank_id AND
+bbr_town_id = :ll_bbr_town_id AND bbr_street_name = :as_arg3 ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_bank_branch  -> ue_insert_row()
+
+Insert into v_bank_branch (bbr_id,bbr_bank_id,bbr_town_id,bbr_street_name)
+Values (0,:ll_bbr_bank_id,:ll_bbr_town_id,:as_arg3);
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubaceno 27.01.2020
+
+Insert into v_bank_branch (bbr_bank_id,bbr_town_id,bbr_street_name)
+Values (:ll_bbr_bank_id,:ll_bbr_town_id,:as_arg3);
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_bank_branch_backup  -> ue_insert_row()
+
+SELECT COUNT(*)
+INTO	:li_count
+FROM v_bank_branch
+WHERE bbr_bank_id = :ll_bbr_bank_id AND
+bbr_town_id = :ll_bbr_town_id AND bbr_street_name = :as_arg3 ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_contract_pend_reason_add -> cb_add.clicked()
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_pending_reas
+WHERE pending_reason = :ls_param1 ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_contract_pending_process-> ue_insert_row()   line 0023
+
+SELECT cont_id
+FROM v_contract
+WHERE cont_signed_ind = "N" AND
+cont_term_ind = "N" ;
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubacen 27.01.2020
+
+SELECT cont_id
+FROM v_contract
+WHERE cont_signed_ind = 'N' AND
+cont_term_ind = 'N' ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_contract_pending_process-> dw_details.ue_update()   line 0030
+
+SELECT cont_id
+FROM v_contract
+WHERE cont_signed_ind = "N" AND
+cont_term_ind = "N" ;
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubacen 27.01.2020
+
+SELECT cont_id
+FROM v_contract
+WHERE cont_signed_ind = 'N' AND
+cont_term_ind = 'N' ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_contract_pending_process-> dw_details.ue_update()   line 0087
+
+DELETE FROM v_cont_pen_reas
+WHERE (cp_pending_id = :ll_pending_id) AND
+(cp_cont_id IN (SELECT cont_id FROM v_contract WHERE cont_signed_ind = "N" AND
+cont_term_ind = "N"));
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubacen 27.01.2020
+
+DELETE FROM v_cont_pen_reas
+WHERE (cp_pending_id = :ll_pending_id) AND
+(cp_cont_id IN (SELECT cont_id FROM v_contract WHERE cont_signed_ind = 'N' AND
+cont_term_ind = 'N'));
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_contract_pending_process-> ue_insert_row()   line 0007
+
+INSERT INTO v_pending_reas (pending_reason,pr_active_ind)
+VALUES (:as_arg1,:as_arg2) ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_contract_pending_process-> ue_insert_row()   line 0052
+
+INSERT INTO v_cont_pen_reas
+(cp_cont_id, cp_pending_id, cp_handed_ind)
+VALUES ( :ll_cont_id, :ll_pendreas_id, "N") ;
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubacen 27.01.2020
+
+INSERT INTO v_cont_pen_reas
+(cp_cont_id, cp_pending_id, cp_handed_ind)
+VALUES ( :ll_cont_id, :ll_pendreas_id, 'N') ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_contract_pending_process-> dw_details.ue_update()   line 0058
+
+INSERT INTO v_cont_pen_reas
+(cp_cont_id, cp_pending_id, cp_handed_ind)
+VALUES ( :ll_cont_id, :ll_pending_id, "N") ;
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubacen 27.01.2020
+
+INSERT INTO v_cont_pen_reas
+(cp_cont_id, cp_pending_id, cp_handed_ind)
+VALUES ( :ll_cont_id, :ll_pending_id, 'N') ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_course-> dw_list.ue_update_child()  
+
+Select Count(*)
+Into :ll_count
+From v_session,
+v_tester_licence
+Where v_session.sess_crse_id=:ll_primary_id AND
+v_tester_licence.tstcl_sess_id=v_session.sess_id;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_course-> ue_insert_row()
+
+Insert Into v_course (crse_id, crse_crse_type_id, crse_provider_id)
+Values(0,:ll_ctype_key,:ll_provider_key);
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubacen 27.01.2020
+
+Insert Into v_course ( crse_crse_type_id, crse_provider_id)
+Values(:ll_ctype_key,:ll_provider_key);
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_course-> cb_add.clicked()
+
+Select count(*)
+Into :ll_count
+From v_course
+Where crse_provider_id = :ls_param2 AND
+crse_crse_type_id = :ls_param1;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_course_provider -> ue_delete_row ()   
+
+ls_sql = "SELECT COUNT(*) FROM " + is_table_name + &
+" WHERE " + is_tprimary_keyname + " = " + String(ll_primary_id) 
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_course_provider -> ue_clear_address ()
+
+ls_sql = "SELECT COUNT(*) FROM " + is_table_name + &
+" WHERE " + is_tprimary_keyname + " = " + String(ll_primary_id) 
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_course_provider -> ue_insert_row ()
+
+Insert Into v_provider (provider_id, provider_name)
+Values(0,:as_arg1);
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubacen 27.01.2020
+
+Insert Into v_provider ( provider_name)
+Values(:as_arg1);
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_course_provider_add -> cb_add.clicked ()
+
+SELECT COUNT(*) 
+INTO :ll_count
+FROM v_provider
+WHERE provider_name = :ls_param1;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_course_type -> ue_insert_row ()     line 0017
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_course_type
+WHERE crse_type_name = :as_arg1 AND crse_class_id = :ll_crse_class_id ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_course_type -> dw_list.ue_update_child()     line 0023
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_course
+WHERE crse_crse_type_id = :ll_primary_id ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_course_type -> dw_list.ue_delete_row()     line 0017
+
+SELECT COUNT(*) 
+INTO :li_count
+FROM v_course_type
+WHERE crse_type_id = :ll_primary_id ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_course_type -> ue_insert_row()     
+
+INSERT INTO v_course_type
+(crse_type_name, crse_class_id)
+VALUES (:as_arg1, :ll_crse_class_id) ;
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_sessions -> open() 
+
+SELECT v_course_type.crse_type_name, v_provider.provider_name
+INTO :ls_course_name, :ls_provider
+FROM v_course,v_course_type,v_provider
+WHERE (v_course.crse_id = :il_crse_id) AND (v_course.crse_crse_type_id = v_course_type.crse_type_id) AND
+(v_course.crse_provider_id = v_provider.provider_id);
+
+-----------------------------------------------------------------------------
+vt_rfwin.pbl -> w_sessions -> ue_insert_row() 
+
+Insert Into v_session (sess_id, sess_crse_id, sess_start_date, sess_end_date)
+Values(0,:il_crse_id,:ld_start_date, :ld_end_date);
+
+///////////////////////////////////////////////////////////////////////////////////////////// New sql Miljan 24.01.2020 ubaciti kada proradi baza ubacen 27.01.2020
+
+Insert Into v_session ( sess_crse_id, sess_start_date, sess_end_date)
+Values(:il_crse_id,:ld_start_date, :ld_end_date);
+

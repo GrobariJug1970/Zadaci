@@ -1,0 +1,2498 @@
+vt_audit.pbl -> dw_delete_app_lane 
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "D" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_app_lane"
+			
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020   10 min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'D' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_app_lane'
+
+-------------------------------------------------------------------------------------------------------------
+vt_audit.pbl -> dw_delete_application
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "D" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_application" 
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020   10min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'D' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_application'
+
+-------------------------------------------------------------------------------------------------------------
+vt_audit.pbl -> dw_delete_bnkren
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "D" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_renewal"
+			
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    10 min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'D' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_renewal'
+			
+-------------------------------------------------------------------------------------------------------------
+vt_audit.pbl -> dw_delete_bnksta
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "D" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_stat_guarantee"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    10 min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'D' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_stat_guarantee'
+		
+-------------------------------------------------------------------------------------------------------------
+vt_audit.pbl -> dw_delete_breaches
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "D" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_breaches"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    5 min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'D' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_breaches'
+		
+-------------------------------------------------------------------------------------------------------------
+vt_audit.pbl -> dw_delete_class
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "D" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_class"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    5 min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'D' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_class'
+		
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_delete_emphist
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "D" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_employ_hist"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'D' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_employ_hist'
+		
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_delete_faults
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "D" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_faults"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'D' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_faults'
+			
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_delete_guar
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "D" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_bank_guarantee"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'D' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_bank_guarantee'
+	
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_delete_lane
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "D" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_lane"
+			
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'D' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_lane'
+			
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_delete_oper_off
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "D" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_oper_official"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'D' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_oper_official'
+		
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_delete_operator
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "D" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_operator"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'D' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_operator'
+			
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_delete_spcheck
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "D" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_spot_check"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'D' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_spot_check'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_delete_station
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "D" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_testing_station"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'D' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_testing_station'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_delete_test
+
+SELECT informix.v_audit.old_detail,   
+informix.v_audit.key_1,
+informix.v_audit.key_2,
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "D" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_test"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min
+
+SELECT v_audit.old_detail,   
+v_audit.key_1,
+v_audit.key_2,
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'D' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_test'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_delete_tester
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "D" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_tester"
+			
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'D' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_tester'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_delete_tester_lic
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "D" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_tester_licence"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'D' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_tester_licence'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_app_lane 
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_app_lane"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_app_lane'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_application
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_application"
+			
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+ 
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_application'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_bnkrensta
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_stat_guarantee"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_stat_guarantee'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_breaches
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_breaches"
+			
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_breaches'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_class
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_class"
+			
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_class'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_conterm
+			
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_cont_term"
+			
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_cont_term'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_contlane			
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_cont_lane"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_cont_lane'
+	
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_contract
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_contract"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_contract'
+		
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_emphist
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_employ_hist"
+			
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_employ_hist'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_faults
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_faults"
+			
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_faults'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_guar
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_bank_guarantee"
+			
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_bank_guarantee'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_guar_ren 
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_renewal"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_renewal'
+		
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_lane
+			
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_lane"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_lane'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_lrenewal
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_lane_renewal"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_lane_renewal'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_oper_off
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_oper_official"
+			
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_oper_official'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_operator
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_operator"
+			
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_operator'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_receipt
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_receipt"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_receipt'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_spcheck
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_spot_check"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_spot_check'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_station 
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_testing_station"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_testing_station'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_tester 
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_tester"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_tester'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_insert_tester_lic
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,        
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "I" AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = "v_tester_licence"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,        
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'I' AND
+v_audit.time_stamp >= :ra_date_from AND
+v_audit.time_stamp <= :ra_date_to AND
+v_audit.tab_name = 'v_tester_licence'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_app_lane
+			
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_app_lane"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_app_lane'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_app_pend
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_app_pend_doc"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   	
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_app_pend_doc'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_app_proc
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_app_process"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_app_process'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_application
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_application"
+Order by informix.v_audit.time_stamp desc,   
+informix.v_audit.col_name   
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_application'
+Order by v_audit.time_stamp desc,   
+v_audit.col_name   
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_bnkren
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_renewal"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_renewal'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_bnksta
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_stat_guarantee"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3  min
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_stat_guarantee'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_breaches
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_breaches"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min 
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_breaches'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_classes
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_class"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min 
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_class'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_conterm
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_cont_term"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min 
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_cont_term'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_contlane
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_cont_lane"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min 
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_cont_lane'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_contract
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_contract"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min 
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_contract'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_emphist
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_employ_hist"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min 
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_employ_hist'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_fault
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_faults"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min 
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_faults'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_guar
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_bank_guarantee"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min 
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_bank_guarantee'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_lane
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_lane"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min 
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_lane'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_lrenewal
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_lane_renewal"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min 
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_lane_renewal'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_operators 
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_operator"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min 
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_operator'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_receipt
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_receipt"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min 
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_receipt'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_spcheck
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_spot_check"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min 
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_testing_station'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_station
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_testing_station"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min 
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_testing_station'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_tester
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_tester"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min 
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_tester'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> dw_update_tester_lic
+
+SELECT informix.v_audit.col_name,   
+informix.v_audit.old_detail,   
+informix.v_audit.key_1,   
+informix.v_audit.time_stamp,   
+informix.v_audit.user_id,   
+informix.v_audit.new_detail,   
+informix.v_audit.tab_name  
+FROM informix.v_audit   
+WHERE v_audit.trans_type = "U" AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = "v_tester_licence"
+
+/////////////////////////////////////////////////////////////////////////////////////// New sql code 14.01.2020    3 min 
+
+SELECT v_audit.col_name,   
+v_audit.old_detail,   
+v_audit.key_1,   
+v_audit.time_stamp,   
+v_audit.user_id,   
+v_audit.new_detail,   
+v_audit.tab_name  
+FROM v_audit   
+WHERE v_audit.trans_type = 'U' AND
+v_audit.time_stamp > :ra_date_from AND
+v_audit.time_stamp < :ra_date_to AND
+v_audit.tab_name = 'v_tester_licence'
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_bank_find
+
+SELECT Trim(bbr_street_name),
+		 Trim(town),
+		 Trim(bank_name),
+		 Trim(long_name)
+		 
+INTO 	:ls_street,
+		:ls_town,
+		:ls_bank,
+		:ls_country
+		
+		
+FROM  v_bank_branch,
+		v_bank,
+		v_town,
+		v_country
+		
+WHERE bbr_id = :al_bank_id AND
+		bbr_bank_id =bank_id AND
+		bbr_town_id=town_id AND
+		town_ctry_id=ctry_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_bnkrendel_quarfind 
+
+SELECT Trim(oper_file_no),
+		 Trim(oper_org_name),
+		 Trim(oper_org_ind),
+		 Trim(per_name),
+		 Trim(per_surname),
+		 Trim(bnkguar_no),
+		 Trim(bank_name)
+INTO 	:ls_oper_file_no,
+		:ls_oper_org_name,
+		:ls_oper_org_ind,
+		:ls_name,
+		:ls_surname,
+		:ls_bnkguar_no,
+		:ls_bank
+		
+FROM  v_bank_guarantee,
+		v_bank_branch,
+		v_bank,
+		v_operator,
+		OUTER v_person
+WHERE bnkguar_id = :al_guar_id AND
+		bnkguar_bbr_id = bbr_id AND
+		bbr_bank_id = bank_id AND
+		bnkguar_oper_id=oper_id AND
+		oper_per_id = per_id;
+		
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_bnkrenins_quarfind 
+
+SELECT Trim(oper_file_no),
+		 Trim(oper_org_name),
+		 Trim(oper_org_ind),
+		 Trim(per_name),
+		 Trim(per_surname),
+		 Trim(bnkguar_no),
+		 Trim(bank_name)
+INTO 	:ls_oper_file_no,
+		:ls_oper_org_name,
+		:ls_oper_org_ind,
+		:ls_name,
+		:ls_surname,
+		:ls_bnkguar_no,
+		:ls_bank
+		
+FROM  v_renewal,
+		v_bank_guarantee,
+		v_bank_branch,
+		v_bank,
+		v_operator,
+		OUTER v_person
+WHERE gren_id = :al_ren_id AND
+		gren_bnkguar_id=bnkguar_id AND
+		bnkguar_bbr_id = bbr_id AND
+		bbr_bank_id = bank_id AND
+		bnkguar_oper_id=oper_id AND
+		oper_per_id = per_id;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_bnkrenins_renfind
+
+SELECT gren_start_date,
+		 gren_end_date,
+		 gren_amnt
+INTO 	 :ld_start_date,
+		 :ld_end_date,
+		 :ll_amount
+		
+FROM  v_renewal
+WHERE gren_id = :al_ren_id;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_bnksta_delstafind
+
+SELECT Trim(stat_file_no),
+		 Trim(stat_name)
+		 
+INTO 	:ls_sta_file_no,
+		:ls_name
+		
+		
+FROM  v_testing_station
+		
+WHERE stat_id = :al_stat_id;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_bnksta_quarfind 
+
+SELECT Trim(oper_file_no),
+		 Trim(oper_org_name),
+		 Trim(oper_org_ind),
+		 Trim(per_name),
+		 Trim(per_surname),
+		 Trim(bnkguar_no),
+		 Trim(bank_name),
+		 gren_start_date,
+		 gren_end_date
+		 
+INTO 	:ls_oper_file_no,
+		:ls_oper_org_name,
+		:ls_oper_org_ind,
+		:ls_name,
+		:ls_surname,
+		:ls_bnkguar_no,
+		:ls_bank,
+		:ld_start_date,
+		:ld_end_date
+		
+FROM  v_stat_guarantee,
+		v_renewal,
+		v_bank_guarantee,
+		v_bank_branch,
+		v_bank,
+		v_operator,
+		OUTER v_person
+WHERE stat_guar_id = :al_stat_guar_id AND
+		stat_guar_gren_id = gren_id AND
+		gren_bnkguar_id=bnkguar_id AND
+		bnkguar_bbr_id = bbr_id AND
+		bbr_bank_id = bank_id AND
+		bnkguar_oper_id=oper_id AND
+		oper_per_id = per_id;
+		
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_bnksta_stafind 
+
+SELECT Trim(stat_file_no),
+		 Trim(stat_name)
+		 
+INTO 	:ls_sta_file_no,
+		:ls_name
+		
+		
+FROM  v_stat_guarantee,
+		v_testing_station
+		
+WHERE stat_guar_id = :al_stat_guar_id AND
+		stat_guar_stat_id=stat_id; 
+		
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_bre_oper_det
+
+SELECT Trim(oper_file_no),
+		 Trim(oper_org_name),
+		 Trim(oper_org_ind),
+		 Trim(per_name),
+		 Trim(per_surname)
+INTO 	:ls_oper_file_no,
+		:ls_oper_org_name,
+		:ls_oper_org_ind,
+		:ls_name,
+		:ls_surname
+		
+FROM  v_operator,
+		OUTER v_person
+WHERE oper_id = :al_oper_id AND
+		oper_per_id = per_id;
+		
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_bre_tst_det 
+
+SELECT Trim(tst_name),
+	 	 Trim(tst_surname),
+	 	 Trim(tst_id_no)
+INTO 	:ls_name,
+		:ls_surname,
+		:ls_idno
+FROM 	v_tester
+WHERE tst_id=:al_tester_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_class_desc 
+
+SELECT Trim(class_desc)
+INTO :ls_class_desc
+FROM v_class
+WHERE class_id = :ra_class_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_contlane_desc 
+
+SELECT contla_cont_id, lane_desc, class_desc
+INTO :ll_cont_id, :ls_class, :ls_lane
+FROM v_cont_lane, v_class, v_lane
+WHERE contla_lane_id =lane_id AND
+contla_class_id = class_id AND
+contla_id = :ra_contla_id ;
+		
+SELECT cont_stat_id, cont_oper_id
+INTO :ll_stat_id, :ll_oper_id
+FROM v_contract
+WHERE cont_id = :ll_cont_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_contact_name 
+
+SELECT cont_stat_id, cont_oper_id
+INTO :ll_stat_id, :ll_oper_id
+FROM v_contract
+WHERE cont_id = :ra_cont_id ; 
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_course_det 
+
+SELECT sess_start_date,
+		 sess_end_date,
+		 crse_type_name,
+		 provider_name
+INTO 	 :ld_start_date,
+		 :ld_end_date,
+		 :ls_course,
+		 :ls_provider
+FROM 	 v_session,
+		 v_course,
+		 v_provider,
+		 v_course_type
+		
+WHERE sess_id = :al_sess_id AND
+		sess_crse_id = crse_id AND
+		crse_provider_id = provider_id AND
+		crse_crse_type_id = crse_type_id;
+		
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_disp_breach
+
+SELECT Trim(brch_remarks),
+		 brch_date		 
+INTO 	:ls_remarks,
+		:ld_date		
+FROM  v_breaches
+WHERE brch_id = :al_breach_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_emp_hist_det
+
+SELECT emphis_stat_id,
+		 emphis_class_id,
+		 emphis_start_dt,
+		 emphis_end_dt
+INTO 	:ll_stat_id,
+		:ll_class_id,
+		:ld_start,
+		:ld_end
+FROM 	v_employ_hist
+WHERE emphis_id=:al_emphis_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_fault_det
+
+SELECT fault_ftype_id,
+		 fault_lane_id,
+		 fault_rep_date
+INTO 	:ll_ftype_id,
+		:ll_lane_id,
+		:ld_date
+FROM 	v_faults
+WHERE fault_id=:al_fault_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_fault_sta
+
+SELECT lane_stat_id
+INTO 	:ll_stat_id
+FROM 	v_faults,
+		v_lane
+WHERE fault_id = :al_fault_id AND
+fault_lane_id = lane_id ;
+		
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_fault_type
+
+SELECT Trim(ftype_desc)
+INTO 	:ls_fault
+FROM 	v_fault_type
+WHERE ftype_id=:al_ftype_id;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_find_app_pend 
+
+SELECT app_no, app_year, pendoc_desc
+INTO :ll_app_no, :ll_app_year, :ls_pendoc_desc
+FROM v_application, v_app_pend_doc, v_pending_docs
+WHERE app_doc_id = :ra_app_doc_id AND
+		app_doc_app_id = app_id AND
+		app_doc_pendoc_id = pendoc_id ;
+		
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_find_app_pend 
+
+SELECT app_no, app_year, pendoc_desc
+INTO :ll_app_no, :ll_app_year, :ls_pendoc_desc
+FROM v_application, v_app_pend_doc, v_pending_docs
+WHERE app_doc_id = :ra_app_doc_id AND
+		app_doc_app_id = app_id AND
+		app_doc_pendoc_id = pendoc_id ;
+		
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_find_app_proc 
+
+SELECT app_no, app_year, process_pend_desc
+INTO :ll_app_no, :ll_app_year, :ls_process_pend_desc
+FROM v_application, v_app_process, v_process_pending
+WHERE v_app_process.app_proc_app_id = app_id AND
+		v_app_process.app_proc_pend_id = process_pend_id AND
+		app_proc_id = :ra_app_proc_id ;
+		
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_find_application_lane 
+
+SELECT app_no,app_year, lane_desc, class_desc
+INTO :ll_app_no,:ll_app_year,:ls_lane_desc,:ls_class_desc
+FROM v_application, v_app_lane, v_lane, v_class
+WHERE app_lane_id = :ra_app_lane_id AND
+		app_lane_class_id = class_id AND
+		app_lane_lane_id = lane_id AND
+		v_app_lane.app_lane_app_id = v_application.app_id ;
+		
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_find_application_no
+
+SELECT app_no,app_year
+INTO :ll_app_no,:ll_app_year
+FROM v_application
+WHERE app_id = :ra_app_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_find_breach_det
+
+SELECT Trim(brch_ind)
+INTO   :ls_brch_ind
+FROM   v_breaches
+WHERE  brch_id = :al_breach_id;
+
+**************************************************************************************************
+
+SELECT Trim(tst_name),
+				 Trim(tst_surname),
+				 Trim(tst_id_no)
+		INTO 	:ls_name,
+				:ls_surname,
+				:ls_idno
+		FROM  v_breaches,
+				v_tester
+		WHERE brch_id = :al_breach_id AND
+				brch_tst_id = tst_id ;
+
+************************************************************************************************
+
+SELECT Trim(oper_file_no),
+				 Trim(oper_org_name),
+				 Trim(oper_org_ind),
+				 Trim(per_name),
+				 Trim(per_surname)
+		INTO 	:ls_oper_file_no,
+				:ls_oper_org_name,
+				:ls_oper_org_ind,
+				:ls_name,
+				:ls_surname		
+		FROM  v_breaches,
+				v_operator,
+				OUTER v_person
+		WHERE brch_id = :al_breach_id AND
+				brch_oper_id = oper_id AND
+				oper_per_id = per_id;
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_find_location 
+
+SELECT address_1, address_2, area_name
+INTO :ls_address1, :ls_address2, :ls_area_name
+FROM v_location
+WHERE loc_id = :ra_loc_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_find_location 
+
+SELECT address_1, address_2, area_name
+INTO :ls_address1, :ls_address2, :ls_area_name
+FROM v_location
+WHERE loc_id = :ra_loc_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_find_oper_officials 
+
+SELECT app_no,app_year, per_name, per_surname
+INTO :ll_app_no,:ll_app_year,:ls_per_name, :ls_per_surname
+FROM v_application, v_oper_official, v_person
+WHERE oper_off_id = :ra_oper_off_id AND
+		oper_off_app_id = app_id AND
+		oper_off_per_id = per_id ;
+ 
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_find_person
+
+SELECT per_name, per_surname
+INTO :ls_per_name, :ls_per_surname
+FROM v_person
+WHERE per_id = :ra_per_id ; 
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_lane_desc 
+
+SELECT lane_desc
+INTO :ls_lane_desc
+FROM v_lane
+WHERE lane_id = :ra_lane_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_lane_sta 
+
+SELECT lane_stat_id
+INTO 	:ll_stat_id
+FROM 	v_lane
+		
+WHERE lane_id=:al_lane_id;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_lrenewal_desc
+
+SELECT ren_cont_id, lane_desc
+INTO :ll_cont_id, :ls_lane_desc
+FROM v_lane_renewal, v_lane
+WHERE ren_id = :ra_ren_id AND
+		ren_lane_id = lane_id ;
+
+*******************************************************************
+
+SELECT cont_stat_id, cont_oper_id
+INTO :ll_stat_id, :ll_oper_id
+FROM v_contract
+WHERE cont_id = :ll_cont_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_oper_name
+
+Select oper_org_ind,oper_org_name 
+	INTO :lc_oper_org_ind,:ls_oper_name
+	FROM v_operator
+	Where oper_id = :al_oper_id ;
+	
+*******************************************************************
+
+SELECT per_name,per_surname 
+		INTO :ls_per_name,:ls_per_surname
+		FROM v_person,v_operator
+		WHERE v_operator.oper_per_id = v_person.per_id AND
+				v_operator.oper_id = :al_oper_id ;
+				
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_rec_owner 
+
+SELECT rec_tstcl_id
+INTO 	:ll_tstcl_id
+FROM  v_receipt
+WHERE rec_id = :al_rec_id ;
+
+*************************************************
+
+SELECT DISTINCT cont_oper_id
+INTO  :ll_oper_id
+FROM  v_receipt,
+v_lane_renewal,
+v_contract
+WHERE rec_id = :al_rec_id AND
+rec_id = ren_rec_id AND
+ren_cont_id = cont_id;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_receipt_find 
+
+SELECT Trim(rec_no),
+		 rec_amount,
+		 rec_dt_issd
+INTO 	:ls_rec_no,
+		:ls_amount,
+		:ld_date
+FROM  v_receipt
+WHERE rec_id = :al_receipt_id ; 					
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_rej_reas 
+
+SELECT rejreas_desc
+INTO :ls_rejreas
+FROM v_rejreas
+WHERE rejreas_id = :ra_rejreas_id ; 	
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_spcheck_det 
+
+SELECT sc_lane_id,
+		 sc_sc_type_id,
+		 Trim(sc_passed_ind),
+		 sc_date,
+		 Trim(sc_breach),
+		 Trim(sc_remarks)
+INTO 	:ll_lane_id,
+		:ll_sc_type_id,
+		:ls_passed_ind,
+		:ld_date,
+		:ls_breach,
+		:ls_remarks		
+FROM 	v_spot_check
+WHERE sc_id=:al_sc_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_spcheck_sta 
+
+SELECT lane_stat_id
+INTO 	:ll_stat_id
+FROM 	v_spot_check,
+		v_lane		
+WHERE sc_id=:al_sc_id AND
+		sc_lane_id = lane_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_spot_check
+
+SELECT Trim(sc_type_desc)
+INTO 	:ls_spot_check
+FROM 	v_spot_check_type
+WHERE sc_type_id=:al_sc_type_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_station_file 
+
+SELECT stat_file_no
+INTO :ls_file_no
+FROM v_testing_station
+WHERE stat_id = :ra_stat_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_station_name 
+
+SELECT stat_name
+INTO :ls_station
+FROM v_testing_station
+WHERE stat_id = :ra_stat_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_term_contact_name
+
+SELECT contterm_cont_id
+INTO :ll_cont_id
+FROM v_cont_term
+WHERE contterm_id = :ra_contterm_id ;
+
+***************************************************************
+
+SELECT cont_stat_id, cont_oper_id
+INTO :ll_stat_id, :ll_oper_id
+FROM v_contract
+WHERE cont_id = :ll_cont_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_tester
+
+SELECT cont_stat_id, cont_oper_id
+INTO :ll_stat_id, :ll_oper_id
+FROM v_contract
+WHERE cont_id = :ll_cont_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_tester_details
+
+SELECT tstcl_tst_id
+INTO 	:ll_tester_id
+FROM 	v_tester_licence
+WHERE tstcl_id=:al_tstcl_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_tester_hist
+
+SELECT emphis_tst_id
+INTO 	:ll_tester_id
+FROM 	v_employ_hist
+WHERE emphis_id=:al_emphis_id ;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_tester_lic_find
+
+SELECT tstcl_app_dte,
+		 tstcl_class_id
+INTO 	:ld_date,
+		:ll_class_id
+FROM 	v_tester_licence
+WHERE tstcl_id=:al_tstcl_id;
+
+-------------------------------------------------------------------------------------------------------------			
+vt_audit.pbl -> afg_tst_rejreas
+
+SELECT Trim(tst_rejreas_desc)
+INTO 	:ls_rejreas
+FROM 	v_tst_rejreas
+WHERE tst_rejreas_id=:al_tst_rejreas_id;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

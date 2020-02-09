@@ -1,0 +1,43 @@
+vrts_upd -> vrts_upd.pbl  -> fg_get_common_ver
+
+select serial_id into :ra_version_ser_id from version where ver_description = :ra_version ;
+
+---------------------------------------------------------------------------------------------------
+vrts_upd -> vrts_upd.pbl  -> fg_get_current_version   line   0008
+
+select version into :ls_version_ser_id from v_system_par;
+
+---------------------------------------------------------------------------------------------------
+vrts_upd -> vrts_upd.pbl  -> fg_get_current_version   line   0020
+
+select ver_description into :ra_version from version 
+where serial_id  = :ra_version_ser_id;
+
+---------------------------------------------------------------------------------------------------
+vrts_upd -> vrts_upd.pbl  -> fg_get_local_ver   line   0014
+
+select ver_description into :ra_version from version where serial_id = :ra_version_ser_id ;
+
+---------------------------------------------------------------------------------------------------
+vrts_upd -> vrts_upd.pbl  -> fg_perform_ver_update   line   0027
+
+ls_sql = "select serial_id, trim(op_type), trim(dest_file_path), trim(dest_file_name) from version_def where " + &
+" version_ser_id = " + string(ll_curr_ver_ser_id) + " or version_ser_id = " + &
+string(ll_common_ver_ser_id)+ ";"
+
+---------------------------------------------------------------------------------------------------
+vrts_upd -> vrts_upd.pbl  -> fg_set_current_version   line   0009
+
+select ver_description into :ls_version 
+from version where serial_id = :ra_version_ser_id ;
+
+---------------------------------------------------------------------------------------------------
+vrts_upd -> vrts_upd.pbl  -> fg_set_current_version   line   0021
+
+select version into :ls_temp from v_system_par;
+	
+---------------------------------------------------------------------------------------------------
+vrts_upd -> vrts_upd.pbl  -> fg_set_current_version   line   0029
+
+update v_system_par set version = :ls_version_ser_id;
+			

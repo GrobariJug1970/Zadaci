@@ -1,0 +1,28 @@
+lsuobj5.pbl -> uo_dw ->  itemchanged()
+
+SELECT next_key_value
+INTO   :ll_KeyValue
+FROM   key_sequences
+WHERE  table_name = :is_PKSequenceName ;
+	
+---------------------------------------------------------------------------------------------------
+lsuobj5.pbl -> uo_dw ->  itemchanged()
+
+UPDATE key_sequences
+SET    next_key_value = :ll_NewKeyValue
+WHERE  table_name = :is_PKSequenceName ;
+
+--------------------------------------------------------------------------------------------------
+lsuobj5.pbl -> uo_dw_no_update ->  itemchanged()
+
+SELECT next_key_value
+INTO   :ll_KeyValue
+FROM   key_sequences
+WHERE  table_name = :is_PKSequenceName ;
+	
+--------------------------------------------------------------------------------------------------
+lsuobj5.pbl -> uo_dw_no_update ->  itemchanged()
+
+UPDATE key_sequences
+SET    next_key_value = :ll_NewKeyValue
+WHERE  table_name = :is_PKSequenceName ;

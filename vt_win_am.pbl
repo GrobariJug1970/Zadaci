@@ -1,0 +1,2286 @@
+vt_win_am.pbl -> w_app_per_search -> cb_add.clicked()
+
+lb_ok = fg_lock("Select app_id from v_application where app_id =" + String(il_app_id),1)
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application
+
+SELECT informix.v_application.app_id  
+FROM informix.v_application  ;
+
+///////////////////////////////////////////////////////////////////////////////////////// new sql miljna 28.12.2020
+
+SELECT v_application.app_id  
+FROM v_application  ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> wf_lock_row()  line 0016
+
+SELECT app_id FROM v_application WHERE app_id = :ra_app_id
+FOR UPDATE ;
+		
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> open()  line 0004
+
+SELECT COUNT(*)
+INTO :li_count2
+FROM v_pending_docs ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> open()  line 0015
+
+SELECT COUNT(*)
+INTO :li_count2
+FROM v_pending_docs ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> cb_accept_reject.clicked() line 0046
+
+SELECT COUNT(*) 
+INTO :li_count
+FROM v_app_lane
+WHERE app_lane_app_id = :ll_app_id AND
+app_lane_term_ind = "N" ;
+
+///////////////////////////////////////////////////////////////////////////////////////// new sql miljna 28.12.2020
+
+SELECT COUNT(*) 
+INTO :li_count
+FROM v_app_lane
+WHERE app_lane_app_id = :ll_app_id AND
+app_lane_term_ind = 'N' ;
+			  
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> cb_accept_reject.clicked() line 0067
+
+Select oper_org_ind 
+Into :lc_oper_org_ind
+From v_operator
+Where oper_id = :ll_oper_id ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> cb_accept_reject.clicked() line 0080
+
+SELECT Count(*)
+INTO :li_count
+FROM v_oper_official
+WHERE v_oper_official.oper_off_app_id = :ll_app_id AND
+v_oper_official.oper_off_type_ind = 'D';
+				
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> cb_accept_reject.clicked() line 0100
+
+Select Count(*)
+INTO	:li_count
+FROM 	v_oper_official
+WHERE 	v_oper_official.oper_off_app_id = :ll_app_id AND
+v_oper_official.oper_off_type_ind = "S" ;
+
+///////////////////////////////////////////////////////////////////////////////////////// new sql miljna 28.12.2020
+
+Select Count(*)
+INTO	:li_count
+FROM 	v_oper_official
+WHERE 	v_oper_official.oper_off_app_id = :ll_app_id AND
+v_oper_official.oper_off_type_ind = 'S' ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> cb_accept_reject.clicked() line 0118
+
+SELECT Count(*)
+INTO :li_count
+FROM v_app_pend_doc
+WHERE v_app_pend_doc.app_doc_app_id  = :ll_app_id AND
+v_app_pend_doc.app_doc_ind = "N" ;
+
+///////////////////////////////////////////////////////////////////////////////////////// new sql miljna 28.12.2020
+
+SELECT Count(*)
+INTO :li_count
+FROM v_app_process
+WHERE v_app_process.app_proc_app_id  = :ll_app_id AND
+v_app_process.app_proc_ind = 'N' ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> cb_accept_reject.clicked() line 0137
+
+SELECT Count(*)
+INTO :li_count
+FROM v_app_process
+WHERE v_app_process.app_proc_app_id  = :ll_app_id AND
+v_app_process.app_proc_ind = "N" ;
+
+///////////////////////////////////////////////////////////////////////////////////////// new sql miljna 28.12.2020
+
+SELECT Count(*)
+INTO :li_count
+FROM v_app_pend_doc
+WHERE v_app_pend_doc.app_doc_app_id  = :ll_app_id AND
+v_app_pend_doc.app_doc_ind = 'N' ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> cb_signatory.clicked() line 0015
+
+Select Count(*) 
+INTO :li_count
+FROM v_oper_official
+WHERE oper_off_app_id = :ll_app_id AND
+oper_off_type_ind = 'S' ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> dw_application.ue_delete_row() line 0035
+
+ SELECT COUNT(oper_off_id)
+ INTO :li_operators
+ FROM v_oper_official
+ WHERE oper_off_app_id = :ll_primary_id;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> dw_application.ue_delete_row() line 0092
+
+SELECT COUNT(*) 
+INTO :li_count
+FROM v_application
+WHERE app_id = :ll_primary_id ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> cb_withdraw.clicked() line 0051
+
+Update v_application
+Set app_withdrawn = "Y", app_withdrawn_dt = :ld_date
+Where app_id = :ll_app_id ;
+
+///////////////////////////////////////////////////////////////////////////////////////// new sql miljna 28.12.2020
+
+Update v_application
+Set app_withdrawn = 'Y', app_withdrawn_dt = :ld_date
+Where app_id = :ll_app_id ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> cb_signatory.clicked() line 0026
+
+UPDATE v_oper_official
+SET oper_off_per_id = :ll_per_id
+WHERE oper_off_app_id = :ll_app_id AND
+oper_off_type_ind = 'S' ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> cb_signatory.clicked() line 0036
+
+INSERT INTO v_oper_official
+(oper_off_app_id, oper_off_per_id, oper_off_type_ind)
+VALUES (:ll_app_id,:ll_per_id,'S') ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> dw_classes.ue_delete_row() line 0015
+
+DELETE FROM v_app_lane
+WHERE app_lane_lane_id = :ll_lane_id AND
+app_lane_app_id = :ll_app_id ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> cb_sig_del.clicked() line 0013
+
+DELETE FROM v_oper_official
+WHERE oper_off_app_id = :ll_app_id AND
+oper_off_per_id = :ll_per_id AND
+oper_off_type_ind = "S";
+
+//////////////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan promenjeno
+
+DELETE FROM v_oper_official
+WHERE oper_off_app_id = :ll_app_id AND
+oper_off_per_id = :ll_per_id AND
+oper_off_type_ind = 'S';
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> dw_application.ue_delete_row() line 0055
+
+DELETE FROM v_oper_official
+WHERE oper_off_app_id = :ll_primary_id;
+			
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> dw_application.ue_delete_row() line 0060
+
+DELETE FROM v_app_lane
+WHERE app_lane_app_id = :ll_primary_id;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> dw_application.ue_delete_row() line 0070
+
+Delete From v_app_process
+WHERE app_proc_app_id = :ll_primary_id ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application -> dw_application.ue_delete_row() line 0080
+
+Delete From v_app_pend_doc
+WHERE app_doc_app_id = :ll_primary_id ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> ue_insert_row() line 0032
+
+Select today 
+Into :ld_date
+From v_system_par ;	
+
+/////////////////////////////////////////////////////////////////////////////////// New sql code 29.01.2020 Miljan
+
+Select convert(date, getdate()) 
+Into :ld_date
+From v_system_par ;	
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> ue_insert_row() line 0036
+
+Select loc_id
+Into :ll_loc_id
+From v_location
+Where loc_stat_id = :il_stat_id AND
+loc_active_ind = "Y";
+
+/////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan 
+
+Select loc_id
+Into :ll_loc_id
+From v_location
+Where loc_stat_id = :il_stat_id AND
+loc_active_ind = 'Y';
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> ue_insert_row() line 0055
+
+SELECT COUNT(*) 
+INTO :li_count
+FROM v_application
+WHERE app_no = :il_app_no AND app_year = :li_app_year ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> ue_insert_row() line 0099
+
+SELECT oper_org_ind
+INTO :ls_oper_type
+FROM v_operator
+WHERE oper_id = :il_oper_id;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> ue_insert_row() line 0111
+
+ls_sql = "SELECT pendoc_id FROM v_pending_docs WHERE pendoc_show_ind = 'Y' AND pendoc_comp_ind = 'Y'"
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> ue_insert_row() line 0113
+
+ls_sql = "SELECT pendoc_id FROM v_pending_docs WHERE pendoc_show_ind = 'Y' AND pendoc_ind = 'Y'"
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> ue_insert_row() line 0115
+
+ls_sql = "SELECT pendoc_id FROM v_pending_docs WHERE pendoc_show_ind = 'Y' AND pendoc_per_ind = 'Y'"
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> ue_insert_row() line 0174
+
+SELECT process_pend_id
+FROM v_process_pending
+WHERE process_pend_ind = "Y";
+
+/////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan 
+
+SELECT process_pend_id
+FROM v_process_pending
+WHERE process_pend_ind = 'Y';
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> ue_check_oper() line 0021
+
+Select oper_id
+INTO :il_oper_id
+From v_operator
+Where v_operator.oper_file_no = :ls_oper_file_no ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> ue_check_stat() line 0018
+
+Select stat_id,stat_name
+INTO :il_stat_id, :ls_stat_name
+From v_testing_station
+Where v_testing_station.stat_file_no = :ls_stat_file_no ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> ue_check_stat() line 0036
+
+Select stat_name
+INTO :ls_stat_name
+From v_testing_station
+Where v_testing_station.stat_id = :il_stat_id ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> fg_disp_lane_class() line 0021
+
+SELECT lane_id, lane_desc
+FROM v_lane
+WHERE lane_stat_id = :ra_tst_stat_id ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> fg_disp_lane_class() line 0052
+
+SELECT class_desc
+INTO :ls_class_desc
+FROM v_class
+WHERE class_id = :ia_class_lanes[li_step,1] ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> open() line 0007
+
+SELECT MAX(app_no) INTO :il_app_no FROM v_application WHERE app_year = YEAR(TODAY) ;
+
+/////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan 
+
+SELECT MAX(app_no) INTO :il_app_no FROM v_application WHERE app_year = YEAR(convert(date, getdate())) ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> open() line 0019
+
+SELECT today 
+INTO :ld_date
+FROM v_system_par ;	
+
+/////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan 
+
+SELECT convert(date, getdate()) 
+INTO :ld_date
+FROM v_system_par ;	
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> cb_select_operater.clicked() line 0011
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_breaches
+WHERE brch_oper_id = :il_oper_id ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> cb_select_operater.clicked() line 0036
+
+SELECT oper_org_name,per_name,per_surname, oper_file_no
+INTO :ls_oper_org_name, :ls_per_name, :ls_per_surname, :ls_oper_file_no
+FROM v_operator,OUTER(v_person)
+WHERE (v_operator.oper_per_id = v_person.per_id) AND
+(v_operator.oper_id = :il_oper_id) ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan OUTER na kraju
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> cb_select_station.clicked() line 0012
+
+SELECT stat_name, stat_file_no
+INTO :ls_stat_name, :ls_stat_file_no
+FROM v_testing_station
+WHERE v_testing_station.stat_id = :il_stat_id ;
+	
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> cb_save.clicked() line 0031
+
+SELECT class_desc 
+INTO :ls_class
+FROM v_class
+WHERE class_id = :ll_class ;
+	
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> ue_insert_row() line 0014
+
+INSERT INTO v_lane (lane_stat_id,lane_desc,lane_no)
+VALUES (:il_stat_id,:as_arg2,:as_arg3) ;
+		
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> ue_insert_row() line 0071
+
+INSERT INTO v_application(app_stat_id,app_oper_id,app_date_made,app_no,app_year,app_statloc_id)
+VALUES (:il_stat_id, :il_oper_id, :ld_app_date_made,:il_app_no,:li_app_year,:ll_loc_id) ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> ue_insert_row() line 0085
+
+INSERT INTO v_app_lane(app_lane_app_id,app_lane_class_id,app_lane_lane_id,app_lane_rej_ind)
+VALUES(:il_app_id,:ia_class_lanes[li_step,1],:ia_class_lanes[li_step,2],"W") ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+INSERT INTO v_app_lane(app_lane_app_id,app_lane_class_id,app_lane_lane_id,app_lane_rej_ind)
+VALUES(:il_app_id,:ia_class_lanes[li_step,1],:ia_class_lanes[li_step,2],'W') ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> ue_insert_row() line 0161
+
+INSERT INTO v_app_pend_doc (app_doc_id,app_doc_app_id, app_doc_pendoc_id,app_doc_date,app_doc_ind)
+VALUES (0,:il_app_id,:ll_app_pendoc_id,null,"N") ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+INSERT INTO v_app_pend_doc (app_doc_app_id, app_doc_pendoc_id,app_doc_date,app_doc_ind)
+VALUES (:il_app_id,:ll_app_pendoc_id,null,'N') ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_add -> ue_insert_row() line 0213
+
+INSERT INTO v_app_process (app_proc_id,app_proc_app_id, app_proc_pend_id,app_proc_date,app_proc_ind)
+VALUES (0,:il_app_id,:ll_process_id,null,"N") ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+INSERT INTO v_app_process (app_proc_app_id, app_proc_pend_id,app_proc_date,app_proc_ind)
+VALUES (:il_app_id,:ll_process_id,null,'N') ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_class_add -> open() 
+
+Select app_stat_id, app_oper_id 
+INTO :il_stat_id, :il_oper_id
+FROM v_application
+WHERE v_application.app_id = :il_app_id ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_class_add -> cb_add.clicked()   line 0018
+
+SELECT COUNT(*) INTO :li_total FROM v_app_lane 
+WHERE v_app_lane.app_lane_lane_id = :ll_lane_id
+AND v_app_lane.app_lane_class_id = :ll_class
+AND v_app_lane.app_lane_app_id = :il_app_id ;
+			
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_class_add -> cb_add.clicked()   line 0039
+
+Select class_desc INTO :ls_class 
+FROM v_class 
+WHERE class_id = :ls_selected_items[li_step] ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_class_add -> ue_insert_row()  
+
+INSERT INTO v_lane(lane_stat_id,lane_desc,lane_no)
+VALUES (:il_stat_id,:ra_2,:ra_3) ;
+		
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_class_add -> cb_add.clicked() 
+
+INSERT INTO v_app_lane(app_lane_lane_id,app_lane_class_id,app_lane_app_id,app_lane_rej_ind)
+VALUES (:ll_lane_id,:ll_class,:il_app_id,'W') ;
+		
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_contract_find -> cb_st_find.clicked()	line 0009
+
+SELECT stat_file_no
+INTO  :ls_stat_file_no
+FROM v_testing_station
+WHERE v_testing_station.stat_id = :ll_station_id ;
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_find -> cb_op_find.clicked()	line 0009
+
+SELECT oper_file_no
+INTO  :ls_oper_file_no
+FROM v_operator
+WHERE v_operator.oper_id = :ll_oper_id ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_lane_add -> cb_add.clicked()	
+
+SELECT stat_name 
+INTO :ls_station_name
+FROM v_testing_station
+WHERE stat_id = :il_stat_id ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_status -> dw_pending_process.ue_update()    line 0021
+
+SELECT TRIM(process_pend_desc) process_pend_desc
+INTO :ls_pend_process_desc
+FROM v_app_process, v_process_pending
+WHERE (app_proc_app_id = :il_app_id) AND (app_proc_pend_id = process_pend_id ) AND (app_proc_id = :ll_primary_key);
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_status -> dw_pending_process.ue_update()    line 0049
+
+SELECT app_date_made
+INTO :ld_app_date
+FROM v_application
+WHERE app_id = :il_app_id;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_status -> dw_app_status_docs.ue_update()    line 0021
+
+SELECT TRIM(pendoc_desc) pendoc_desc
+INTO :ls_pendoc_desc
+FROM v_app_pend_doc, v_pending_docs
+WHERE (app_doc_app_id = :il_app_id) AND (app_doc_pendoc_id = pendoc_id ) AND (app_doc_id = :ll_primary_key);
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_status -> dw_app_status_docs.ue_update()    line 0050
+ 
+SELECT app_date_made
+INTO :ld_app_date
+FROM v_application
+WHERE app_id = :il_app_id;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_application_unreject -> cb_unreject.clicked()    line 0016	
+
+UPDATE v_application
+SET app_stat_ind = 'P', app_rejreas_id = NULL, app_date_accp = NULL
+WHERE app_id = :il_app_id ;
+	
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract -> ue_terminate_contract()    line 0012
+
+SELECT cont_term_ind
+INTO :ls_cont_term_ind
+FROM v_contract
+WHERE v_contract.cont_id = :ll_cont_id;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract -> ue_terminate_contract()    line 0025
+
+lb_ok = fg_lock("Select cont_id from v_contract where cont_id =" + String(il_cont_id),1)
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract -> wf_buttons()    line 0004
+
+SELECT cont_signed_ind, cont_term_ind 
+INTO :lc_cont_signed, :lc_cont_term
+FROM v_contract
+WHERE v_contract.cont_id = :il_cont_id ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract -> cb_pay.clicked()    line 0013
+
+lb_ok = fg_lock("Select cont_id from v_contract where cont_id =" + String(il_cont_id),1)
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract -> cb_terminate_lane.clicked()    line 0005
+
+lb_ok = fg_lock("Select cont_id from v_contract where cont_id =" + String(il_cont_id),1)
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract -> cb_cert_sta.clicked()    line 0007
+
+SELECT  stat_auth_no
+INTO  :ls_stat_auth_no
+FROM v_contract,   
+v_testing_station
+WHERE (v_testing_station.stat_id=v_contract.cont_stat_id) AND
+(v_contract.cont_id=:il_cont_id);
+		
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract -> cb_pending.clicked()    line 0005
+
+lb_ok = fg_lock("Select cont_id from v_contract where cont_id =" + String(il_cont_id),1)
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract -> cb_contract_status.clicked()    line 0014
+
+lb_ok = fg_lock("Select cont_id from v_contract where cont_id =" + String(il_cont_id),1)
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract -> cb_contract_status.clicked()    line 0021
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_cont_pen_reas
+WHERE cp_cont_id = :il_cont_id AND
+cp_handed_ind = "N" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_cont_pen_reas
+WHERE cp_cont_id = :il_cont_id AND
+cp_handed_ind = 'N' ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract -> cb_contract_status.clicked()    line 0042
+
+SELECT COUNT(*)
+INTO  :ll_paid_count
+FROM  v_lane_renewal
+WHERE ren_cont_id = :il_cont_id AND
+ren_lane_id = :li_rc AND
+TRIM(ren_last_ind) = "Y" AND
+TRIM(ren_term_ind) = "N";
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT COUNT(*)
+INTO  :ll_paid_count
+FROM  v_lane_renewal
+WHERE ren_cont_id = :il_cont_id AND
+ren_lane_id = :li_rc AND
+TRIM(ren_last_ind) = 'Y' AND
+TRIM(ren_term_ind) = 'N';
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract -> cb_contract_status.clicked()    line 0071
+
+SELECT cont_stat_id,cont_oper_id
+INTO   :ll_stat_id,:ll_oper_id
+FROM   v_contract
+WHERE  cont_id = :il_cont_id;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract -> cb_contract_status.clicked()    line 0095
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_bank_guarantee,
+v_renewal,
+v_stat_guarantee
+WHERE bnkguar_oper_id=:ll_oper_id AND
+bnkguar_active_ind="Y" AND
+gren_bnkguar_id=bnkguar_id AND
+gren_latest_ind="Y" AND
+gren_end_date >= :ls_date AND
+stat_guar_gren_id = gren_id AND
+stat_guar_stat_id = :ll_stat_id AND
+stg_active_ind="Y";
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_bank_guarantee,
+v_renewal,
+v_stat_guarantee
+WHERE bnkguar_oper_id=:ll_oper_id AND
+bnkguar_active_ind='Y' AND
+gren_bnkguar_id=bnkguar_id AND
+gren_latest_ind='Y' AND
+gren_end_date >= :ls_date AND
+stat_guar_gren_id = gren_id AND
+stat_guar_stat_id = :ll_stat_id AND
+stg_active_ind='Y';
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract -> cb_contract_status.clicked()    line 0121
+
+Select Count(*)
+Into :li_tester_count
+From v_employ_hist
+Where emphis_stat_id = :ll_stat_id AND
+emphis_actve_ind = "Y";
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+Select Count(*)
+Into :li_tester_count
+From v_employ_hist
+Where emphis_stat_id = :ll_stat_id AND
+emphis_actve_ind = 'Y';
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract -> cb_certificate.clicked()    line 0006
+
+SELECT oper_auth_no
+INTO :ls_oper_auth_no
+FROM v_contract, v_operator
+WHERE ( v_operator.oper_id = v_contract.cont_oper_id ) AND
+v_contract.cont_id = :il_cont_id ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract -> cb_contract_status.clicked()    line 0151
+
+UPDATE v_contract
+SET cont_signed_ind = "Y",
+cont_signed_date = :ld_date,
+cont_signed_user = :gs_userid
+WHERE cont_id = :il_cont_id ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+UPDATE v_contract
+SET cont_signed_ind = 'Y',
+cont_signed_date = :ld_date,
+cont_signed_user = :gs_userid
+WHERE cont_id = :il_cont_id ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract -> cb_contract_status.clicked()    line 0164
+
+UPDATE v_application 
+SET app_stat_ind = "C"
+WHERE app_cont_id = :il_cont_id ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+UPDATE v_application 
+SET app_stat_ind = 'C'
+WHERE app_cont_id = :il_cont_id ;
+
+-------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_find -> cb_st_find.clicked()    line 0009
+
+SELECT stat_file_no
+INTO  :ls_stat_file_no
+FROM v_testing_station
+WHERE v_testing_station.stat_id = :ll_station_id ;
+	
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0030
+
+SELECT 	app_stat_id, app_oper_id,app_date_accp,app_statloc_id
+INTO		:ll_stat_id, :ll_oper_id, :ld_app_date_accp,:ll_statloc_id
+FROM 		v_application
+WHERE 	app_id = :il_app_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0043
+
+SELECT COUNT(*)
+INTO :ll_count
+FROM v_contract
+WHERE cont_stat_id=:ll_stat_id AND
+cont_oper_id <> :ll_oper_id AND
+Trim(cont_signed_ind)="Y" AND
+Trim(cont_term_ind)="N";
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT COUNT(*)
+INTO :ll_count
+FROM v_contract
+WHERE cont_stat_id=:ll_stat_id AND
+cont_oper_id <> :ll_oper_id AND
+Trim(cont_signed_ind)='Y' AND
+Trim(cont_term_ind)='N';
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0067
+
+SELECT 	cont_duration 
+INTO		:li_cont_duration
+FROM 		v_system_par ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0124
+
+SELECT cont_id, cont_end_date 
+INTO :ll_cont_id,:ld_cont_end_date
+FROM v_contract
+WHERE cont_stat_id = :ll_stat_id AND cont_last_ind = "Y" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT cont_id, cont_end_date 
+INTO :ll_cont_id,:ld_cont_end_date
+FROM v_contract
+WHERE cont_stat_id = :ll_stat_id AND cont_last_ind = 'Y' ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0171
+
+SELECT cont_id
+INTO :ll_cont_prev_id
+FROM v_contract
+WHERE cont_stat_id = :ll_stat_id AND
+cont_last_ind = "Y" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT cont_id
+INTO :ll_cont_prev_id
+FROM v_contract
+WHERE cont_stat_id = :ll_stat_id AND
+cont_last_ind = 'Y' ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0221
+
+SELECT pending_id
+FROM v_pending_reas
+WHERE pr_active_ind = "Y" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT pending_id
+FROM v_pending_reas
+WHERE pr_active_ind = 'Y' ;
+	
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0274
+
+SELECT oper_off_per_id
+FROM v_oper_official
+WHERE oper_off_app_id = :il_app_id AND
+oper_off_type_ind = 'D' ; 
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0323
+
+Select oper_off_per_id 
+INTO :il_new_signatory_id
+From v_oper_official
+Where oper_off_app_id = :il_app_id AND
+oper_off_type_ind = 'S' ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0364
+
+SELECT app_lane_id, app_lane_lane_id, app_lane_class_id
+FROM v_app_lane
+WHERE app_lane_app_id = :il_app_id AND
+app_lane_term_ind = "N" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT app_lane_id, app_lane_lane_id, app_lane_class_id
+FROM v_app_lane
+WHERE app_lane_app_id = :il_app_id AND
+app_lane_term_ind = 'N' ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0399
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_cont_lane
+WHERE contla_class_id = :ll_class_id AND 
+contla_lane_id = :ll_lane_id AND
+contla_cont_id = :ll_cont_id AND
+contla_term_ind = "N" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_cont_lane
+WHERE contla_class_id = :ll_class_id AND 
+contla_lane_id = :ll_lane_id AND
+contla_cont_id = :ll_cont_id AND
+contla_term_ind = 'N' ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0468
+
+SELECT DISTINCT app_lane_class_id
+FROM v_app_lane
+WHERE app_lane_app_id = :il_app_id AND
+app_lane_term_ind = "N" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT DISTINCT app_lane_class_id
+FROM v_app_lane
+WHERE app_lane_app_id = :il_app_id AND
+app_lane_term_ind = 'N' ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0494
+
+SELECT app_date_accp
+INTO :ld_app_date_accp
+FROM v_application
+WHERE app_id = :il_app_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> uf_check_contract()    line 0018
+
+lb_ok = fg_lock("Select app_id from v_application where app_id =" + String(il_app_id),1)
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> uf_check_contract()    line 0025
+
+SELECT app_stat_id, app_oper_id ,app_date_accp,app_statloc_id
+INTO   :ll_stat_id, :ll_oper_id,:ld_app_accp,:ll_app_statloc_id
+FROM   v_application
+WHERE  app_id = :il_app_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> uf_check_contract()    line 0060
+
+Select loc_id
+Into :ll_statcur_addr
+From v_location,
+v_testing_station
+Where stat_id = :ll_stat_id And
+loc_stat_id = stat_id And
+loc_active_ind = "Y";
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+Select loc_id
+Into :ll_statcur_addr
+From v_location,
+v_testing_station
+Where stat_id = :ll_stat_id And
+loc_stat_id = stat_id And
+loc_active_ind = 'Y';
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> uf_check_contract()    line 0080
+
+SELECT COUNT(*) 
+INTO :ll_count
+FROM v_contract
+WHERE cont_stat_id = :ll_stat_id AND
+cont_oper_id = :ll_oper_id AND
+cont_term_ind = "N" AND
+cont_end_date > :ld_today AND
+cont_last_ind = "Y" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT COUNT(*) 
+INTO :ll_count
+FROM v_contract
+WHERE cont_stat_id = :ll_stat_id AND
+cont_oper_id = :ll_oper_id AND
+cont_term_ind = 'N' AND
+cont_end_date > :ld_today AND
+cont_last_ind = 'Y' ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> uf_check_contract()    line 0102
+
+SELECT v_cont_official.cont_off_per_id
+FROM v_contract, v_cont_official
+WHERE cont_stat_id = :ll_stat_id AND
+cont_term_ind = "N" AND
+cont_end_date > :ld_today AND
+v_contract.cont_id = v_cont_official.cont_off_cont_id AND
+v_cont_official.cont_off_type_ind = "D" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT v_cont_official.cont_off_per_id
+FROM v_contract, v_cont_official
+WHERE cont_stat_id = :ll_stat_id AND
+cont_term_ind = 'N' AND
+cont_end_date > :ld_today AND
+v_contract.cont_id = v_cont_official.cont_off_cont_id AND
+v_cont_official.cont_off_type_ind = 'D' ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> uf_check_contract()    line 0141
+
+SELECT COUNT(*) 
+INTO :ll_count2
+FROM v_oper_official
+WHERE oper_off_app_id = :il_app_id AND
+oper_off_per_id = :ll_director_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> uf_check_contract()    line 0175
+
+SELECT COUNT(*) 
+INTO :ll_count
+FROM v_oper_official
+WHERE oper_off_app_id = :il_app_id AND
+oper_off_type_ind = "D" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT COUNT(*) 
+INTO :ll_count
+FROM v_oper_official
+WHERE oper_off_app_id = :il_app_id AND
+oper_off_type_ind = 'D' ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> uf_check_contract()    line 0188
+
+SELECT COUNT(*)
+INTO :ll_count2
+FROM v_contract, v_cont_official
+WHERE cont_stat_id = :ll_stat_id AND
+cont_term_ind = "N" AND
+cont_end_date > :ld_today AND
+v_contract.cont_id = v_cont_official.cont_off_cont_id AND
+v_cont_official.cont_off_type_ind = "D" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT COUNT(*)
+INTO :ll_count2
+FROM v_contract, v_cont_official
+WHERE cont_stat_id = :ll_stat_id AND
+cont_term_ind = 'N' AND
+cont_end_date > :ld_today AND
+v_contract.cont_id = v_cont_official.cont_off_cont_id AND
+v_cont_official.cont_off_type_ind = 'D' ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> uf_check_contract()    line 0212
+
+SELECT cont_statloc_id
+INTO :ll_cont_statloc_id
+FROM v_contract
+WHERE cont_stat_id = :ll_stat_id AND
+cont_term_ind = "N" AND
+cont_end_date > :ld_today;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT cont_statloc_id
+INTO :ll_cont_statloc_id
+FROM v_contract
+WHERE cont_stat_id = :ll_stat_id AND
+cont_term_ind = 'N' AND
+cont_end_date > :ld_today;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> uf_check_contract()    line 0254
+
+SELECT cont_id,v_contract.cont_start_date
+INTO :il_old_cont_id,:ld_date
+FROM v_contract
+WHERE cont_stat_id = :ll_stat_id AND
+cont_term_ind = "N" AND
+cont_end_date > :ld_today AND
+cont_last_ind = "Y" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT cont_id,v_contract.cont_start_date
+INTO :il_old_cont_id,:ld_date
+FROM v_contract
+WHERE cont_stat_id = :ll_stat_id AND
+cont_term_ind = 'N' AND
+cont_end_date > :ld_today AND
+cont_last_ind = 'Y' ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> uf_check_contract()    line 0269
+
+SELECT v_person.per_name, v_person.per_surname
+INTO :ls_name, :ls_surname
+FROM v_person, v_cont_official
+WHERE v_cont_official.cont_off_cont_id = :il_old_cont_id AND
+v_cont_official.cont_off_per_id = v_person.per_id AND
+v_cont_official.cont_off_type_ind = "S" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT v_person.per_name, v_person.per_surname
+INTO :ls_name, :ls_surname
+FROM v_person, v_cont_official
+WHERE v_cont_official.cont_off_cont_id = :il_old_cont_id AND
+v_cont_official.cont_off_per_id = v_person.per_id AND
+v_cont_official.cont_off_type_ind = 'S' ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> wf_refresh_application()    line 0008
+
+SELECT	app_no, app_year, app_date_accp,
+oper_id,oper_file_no, stat_file_no, stat_name
+INTO:ll_app_no, :ll_app_year, :ld_app_date_made,
+:ll_oper_id,:ls_oper_file_no,
+:ls_stat_file_no, :ls_station_name
+FROM v_application, v_operator, v_testing_station
+WHERE v_application.app_id = :ra_app_id AND
+v_application.app_stat_id = v_testing_station.stat_id AND
+v_application.app_oper_id = v_operator.oper_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> wf_refresh_application()    line 0024
+
+Select 	per_name, per_surname, per_idno
+INTO :ls_sign_name,:ls_sign_surname,:ls_sign_idno
+FROM v_person, v_oper_official
+WHERE v_oper_official.oper_off_app_id = :ra_app_id AND
+v_oper_official.oper_off_type_ind = 'S' AND
+v_oper_official.oper_off_per_id = v_person.per_id ;
+
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> wf_select_signatory.clicked()    line 0008
+
+SELECT per_name, per_surname
+INTO :ls_name, :ls_surname
+FROM v_person
+WHERE per_id = :il_new_signatory_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0018
+
+UPDATE v_contract
+SET cont_last_ind = "N"
+WHERE cont_id = :ll_cont_prev_id ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+UPDATE v_contract
+SET cont_last_ind = 'N'
+WHERE cont_id = :ll_cont_prev_id ;
+		
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0451
+
+UPDATE v_application 
+SET app_cont_prn_ind = "Y",
+app_cont_id =:ll_cont_id
+WHERE app_id = :il_app_id ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+UPDATE v_application 
+SET app_cont_prn_ind = 'Y',
+app_cont_id =:ll_cont_id
+WHERE app_id = :il_app_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0532
+
+UPDATE v_certificate
+SET 	certif_op_no = :ls_certif_op_no,
+certif_sta_no = :ls_certif_sta_no
+WHERE certif_id = :ll_certif_id ;		
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0150
+
+INSERT INTO v_cont_official(cont_off_cont_id,cont_off_per_id, cont_off_type_ind)
+VALUES (:ll_cont_id, :il_new_signatory_id,'S') ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0204
+
+INSERT INTO v_contract(cont_stat_id, cont_oper_id, cont_last_ind, cont_start_date, cont_end_date, cont_prev_id,cont_signed_date,cont_signed_ind,cont_statloc_id)
+VALUES (:ll_stat_id, :ll_oper_id, "Y", :ld_cont_start_date, :ld_cont_end_date,:ll_cont_prev_id,TODAY,"N",:ll_statloc_id) ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+INSERT INTO v_contract(cont_stat_id, cont_oper_id, cont_last_ind, cont_start_date, cont_end_date, cont_prev_id,cont_signed_date,cont_signed_ind,cont_statloc_id)
+VALUES (:ll_stat_id, :ll_oper_id, 'Y', :ld_cont_start_date, :ld_cont_end_date,:ll_cont_prev_id,convert(date, getdate()),'N',:ll_statloc_id) ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0251
+
+INSERT INTO v_cont_pen_reas  (cp_cont_id,cp_pending_id, cp_handed_ind)
+VALUES (:ll_cont_id,:ll_pending_id,"N") ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+INSERT INTO v_cont_pen_reas  (cp_cont_id,cp_pending_id, cp_handed_ind)
+VALUES (:ll_cont_id,:ll_pending_id,'N') ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0299
+
+INSERT INTO v_cont_official(cont_off_cont_id,cont_off_per_id, cont_off_type_ind)
+VALUES (:ll_cont_id, :ll_per_id,'D') ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0343
+
+INSERT INTO v_cont_official(cont_off_cont_id,cont_off_per_id, cont_off_type_ind)
+VALUES (:ll_cont_id, :il_new_signatory_id,'S') ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0419
+
+INSERT INTO v_cont_lane (contla_class_id, contla_app_lane_id, contla_lane_id, contla_cont_id, contla_start_date, contla_end_date, contla_term_ind,contla_add_ind)
+VALUES (:ll_class_id, :ll_app_lane_id, :ll_lane_id, :ll_cont_id, :ld_cont_start_date, :ld_cont_end_date,"N",:ls_add) ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+INSERT INTO v_cont_lane (contla_class_id, contla_app_lane_id, contla_lane_id, contla_cont_id, contla_start_date, contla_end_date, contla_term_ind,contla_add_ind)
+VALUES (:ll_class_id, :ll_app_lane_id, :ll_lane_id, :ll_cont_id, :ld_cont_start_date, :ld_cont_end_date,'N',:ls_add) ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_new -> ue_confirm_contract()    line 0139
+
+DELETE FROM v_cont_official
+WHERE cont_off_cont_id = :ll_cont_id AND
+cont_off_type_ind = "S" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+DELETE FROM v_cont_official
+WHERE cont_off_cont_id = :ll_cont_id AND
+cont_off_type_ind = 'S' ;
+				
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_status -> dw_reasons.ue_update()    line 0022
+
+SELECT pending_reason
+INTO :ls_pendoc_desc
+FROM v_pending_reas
+WHERE pending_id = :ll_pend_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_term_lane_class -> cb_terminate_class.clicked()    
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_cont_lane
+WHERE contla_cont_id = :il_cont_id AND
+contla_term_ind = "N" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT COUNT(*)
+INTO :li_count
+FROM v_cont_lane
+WHERE contla_cont_id = :il_cont_id AND
+contla_term_ind = 'N' ;
+		
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_term_lane_class -> cb_save.clicked()    
+
+UPDATE v_certificate
+SET 	certif_op_no = :ls_certif_op_no,
+certif_sta_no = :ls_certif_sta_no
+WHERE certif_id = :ll_certif_id ;		
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_term_lane_class -> cb_terminate_class.clicked()   
+
+UPDATE v_cont_lane
+SET contla_term_ind = "Y", contla_end_date = :ld_today
+WHERE contla_id = :ll_contla_id ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+UPDATE v_cont_lane
+SET contla_term_ind = 'Y', contla_end_date = :ld_today
+WHERE contla_id = :ll_contla_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_term_lane_class -> cb_terminate_lane.clicked() 
+
+UPDATE v_cont_lane
+SET contla_term_ind = "Y", contla_end_date = :ld_today
+WHERE contla_lane_id = :ll_lane_id ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+UPDATE v_cont_lane
+SET contla_term_ind = 'Y', contla_end_date = :ld_today
+WHERE contla_lane_id = :ll_lane_id ;
+		
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> ue_terminate_contract()  line 0020
+
+SELECT Max(contla_start_date)
+INTO :ld_cont_strt_date
+FROM v_cont_lane
+WHERE contla_cont_id = :il_cont_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> ue_terminate_contract()  line 0076
+
+SELECT certif_id 
+INTO 	:ll_certif_id
+FROM 	v_certificate
+WHERE certif_last_ind = "Y" AND
+certif_cont_id = :il_cont_id ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+SELECT certif_id 
+INTO 	:ll_certif_id
+FROM 	v_certificate
+WHERE certif_last_ind = 'Y' AND
+certif_cont_id = :il_cont_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> ue_refresh_screen()  line 0006
+
+SELECT contterm_id,contterm_dt,contterm_reas,contterm_app_dt
+INTO :il_contterm_id,:ld_contterm_dt,:ls_term_reas, :ld_appeal_dt
+FROM v_cont_term 
+WHERE contterm_cont_id = :il_cont_id AND
+contterm_conf_ind = "P" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+SELECT contterm_id,contterm_dt,contterm_reas,contterm_app_dt
+INTO :il_contterm_id,:ld_contterm_dt,:ls_term_reas, :ld_appeal_dt
+FROM v_cont_term 
+WHERE contterm_cont_id = :il_cont_id AND
+contterm_conf_ind = 'P' ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> ue_ltd_terminate()  line 0027
+
+SELECT Max(contla_start_date)
+INTO :ld_cont_strt_date
+FROM v_cont_lane
+WHERE contla_cont_id = :il_cont_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> cb_ltf_canc_term()  line 0016
+
+SELECT contterm_app_dt
+INTO :ld_appeal_dt
+FROM v_cont_term 
+WHERE contterm_cont_id = :il_cont_id AND
+contterm_conf_ind = "P" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubaceno 03.02.2020
+
+SELECT contterm_app_dt
+INTO :ld_appeal_dt
+FROM v_cont_term 
+WHERE contterm_cont_id = :il_cont_id AND
+contterm_conf_ind = 'P' ;
+		
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> cb_ltd_conf_term()  line 0021
+
+SELECT contterm_dt
+INTO :ld_date
+FROM v_cont_term 
+WHERE contterm_cont_id = :il_cont_id AND
+contterm_conf_ind = "P" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+SELECT contterm_dt
+INTO :ld_date
+FROM v_cont_term 
+WHERE contterm_cont_id = :il_cont_id AND
+contterm_conf_ind = 'P' ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> cb_ltd_conf_term()  line 0103
+
+SELECT certif_id 
+INTO 	:ll_certif_id
+FROM 	v_certificate
+WHERE certif_last_ind = "Y" AND
+certif_cont_id = :il_cont_id ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+SELECT certif_id 
+INTO 	:ll_certif_id
+FROM 	v_certificate
+WHERE certif_last_ind = 'Y' AND
+certif_cont_id = :il_cont_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> ue_ltd_terminate()  
+		
+Insert Into v_cont_term (contterm_cont_id,contterm_dt,contterm_conf_ind,contterm_reas)
+VALUES(:il_cont_id,:ld_term_date,"P",:ls_term_reas) ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubaceno 03.02.2020
+
+Insert Into v_cont_term (contterm_cont_id,contterm_dt,contterm_conf_ind,contterm_reas)
+VALUES(:il_cont_id,:ld_term_date,'P',:ls_term_reas) ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> ue_terminate_contract()    line 0037
+
+Update v_contract
+Set cont_term_ind = "Y", cont_term_date = :ld_term_date
+Where cont_id = :il_cont_id ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubaceno 03.02.2020
+
+Update v_contract
+Set cont_term_ind = 'Y', cont_term_date = :ld_term_date
+Where cont_id = :il_cont_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> ue_terminate_contract()    line 0049
+
+Update v_cont_lane
+Set contla_end_date = :ld_term_date	,contla_term_ind = "Y"
+Where contla_cont_id = :il_cont_id AND
+Trim(contla_term_ind) = "N";
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubaceno 03.02.2020
+
+Update v_cont_lane
+Set contla_end_date = :ld_term_date	,contla_term_ind = 'Y'
+Where contla_cont_id = :il_cont_id AND
+Trim(contla_term_ind) = 'N';
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> ue_terminate_contract()    line 0062
+		
+Update v_certificate
+Set certif_end_date = :ld_term_date 
+Where certif_last_ind = "Y" AND
+certif_cont_id = :il_cont_id ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubaceno 03.02.2020
+
+Update v_certificate
+Set certif_end_date = :ld_term_date 
+Where certif_last_ind = 'Y' AND
+certif_cont_id = :il_cont_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> ue_terminate_contract()    line 0090
+
+Update v_cert_class
+Set certclass_end_dt = :ld_term_date
+Where certclass_cert_id = :ll_certif_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> cb_ltf_canc_term.clicked()    line 0043
+
+Update v_cont_term
+SET contterm_conf_ind = "C",
+contterm_conf_dt = :ld_conf_date 
+WHERE contterm_cont_id = :il_cont_id AND
+contterm_conf_ind = "P" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+Update v_cont_term
+SET contterm_conf_ind = 'C',
+contterm_conf_dt = :ld_conf_date 
+WHERE contterm_cont_id = :il_cont_id AND
+contterm_conf_ind = 'P' ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> cb_ltf_conf_term.clicked()    line 0048
+
+Update v_cont_term
+SET contterm_conf_ind = "T",
+contterm_conf_dt = :ld_conf_date 
+WHERE contterm_cont_id = :il_cont_id AND
+contterm_conf_ind = "P" ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+Update v_cont_term
+SET contterm_conf_ind = 'T',
+contterm_conf_dt = :ld_conf_date 
+WHERE contterm_cont_id = :il_cont_id AND
+contterm_conf_ind = 'P' ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> cb_ltf_conf_term.clicked()    line 0062
+
+Update v_contract
+Set cont_term_ind = "Y", cont_term_date = :ld_conf_date
+Where cont_id = :il_cont_id ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+Update v_contract
+Set cont_term_ind = 'Y', cont_term_date = :ld_conf_date
+Where cont_id = :il_cont_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> cb_ltd_conf_term.clicked()    line 0075
+
+Update v_cont_lane
+Set contla_end_date = :ld_conf_date, contla_term_ind = "Y"
+Where contla_cont_id = :il_cont_id  AND
+Trim(contla_term_ind) = "N";
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+Update v_cont_lane
+Set contla_end_date = :ld_conf_date, contla_term_ind = 'Y'
+Where contla_cont_id = :il_cont_id  AND
+Trim(contla_term_ind) = 'N';
+	
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> cb_ltd_conf_term.clicked()    line 0089
+
+Update v_certificate
+Set certif_end_date = :ld_conf_date
+Where certif_last_ind = "Y" AND
+certif_cont_id = :il_cont_id ;
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+Update v_certificate
+Set certif_end_date = :ld_conf_date
+Where certif_last_ind = 'Y' AND
+certif_cont_id = :il_cont_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_contract_terminate -> cb_ltd_conf_term.clicked()    line 0118
+
+Update v_cert_class
+Set certclass_end_dt = :ld_conf_date
+Where certclass_cert_id = :ll_certif_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_fault_types_edit -> open()    
+
+SELECT fault_rep_date, fault_ok_date, ftype_desc, ftype_id
+INTO :ld_fault_rep_date, :ld_fault_ok_date, :ls_ftype_desc, :ll_ftype_id
+FROM v_faults, v_fault_type
+WHERE fault_id = :ll_fault_id AND
+ftype_id = fault_ftype_id;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_edit -> ue_pre_update() 	line 0038
+
+SELECT 	bnkguar_no,oper_org_name,oper_file_no,per_name,per_surname
+INTO :ls_guar_no,:ls_oper_name,:ls_oper_file_no,:ls_per_name,:ls_per_surname
+FROM v_bank_guarantee, v_renewal, v_stat_guarantee,v_operator, OUTER v_person
+WHERE (informix.v_stat_guarantee.stat_guar_stat_id = :ll_station_id) AND
+(informix.v_bank_guarantee.bnkguar_id = informix.v_renewal.gren_bnkguar_id) AND
+(informix.v_bank_guarantee.bnkguar_oper_id = informix.v_operator.oper_id) AND
+(informix.v_operator.oper_per_id = informix.v_person.per_id) AND
+(informix.v_renewal.gren_id = informix.v_stat_guarantee.stat_guar_gren_id) AND
+(informix.v_bank_guarantee.bnkguar_id <> :il_bnkguar_id) AND
+(informix.v_renewal.gren_latest_ind = "Y") AND
+(informix.v_stat_guarantee.stg_active_ind = "Y") AND 
+(informix.v_bank_guarantee.bnkguar_active_ind = "Y"); 
+
+//////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan na kraju ima outer
+
+
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_edit -> ue_update() 	line 0064
+
+Select count(*)
+Into :ll_count
+From v_stat_guarantee
+Where stat_guar_gren_id = :il_renewal_id;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_edit -> ue_guar_update() 	line 0019
+
+SELECT bnkguar_id,bnkguar_active_ind 
+FROM v_bank_guarantee WHERE bnkguar_id = :al_guar_id
+FOR UPDATE  of bnkguar_active_ind,bnkguar_no,bnkguar_bbr_id;
+	
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_edit -> dw_stations.ue_update() 	
+
+Select count(*)
+Into :ll_count
+From v_stat_guarantee
+Where stat_guar_gren_id = :il_renewal_id;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_edit -> ue_guar_update()   line 0068
+
+UPDATE v_bank_guarantee
+SET bnkguar_active_ind = :as_active_ind
+WHERE CURRENT OF update_curs;
+		
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_edit -> ue_guar_update()   line 0105
+
+UPDATE v_bank_guarantee
+SET bnkguar_bbr_id=:ll_bnkguar_bbr_id,bnkguar_no=:ls_bnkguar_no
+WHERE CURRENT OF update_curs;
+			
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_new -> ue_find_station()   line 0009
+
+SELECT stat_id,stat_name,stat_file_no,stat_cnt_name,stat_cnt_surname
+INTO   :ll_stat_id, :ls_stat_name,:ls_stat_file_no,:ls_stat_cnt_name,:ls_stat_cnt_surname
+FROM   v_testing_station
+WHERE  Trim(v_testing_station.stat_file_no) = :as_file_no;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_new -> ue_update()   line 0060
+
+SELECT 	bnkguar_no,oper_org_name,oper_file_no,per_name,per_surname
+INTO :ls_guar_no,:ls_oper_name,:ls_oper_file_no,:ls_per_name,:ls_per_surname
+FROM v_bank_guarantee, v_renewal, v_stat_guarantee,v_operator, OUTER v_person
+WHERE (informix.v_stat_guarantee.stat_guar_stat_id = :ll_station_id) AND
+(informix.v_bank_guarantee.bnkguar_id = informix.v_renewal.gren_bnkguar_id) AND
+(informix.v_bank_guarantee.bnkguar_oper_id = informix.v_operator.oper_id) AND
+(informix.v_operator.oper_per_id = informix.v_person.per_id) AND
+(informix.v_renewal.gren_id = informix.v_stat_guarantee.stat_guar_gren_id) AND
+(informix.v_renewal.gren_latest_ind = "Y") AND
+(informix.v_stat_guarantee.stg_active_ind = "Y") AND 
+(informix.v_bank_guarantee.bnkguar_active_ind = "Y"); 
+
+/////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 OUTER  tek na kraju
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_new -> cb_search.clicked()   line 0014
+
+Select informix.v_testing_station.stat_file_no
+Into :ls_file_no
+From informix.v_testing_station
+Where informix.v_testing_station.stat_id = :ll_station_id;
+	
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_new -> ue_update()   line 0025
+
+Insert Into v_bank_guarantee (bnkguar_bbr_id, bnkguar_oper_id,bnkguar_no,bnkguar_issue_date)
+Values (:ll_bbr_id,:il_oper_id,:ls_guar_no,:ls_start_date);
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_new -> ue_update()   line 0038
+
+Insert Into v_renewal (gren_bnkguar_id,gren_start_date,gren_end_date,gren_amnt,gren_stn_amount)
+Values (:ll_bnk_guar_id,:ls_start_date,:ls_end_date,:ld_amount,:id_stn_amount);
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_new -> ue_update()   line 0088
+
+Insert Into v_stat_guarantee (stat_guar_stat_id,stat_guar_gren_id)
+Values (:ll_station_id,:ll_renewal_id);
+					
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_ren_list -> ue_calc_fee()   line 0022
+
+SELECT gren_id,gren_ren_amount,gren_amnt 
+FROM   v_renewal
+WHERE  (v_renewal.gren_bnkguar_id in (SELECT bnkguar_id
+FROM   v_bank_guarantee,
+v_renewal
+WHERE  (v_bank_guarantee.bnkguar_active_ind="Y") AND
+(v_bank_guarantee.bnkguar_id=v_renewal.gren_bnkguar_id) AND		
+(v_renewal.gren_latest_ind="Y") AND
+(v_renewal.gren_lttr_date Is Null) AND
+(v_renewal.gren_end_date <= :ld_expiry_date))) AND
+(v_renewal.gren_latest_ind="Y")
+
+///////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubaceno ali treba proveriti 03.02.2020
+
+SELECT gren_id,gren_ren_amount,gren_amnt 
+FROM   v_renewal
+WHERE  (v_renewal.gren_bnkguar_id in (SELECT bnkguar_id
+FROM   v_bank_guarantee,
+v_renewal
+WHERE  (v_bank_guarantee.bnkguar_active_ind='Y') AND
+(v_bank_guarantee.bnkguar_id=v_renewal.gren_bnkguar_id) AND		
+(v_renewal.gren_latest_ind='Y') AND
+(v_renewal.gren_lttr_date Is Null) AND
+(v_renewal.gren_end_date <= :ld_expiry_date))) AND
+(v_renewal.gren_latest_ind='Y')
+																	 
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_ren_list -> ue_calc_fee()   line 0064
+
+SELECT Count(*)
+INTO   :ll_count
+FROM   v_stat_guarantee
+WHERE  (v_stat_guarantee.stat_guar_gren_id = :ll_renewal_id) AND
+(v_stat_guarantee.stg_active_ind="Y");
+
+///////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+SELECT Count(*)
+INTO   :ll_count
+FROM   v_stat_guarantee
+WHERE  (v_stat_guarantee.stat_guar_gren_id = :ll_renewal_id) AND
+(v_stat_guarantee.stg_active_ind='Y');
+					 
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_ren_list -> ue_update()   line 0014
+
+SELECT TODAY INTO :ld_today FROM v_system_par;
+
+///////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+SELECT convert(date, getdate()) INTO :ld_today FROM v_system_par;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_ren_list -> ue_calc_fee()   line 0079
+
+UPDATE v_renewal
+SET gren_ren_amount=:ld_ren_amount
+WHERE CURRENT OF update_curs;
+			
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_ren_list -> ue_update()   line 0039
+
+UPDATE v_system_par
+SET guar_ren_date=:ld_today;
+				
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_ren_lttr_st -> ue_bank_guar()   line 0022
+
+SELECT 	rec_no_tst,guar_ren_date
+INTO		:ll_primary_key,:ld_last_ren
+FROM		v_system_par;
+	
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_ren_lttr_st -> ue_bank_guar()   line 0025
+
+li_rc = fg_checkSQLCode( SQLCA, ls_errorloc, 'Select From v_system_par', FALSE )
+	
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_ren_lttr_st -> ue_bank_guar()   line 0037
+
+SELECT 	guar_notice_days
+INTO		:ll_days_prior
+FROM		v_system_par;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_ren_lttr_st -> ue_bank_guar()   line 0040
+
+li_rc = fg_checkSQLCode( SQLCA, ls_errorloc, 'Select From v_system_par', FALSE )
+		
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_ren_lttr_st -> ue_bank_guar()   line 0050
+
+SELECT COUNT(*)
+INTO   :ll_count
+FROM   v_bank_guarantee,
+v_renewal,
+v_stat_guarantee,
+v_testing_station,
+v_contract
+WHERE  (v_bank_guarantee.bnkguar_active_ind="Y") AND
+(v_bank_guarantee.bnkguar_id=v_renewal.gren_bnkguar_id) AND		
+(v_renewal.gren_latest_ind="Y") AND
+(v_renewal.gren_lttr_date Is Null) AND
+(v_renewal.gren_end_date <= :ld_expiry_date) AND
+(v_renewal.gren_id = v_stat_guarantee.stat_guar_gren_id) AND
+(v_stat_guarantee.stat_guar_stat_id = v_testing_station.stat_id) AND
+(v_testing_station.stat_id = v_contract.cont_stat_id) AND
+(v_contract.cont_term_ind = "N") AND
+(v_contract.cont_last_ind = "Y") AND
+(v_contract.cont_signed_ind = "Y") AND
+(v_renewal.gren_end_date < v_contract.cont_end_date);
+
+////////////////////////////////////////////////////////////////////////////// new sql 29.01.2020 Miljan ubaceno 03.02.2020
+
+SELECT COUNT(*)
+INTO   :ll_count
+FROM   v_bank_guarantee,
+v_renewal,
+v_stat_guarantee,
+v_testing_station,
+v_contract
+WHERE  (v_bank_guarantee.bnkguar_active_ind='Y') AND
+(v_bank_guarantee.bnkguar_id=v_renewal.gren_bnkguar_id) AND		
+(v_renewal.gren_latest_ind='Y') AND
+(v_renewal.gren_lttr_date Is Null) AND
+(v_renewal.gren_end_date <= :ld_expiry_date) AND
+(v_renewal.gren_id = v_stat_guarantee.stat_guar_gren_id) AND
+(v_stat_guarantee.stat_guar_stat_id = v_testing_station.stat_id) AND
+(v_testing_station.stat_id = v_contract.cont_stat_id) AND
+(v_contract.cont_term_ind = 'N') AND
+(v_contract.cont_last_ind = 'Y') AND
+(v_contract.cont_signed_ind = 'Y') AND
+(v_renewal.gren_end_date < v_contract.cont_end_date);
+					 
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_ren_lttr_st -> ue_lanes()   line 0023
+
+SELECT 	rec_no_tst,lane_notice_date
+INTO :ll_primary_key,:ld_last_ren
+FROM v_system_par;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_ren_lttr_st -> ue_lanes()   line 0026
+
+li_rc = fg_checkSQLCode( SQLCA, ls_errorloc, 'Select From v_system_par', FALSE )
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_ren_lttr_st -> ue_lanes()   line 0038
+
+SELECT 	lane_notice_days
+INTO :ll_days_prior
+FROM v_system_par;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_ren_lttr_st -> ue_lanes()   line 0041
+
+li_rc = fg_checkSQLCode( SQLCA, ls_errorloc, 'Select From v_system_par', FALSE )
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_ren_lttr_st -> open()   line 0011
+
+SELECT 	ren_check_int
+INTO :ll_time_int
+FROM v_system_par;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_ren_lttr_st -> open()   line 0014
+
+li_rc = fg_checkSQLCode( SQLCA, ls_errorloc, 'Select From v_system_par', FALSE )
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_renew -> ue_pre_update()   line 0066
+
+SELECT 	guar_dur_days
+INTO :ll_duration
+FROM v_system_par;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_renew -> ue_pre_update()   line 0069
+
+li_rc = fg_checkSQLCode( SQLCA, ls_errorloc, 'Select From v_system_par', FALSE )	
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_renew -> ue_pre_update()   line 0077
+
+SELECT 	leeway_days
+INTO :ll_leeway
+FROM v_system_par;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_renew -> ue_pre_update()   line 0080
+
+li_rc = fg_checkSQLCode( SQLCA, ls_errorloc, 'Select From v_system_par', FALSE )
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_renew -> ue_update()   line 0049
+
+SELECT 	bnkguar_no,oper_org_name,oper_file_no,per_name,per_surname
+INTO :ls_guar_no,:ls_oper_name,:ls_oper_file_no,:ls_per_name,:ls_per_surname
+FROM v_bank_guarantee, v_renewal, v_stat_guarantee,v_operator, OUTER v_person
+WHERE (informix.v_stat_guarantee.stat_guar_stat_id = :ll_station_id) AND
+(informix.v_bank_guarantee.bnkguar_id <> :il_bnkguar_id) AND
+(informix.v_bank_guarantee.bnkguar_id = informix.v_renewal.gren_bnkguar_id) AND
+(informix.v_bank_guarantee.bnkguar_oper_id = informix.v_operator.oper_id) AND
+(informix.v_operator.oper_per_id = informix.v_person.per_id) AND
+(informix.v_renewal.gren_id = informix.v_stat_guarantee.stat_guar_gren_id) AND
+(informix.v_renewal.gren_latest_ind = "Y") AND
+(informix.v_stat_guarantee.stg_active_ind = "Y") AND 
+(informix.v_bank_guarantee.bnkguar_active_ind = "Y"); 
+
+////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan OUTER na kraju
+							
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_renew -> ue_update()   line 0098
+
+SELECT gren_id
+FROM v_renewal 
+WHERE gren_id = :ll_old_renewal_id
+FOR UPDATE  of gren_latest_ind;
+		
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_renew -> ue_find_station()   line 0009
+
+SELECT stat_id,stat_name,stat_file_no,stat_cnt_name,stat_cnt_surname
+INTO   :ll_stat_id, :ls_stat_name,:ls_stat_file_no,:ls_stat_cnt_name,:ls_stat_cnt_surname
+FROM   v_testing_station
+WHERE  Trim(v_testing_station.stat_file_no) = :as_file_no;
+
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_renew -> cb_search.clicked()   line 0014
+
+Select informix.v_testing_station.stat_file_no
+Into :ls_file_no
+From informix.v_testing_station
+Where informix.v_testing_station.stat_id = :ll_station_id;
+
+////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+Select v_testing_station.stat_file_no
+Into :ls_file_no
+From v_testing_station
+Where v_testing_station.stat_id = :ll_station_id;
+	
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_renew -> ue_update()   line 0026
+
+Insert Into v_renewal (gren_bnkguar_id,gren_start_date,gren_end_date,gren_amnt,gren_stn_amount,gren_previous_id)
+Values (:il_bnkguar_id,:ls_start_date,:ls_end_date,:ld_amount,:ld_stn_amount,:ll_old_renewal_id);
+	
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_renew -> ue_update()   line 0077
+
+Insert Into v_stat_guarantee (stat_guar_stat_id,stat_guar_gren_id)
+Values (:ll_station_id,:ll_renewal_id);
+						
+------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_search -> ue_update()   line 0016
+
+ls_select = "SELECT (informix.v_bank_guarantee.bnkguar_id) bnkguar_id," +&  
+"Trim(informix.v_bank_guarantee.bnkguar_no) bnkguar_no," +&   
+"Trim(informix.v_bank.bank_name) bank_name," +&   
+"Trim(informix.v_bank_branch.bbr_street_name) bbr_street_name," +&   
+"Trim(informix.v_town.town) town," +& 
+"(informix.v_renewal.gren_amnt) gren_amnt," +&   
+"(informix.v_renewal.gren_start_date) gren_start_date," +&   
+"(informix.v_renewal.gren_end_date)gren_end_date," +&   
+"Trim (informix.v_operator.oper_org_name) oper_org_name," +&
+"Trim (informix.v_operator.oper_file_no) oper_file_no," +&
+"Trim (informix.v_person.per_name) per_name," +&
+"Trim (informix.v_person.per_surname) per_surname," +&
+"(informix.v_renewal.gren_id) gren_id," +&
+"Trim(informix.v_bank_guarantee.bnkguar_active_ind) bnkguar_active_ind, " +&
+"'" + gs_Curr1 + "'" + " as_Curr1, " +&
+"'" + gs_Curr2 + "'" + " as_Curr2 "
+ls_from = 	"FROM informix.v_bank," +&   
+"informix.v_bank_branch," +&
+"informix.v_town," +&   
+"informix.v_bank_guarantee," +&   
+"informix.v_renewal," +&
+"informix.v_operator," +&
+"OUTER informix.v_person "
+ls_where =	"WHERE ( informix.v_renewal.gren_latest_ind = 'Y' ) " +&
+"AND ( informix.v_renewal.gren_bnkguar_id = informix.v_bank_guarantee.bnkguar_id ) " +& 
+"AND ( informix.v_bank_guarantee.bnkguar_bbr_id = informix.v_bank_branch.bbr_id ) " +&
+"AND ( informix.v_bank_branch.bbr_bank_id = informix.v_bank.bank_id ) " +& 
+"AND ( informix.v_bank_branch.bbr_town_id = informix.v_town.town_id) " +&
+"AND ( informix.v_bank_guarantee.bnkguar_oper_id = informix.v_operator.oper_id) " +&
+"AND ( informix.v_operator.oper_per_id = informix.v_person.per_id ) "
+
+////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan OUTER na kraju
+				  
+--------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_search -> cb_st_find.clicked()   
+
+SELECT stat_file_no
+INTO  :ls_stat_file_no
+FROM v_testing_station
+WHERE v_testing_station.stat_id = :ll_station_id ;
+			
+--------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_search_lttr_re_issue -> ue_search()  	line 0014
+
+ls_select = "SELECT (informix.v_bank_guarantee.bnkguar_id) bnkguar_id," +&  
+"Trim(informix.v_bank_guarantee.bnkguar_no) bnkguar_no," +&   
+"Trim(informix.v_bank.bank_name) bank_name," +&   
+"Trim(informix.v_bank_branch.bbr_street_name) bbr_street_name," +&   
+"Trim(informix.v_town.town) town," +& 
+"(informix.v_renewal.gren_amnt) gren_amnt," +&   
+"(informix.v_renewal.gren_start_date) gren_start_date," +&   
+"(informix.v_renewal.gren_end_date)gren_end_date," +&   
+"Trim (informix.v_operator.oper_org_name) oper_org_name," +&
+"Trim (informix.v_operator.oper_file_no) oper_file_no," +&
+"Trim (informix.v_person.per_name) per_name," +&
+"Trim (informix.v_person.per_surname) per_surname," +&
+"(informix.v_renewal.gren_id) gren_id," +&
+"(informix.v_renewal.gren_lttr_date) gren_lttr_date," +&
+"(informix.v_renewal.gren_ren_amount) gren_ren_amount, " +&
++ "'" + gs_curr1 + "' as_Curr1 "
+ls_from = 	"FROM informix.v_bank," +&   
+"informix.v_bank_branch," +&
+"informix.v_town," +&   
+"informix.v_bank_guarantee," +&   
+"informix.v_renewal," +&
+"informix.v_stat_guarantee," +&
+"informix.v_testing_station," +&
+"informix.v_contract," +&
+"informix.v_operator," +&
+"OUTER informix.v_person "
+ls_where =	"WHERE ( informix.v_renewal.gren_latest_ind = 'Y' ) " +&
+"AND ( informix.v_renewal.gren_bnkguar_id = informix.v_bank_guarantee.bnkguar_id ) " +& 
+"AND ( informix.v_bank_guarantee.bnkguar_bbr_id = informix.v_bank_branch.bbr_id ) " +&
+"AND ( informix.v_bank_branch.bbr_bank_id = informix.v_bank.bank_id ) " +& 
+"AND ( informix.v_bank_branch.bbr_town_id = informix.v_town.town_id) " +&
+"AND ( informix.v_bank_guarantee.bnkguar_oper_id = informix.v_operator.oper_id) " +&
+"AND ( informix.v_operator.oper_per_id = informix.v_person.per_id ) " +&
+"AND ( informix.v_bank_guarantee.bnkguar_active_ind='Y' ) " +&
+"AND ( informix.v_renewal.gren_lttr_date Is Not Null ) " +&
+"AND (v_renewal.gren_id = v_stat_guarantee.stat_guar_gren_id) " +&
+"AND (v_stat_guarantee.stat_guar_stat_id = v_testing_station.stat_id) " +&
+"AND (v_testing_station.stat_id = v_contract.cont_stat_id) " +&
+"AND (v_contract.cont_term_ind = 'N') " +&
+"AND (v_contract.cont_last_ind = 'Y') " +&
+"AND (v_contract.cont_signed_ind = 'Y') " +&
+"AND (v_renewal.gren_end_date < v_contract.cont_end_date) "
+
+////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan OUTER na kraju
+				  
+------------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_search_lttr_re_issue -> open()  	line 0007
+
+SELECT 	guar_ren_date
+INTO :ld_last_ren
+FROM v_system_par;
+
+------------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_search_lttr_re_issue -> open()  	line 0010
+
+li_rc = fg_checkSQLCode( SQLCA, ls_errorloc, 'Select From v_system_par', FALSE )
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guar_search_lttr_re_issue -> cb_st_find.clicked()  
+
+SELECT stat_file_no
+INTO  :ls_stat_file_no
+FROM v_testing_station
+WHERE v_testing_station.stat_id = :ll_station_id ;
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guarantee -> ue_retrieve() 
+
+Select informix.v_operator.oper_file_no
+Into :ls_file_no
+From informix.v_operator
+Where informix.v_operator.oper_id = :al_oper_id;
+
+////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubaceno 03.02.2020
+
+Select v_operator.oper_file_no
+Into :ls_file_no
+From v_operator
+Where v_operator.oper_id = :al_oper_id;
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guarantee -> ue_delete()    line 0016
+
+Select gren_id,gren_previous_id
+Into :ll_gren_id,:ll_gren_previous_id
+From  v_renewal
+Where (informix.v_renewal.gren_bnkguar_id=:ll_bnkguar_id) AND
+(informix.v_renewal.gren_latest_ind="Y");
+
+////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubaceno 03.02.2020
+
+Select gren_id,gren_previous_id
+Into :ll_gren_id,:ll_gren_previous_id
+From  v_renewal
+Where (v_renewal.gren_bnkguar_id=:ll_bnkguar_id) AND
+(v_renewal.gren_latest_ind='Y');
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guarantee -> ue_delete()    line 0030
+
+lb_ok = fg_lock("Select bnkguar_id from v_bank_guarantee where bnkguar_id =" + String(il_bnkguar_id),1)
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guarantee -> wf_lock_row()    line 0019
+
+SELECT bnkguar_id,bnkguar_active_ind FROM v_bank_guarantee WHERE bnkguar_id = :al_bnkguar_id
+FOR UPDATE ;
+			
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guarantee -> cb_guar_search.clicked()    
+
+SELECT oper_id
+INTO  :ll_oper_id
+FROM v_bank_guarantee,v_operator
+WHERE v_bank_guarantee.bnkguar_oper_id = v_operator.oper_id AND v_bank_guarantee.bnkguar_id = :ll_bnkguar_id ;
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guarantee -> cb_renewal.clicked() 	
+
+Select Count(*) 
+Into :ll_count
+From v_renewal,
+v_stat_guarantee
+Where (v_renewal.gren_bnkguar_id = :ll_bnkguar_id) AND
+(v_renewal.gren_latest_ind = "Y") AND
+(v_renewal.gren_id = v_stat_guarantee.stat_guar_gren_id) AND
+(v_stat_guarantee.stg_active_ind= "N");
+
+////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+Select Count(*) 
+Into :ll_count
+From v_renewal,
+v_stat_guarantee
+Where (v_renewal.gren_bnkguar_id = :ll_bnkguar_id) AND
+(v_renewal.gren_latest_ind = 'Y') AND
+(v_renewal.gren_id = v_stat_guarantee.stat_guar_gren_id) AND
+(v_stat_guarantee.stg_active_ind= 'N');
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_guarantee -> ue_delete()
+
+Update 	v_renewal
+Set 	gren_latest_ind="Y"
+Where gren_id=:ll_gren_previous_id;
+
+////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+Update 	v_renewal
+Set gren_latest_ind='Y'
+Where gren_id=:ll_gren_previous_id;
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_maintenance -> ue_check_status()     line 0015
+
+Select stat_id,stat_name
+INTO :il_stat_id, :ls_stat_name
+From v_testing_station
+Where v_testing_station.stat_file_no = :ls_stat_file_no ;
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_maintenance -> ue_add_inspector()     line 0012
+
+SELECT count(*)
+INTO :ll_count
+FROM v_insp_spt_chk
+WHERE (:ll_per_id IN (insp_per_id)) AND (insp_sc_id = :ll_sc_id);
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_maintenance -> cb_find_station.clicked()     
+
+SELECT stat_name, stat_file_no
+INTO :ls_stat_name, :ls_stat_file_no
+FROM v_testing_station
+WHERE v_testing_station.stat_id = :il_stat_id ;
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_maintenance -> ue_add_inspector()   line 00029
+
+INSERT INTO v_insp_spt_chk (insp_id, insp_per_id,insp_sc_id)
+VALUES (0,:ll_per_id, :ll_sc_id) ;
+
+////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+INSERT INTO v_insp_spt_chk ( insp_per_id,insp_sc_id)
+VALUES (:ll_per_id, :ll_sc_id) ;
+		
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_maintenance -> dw_lane_faults.ue_add()    line 0019
+
+INSERT INTO v_faults (fault_id, fault_ftype_id, fault_lane_id, fault_rep_date, fault_ok_date ) 
+VALUES (0,:ll_fault_type,:ll_lane_id,:ld_date_reported,null) ;
+
+////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+INSERT INTO v_faults ( fault_ftype_id, fault_lane_id, fault_rep_date, fault_ok_date ) 
+VALUES (:ll_fault_type,:ll_lane_id,:ld_date_reported,null) ;
+		
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_maintenance -> dw_spot_check_view.ue_add()     line 0020
+
+INSERT INTO v_spot_check (sc_id, sc_lane_id, sc_remarks, sc_passed_ind, sc_date, sc_sc_type_id, sc_breach ) 
+VALUES (0,:ll_lane_id,:ls_remarks,:ls_status_ind,:ld_date,:ll_sc_type_id,:ls_breach) ;
+
+////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan ubacen 03.02.2020
+
+INSERT INTO v_spot_check ( sc_lane_id, sc_remarks, sc_passed_ind, sc_date, sc_sc_type_id, sc_breach ) 
+VALUES (:ll_lane_id,:ls_remarks,:ls_status_ind,:ld_date,:ll_sc_type_id,:ls_breach) ;
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_maintenance -> dw_lane_faults.ue_update()     line 0022
+
+UPDATE v_faults 
+SET fault_rep_date = :ld_date_reported,	  fault_ok_date = :ld_date_ok, fault_ftype_id = :ll_fault_type
+WHERE fault_id = :ll_fault_id;
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_maintenance -> dw_spot_check_view.ue_update()     line 0025
+
+UPDATE v_spot_check
+SET	sc_remarks = :ls_remarks,	
+sc_date = :ld_date,
+sc_passed_ind = :ls_passed_ind,
+sc_breach = :ls_breach,
+sc_sc_type_id = :ll_sc_type_id
+WHERE sc_id = :ll_sc_id;
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_maintenance ->  ue_remove_inspector ()    line 0025
+		
+DELETE FROM v_insp_spt_chk
+WHERE insp_per_id = :ll_per_id AND
+insp_sc_id = :ll_sc_id ;
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_maintenance ->  dw_lane_faults.ue_delete_row()    line 0011
+
+DELETE FROM v_faults 
+WHERE fault_id = :ll_fault_id;
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_maintenance ->  dw_spot_check_view.ue_delete_row()    line 0012
+
+DELETE FROM v_spot_check 
+WHERE sc_id = :ll_sc_id;
+	
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_renewal ->  ue_update()    line 0018
+
+SELECT TODAY INTO :ld_today FROM v_system_par;
+
+////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan
+
+SELECT convert(date, getdate()) INTO :ld_today FROM v_system_par;
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_renewal ->  ue_update()    line 0041	
+
+ls_sql=	"SELECT  Distinct v_lane_renewal.ren_id " +&
+"FROM		v_lane_renewal, " +&
+"v_lane, " +&
+"v_testing_station, " +&
+"v_contract, " +&
+"v_cont_lane " +&
+"WHERE (v_testing_station.stat_id IN(" + ls_station_id_list +")) AND " +& 
+"v_lane_renewal.ren_last_ind = 'Y' AND " +& 
+"v_lane_renewal.ren_term_ind = 'N' AND " +&
+"v_contract.cont_last_ind = 'Y' AND " +&
+"v_contract.cont_term_ind = 'N' AND " +&
+"v_contract.cont_signed_ind = 'Y' AND " +&
+"v_cont_lane.contla_term_ind= 'N' AND " +&
+"v_lane_renewal.ren_end_date <='" + ls_date +"' AND " +&
+"v_lane_renewal.ren_lane_id = v_lane.lane_id AND " +&
+"v_lane.lane_stat_id = v_testing_station.stat_id AND " +&
+"v_contract.cont_stat_id = v_testing_station.stat_id AND " +&
+"v_contract.cont_id = v_cont_lane.contla_cont_id AND " +&
+"v_cont_lane.contla_lane_id = v_lane.lane_id"
+		
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_renewal ->  open()    line 0017
+
+SELECT 	lane_renew_amnt
+INTO :lde_stn_amount
+FROM v_system_par;
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_renewal ->  ue_update()    line 0144
+
+UPDATE v_system_par
+SET lane_notice_date=:ld_today;
+				
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_search_lttr_re_issue ->  ue_search()    line 0011
+
+ls_select = "SELECT DISTINCT  Trim(v_person.per_name)per_name, " +&
+"Trim(v_person.per_surname)per_surname, " +&
+"Trim(v_person.per_idno)per_idno, " +&
+"Trim(v_operator.oper_file_no)oper_file_no, " +&
+"Trim(v_operator.oper_org_name)oper_org_name, " +&
+"Trim(v_operator.oper_org_ind)oper_org_ind, " +&
+"Trim(v_testing_station.stat_name)stat_name, " +&
+"Trim(v_testing_station.stat_file_no)stat_file_no, " +&
+"(v_testing_station.stat_id)stat_id "
+ls_from = 	"FROM v_lane_renewal, " +&
+"v_lane, " +&
+"v_testing_station, " +&
+"v_contract, " +&
+"v_cont_lane, " +&
+"v_operator, " +&
+"OUTER v_person "
+ls_where =	'WHERE	v_lane_renewal.ren_last_ind = "Y" AND ' +&
+'v_lane_renewal.ren_term_ind = "N" AND ' +&
+'v_contract.cont_last_ind = "Y" AND ' +&
+'v_contract.cont_term_ind = "N" AND ' +&
+'v_contract.cont_signed_ind = "Y" AND ' +&
+'v_contract.cont_end_date > TODAY AND ' +&
+'v_cont_lane.contla_term_ind="N" AND ' +&
+'v_contract.cont_end_date > v_lane_renewal.ren_end_date AND ' +&
+'v_lane_renewal.ren_lane_id = v_lane.lane_id AND ' +&
+'v_lane.lane_stat_id = v_testing_station.stat_id AND ' +&
+'v_contract.cont_stat_id = v_testing_station.stat_id AND ' +&
+'v_contract.cont_oper_id = v_operator.oper_id AND ' +&
+'v_operator.oper_per_id = v_person.per_id AND ' +&
+'v_contract.cont_id = v_cont_lane.contla_cont_id AND ' +&
+'v_cont_lane.contla_lane_id = v_lane.lane_id AND ' +&
+'v_lane_renewal.ren_lttr_date Is not Null '
+
+///////////////////////////////////////////////////////////////////////////////////// new sql 29.01.2020 Miljan OUTER na kraju
+			
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_search_lttr_re_issue ->  open()    line 0007
+
+SELECT 	lane_notice_date
+INTO :ld_last_ren
+FROM v_system_par;
+
+----------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_search_lttr_re_issue ->  open()    line 0010
+
+li_rc = fg_checkSQLCode( SQLCA, ls_errorloc, 'Select From v_system_par', FALSE )
+
+---------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_lane_search_lttr_re_issue -> cb_st_find.clicked()    line 0010
+
+SELECT stat_file_no
+INTO  :ls_stat_file_no
+FROM v_testing_station
+WHERE v_testing_station.stat_id = :ll_station_id ;
+
+---------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_testwindow -> cb_4.clicked()    line 0005
+
+Select count(*) INTO :ll_count from v_oper_official where oper_off_app_id = :ll_app ;
+
+---------------------------------------------------------------------------------------------
+vt_win_am.pbl -> w_testwindow -> cb_1.clicked()    line 0011
+
+SELECT app_id FROM v_application WHERE app_id = :ll
+FOR UPDATE ;
+	
+	

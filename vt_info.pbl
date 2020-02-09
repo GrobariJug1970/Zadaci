@@ -1,0 +1,646 @@
+vt_info.pbl - > dw_inf_address_report 
+
+SELECT informix.v_location.loc_id,   
+informix.v_location.address_1,   
+informix.v_location.address_2,   
+informix.v_location.loc_town_id,   
+informix.v_location.post_code,   
+informix.v_town.town_id,   
+informix.v_town.town, 
+informix.v_tester.tst_loc_id 
+FROM informix.v_location,   
+informix.v_town, 
+informix.v_tester
+WHERE  ( informix.v_town.town_id = informix.v_location.loc_town_id ) AND 
+( v_tester.tst_loc_id = loc_id ) AND 
+( v_tester.tst_id = :ra_tst_id )
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code 
+
+SELECT v_location.loc_id,   
+v_location.address_1,   
+v_location.address_2,   
+v_location.loc_town_id,   
+v_location.post_code,   
+v_town.town_id,   
+v_town.town, 
+v_tester.tst_loc_id 
+FROM v_location,   
+v_town, 
+v_tester
+WHERE  ( v_town.town_id = v_location.loc_town_id ) AND 
+( v_tester.tst_loc_id = loc_id ) AND 
+( v_tester.tst_id = :ra_tst_id )
+			   
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_app_report
+
+SELECT informix.v_class.class_id,   
+informix.v_class.class_desc,   
+informix.v_tester_licence.tstcl_id,   
+informix.v_tester_licence.tstcl_class_id,   
+informix.v_tester_licence.tstcl_tst_id,   
+informix.v_tester_licence.tstcl_app_dte,   
+informix.v_tester_licence.tstcl_app_accptd,   
+informix.v_tester_licence.tstcl_dte_app_accp,
+(informix.v_tester_licence.tstcl_wdrw_ind) tstcl_wdrw_ind  
+FROM informix.v_class,   
+informix.v_tester_licence  
+WHERE ( informix.v_tester_licence.tstcl_class_id = informix.v_class.class_id ) AND 
+( v_tester_licence.tstcl_tst_id = :ra_tst_id )
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code 
+
+SELECT v_class.class_id,   
+v_class.class_desc,   
+v_tester_licence.tstcl_id,   
+v_tester_licence.tstcl_class_id,   
+v_tester_licence.tstcl_tst_id,   
+v_tester_licence.tstcl_app_dte,   
+v_tester_licence.tstcl_app_accptd,   
+v_tester_licence.tstcl_dte_app_accp,
+(v_tester_licence.tstcl_wdrw_ind) tstcl_wdrw_ind  
+FROM v_class,   
+v_tester_licence  
+WHERE ( v_tester_licence.tstcl_class_id = v_class.class_id ) AND 
+( v_tester_licence.tstcl_tst_id = :ra_tst_id )
+		 
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_breaches_report
+
+SELECT informix.v_breaches.brch_tst_id,   
+informix.v_breaches.brch_date,   
+informix.v_breaches.brch_remarks,   
+informix.v_breaches.brch_id  
+FROM informix.v_breaches   
+WHERE v_breaches.brch_tst_id = :ra_tst_id
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code 
+
+SELECT v_breaches.brch_tst_id,   
+v_breaches.brch_date,   
+v_breaches.brch_remarks,   
+v_breaches.brch_id  
+FROM v_breaches   
+WHERE v_breaches.brch_tst_id = :ra_tst_id
+
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_emphist_report
+
+SELECT informix.v_employ_hist.emphis_id,   
+informix.v_employ_hist.emphis_tst_id,   
+informix.v_employ_hist.emphis_stat_id,   
+informix.v_employ_hist.emphis_start_dt,   
+informix.v_employ_hist.emphis_end_dt,   
+informix.v_employ_hist.emphis_actve_ind, 
+informix.v_testing_station.stat_name
+FROM informix.v_employ_hist,
+informix.v_testing_station 
+WHERE( v_employ_hist.emphis_tst_id = :ra_tst_id ) AND 
+( v_employ_hist.emphis_stat_id = v_testing_station.stat_id ) 
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code
+
+SELECT v_employ_hist.emphis_id,   
+v_employ_hist.emphis_tst_id,   
+v_employ_hist.emphis_stat_id,   
+v_employ_hist.emphis_start_dt,   
+v_employ_hist.emphis_end_dt,   
+v_employ_hist.emphis_actve_ind, 
+v_testing_station.stat_name
+FROM v_employ_hist,
+v_testing_station 
+WHERE( v_employ_hist.emphis_tst_id = :ra_tst_id ) AND 
+( v_employ_hist.emphis_stat_id = v_testing_station.stat_id ) 
+		
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_licences_report
+
+SELECT informix.v_tester_licence.tstcl_id,   
+informix.v_class.class_desc,   
+informix.v_class.class_id,   
+informix.v_tester_licence.tstcl_dt_lic_iss,   
+informix.v_tester_licence.tstcl_dt_lic_term,   
+informix.v_tester_licence.tstcl_lic_term_ind  
+FROM informix.v_class,   
+informix.v_tester_licence  
+WHERE ( informix.v_tester_licence.tstcl_class_id = informix.v_class.class_id )  AND 
+( v_tester_licence.tstcl_tst_id = :ra_tst_id )
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code
+
+SELECT v_tester_licence.tstcl_id,   
+v_class.class_desc,   
+v_class.class_id,   
+v_tester_licence.tstcl_dt_lic_iss,   
+v_tester_licence.tstcl_dt_lic_term,   
+v_tester_licence.tstcl_lic_term_ind  
+FROM v_class,   
+v_tester_licence  
+WHERE ( v_tester_licence.tstcl_class_id = v_class.class_id )  AND 
+( v_tester_licence.tstcl_tst_id = :ra_tst_id )
+
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_oper_app_dets
+
+SELECT informix.v_application.app_id,   
+informix.v_testing_station.stat_name,  
+informix.v_testing_station.stat_auth_no,                          
+informix.v_testing_station.stat_file_no,  
+informix.v_application.app_date_made,   
+informix.v_application.app_stat_ind,   
+informix.v_application.app_date_accp,   
+informix.v_application.app_no,   
+informix.v_application.app_year,   
+informix.v_application.app_withdrawn,   
+informix.v_application.app_withdrawn_dt 
+FROM informix.v_application,   
+informix.v_testing_station  
+WHERE ( informix.v_testing_station.stat_id = informix.v_application.app_stat_id )    AND
+( v_application.app_oper_id = :ra_oper_id )
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code
+
+SELECT v_application.app_id,   
+v_testing_station.stat_name,  
+v_testing_station.stat_auth_no,                          
+v_testing_station.stat_file_no,  
+v_application.app_date_made,   
+v_application.app_stat_ind,   
+v_application.app_date_accp,   
+v_application.app_no,   
+v_application.app_year,   
+v_application.app_withdrawn,   
+v_application.app_withdrawn_dt 
+FROM v_application,   
+v_testing_station  
+WHERE ( v_testing_station.stat_id = v_application.app_stat_id )    AND
+( v_application.app_oper_id = :ra_oper_id )
+
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_oper_app_dets_rep
+
+SELECT informix.v_application.app_id,   
+informix.v_testing_station.stat_name,  
+informix.v_testing_station.stat_auth_no,                          
+informix.v_testing_station.stat_file_no,  
+informix.v_application.app_date_made,   
+informix.v_application.app_stat_ind,   
+informix.v_application.app_date_accp,   
+informix.v_application.app_no,   
+informix.v_application.app_year,   
+informix.v_application.app_withdrawn,   
+informix.v_application.app_withdrawn_dt 
+FROM informix.v_application,   
+informix.v_testing_station  
+WHERE ( informix.v_testing_station.stat_id = informix.v_application.app_stat_id )    AND
+( v_application.app_oper_id = :ra_oper_id )
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code
+
+SELECT v_application.app_id,   
+v_testing_station.stat_name,  
+v_testing_station.stat_auth_no,                          
+v_testing_station.stat_file_no,  
+v_application.app_date_made,   
+v_application.app_stat_ind,   
+v_application.app_date_accp,   
+v_application.app_no,   
+v_application.app_year,   
+v_application.app_withdrawn,   
+v_application.app_withdrawn_dt 
+FROM v_application,   
+v_testing_station  
+WHERE ( v_testing_station.stat_id = v_application.app_stat_id )    AND
+( v_application.app_oper_id = :ra_oper_id )
+			
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_oper_cont_dets
+
+SELECT informix.v_contract.cont_id,   
+informix.v_contract.cont_oper_id,   
+informix.v_contract.cont_stat_id,   
+informix.v_testing_station.stat_id,   
+informix.v_testing_station.stat_name,   
+informix.v_contract.cont_start_date,   
+informix.v_contract.cont_end_date,   
+informix.v_contract.cont_term_ind,   
+informix.v_contract.cont_term_date,   
+informix.v_contract.cont_signed_ind,   
+informix.v_contract.cont_signed_date  
+FROM informix.v_contract,   
+informix.v_testing_station  
+WHERE ( informix.v_testing_station.stat_id = informix.v_contract.cont_stat_id ) AND
+(informix.v_contract.cont_oper_id = :ra_oper_id )
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code
+
+SELECT v_application.app_id,   
+v_testing_station.stat_name,  
+v_testing_station.stat_auth_no,                          
+v_testing_station.stat_file_no,  
+v_application.app_date_made,   
+v_application.app_stat_ind,   
+v_application.app_date_accp,   
+v_application.app_no,   
+v_application.app_year,   
+v_application.app_withdrawn,   
+v_application.app_withdrawn_dt 
+FROM v_application,   
+v_testing_station  
+WHERE ( v_testing_station.stat_id = v_application.app_stat_id )    AND
+( v_application.app_oper_id = :ra_oper_id )
+			
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_oper_cont_dets_rep
+
+SELECT informix.v_contract.cont_id,   
+informix.v_contract.cont_oper_id,   
+informix.v_contract.cont_stat_id,   
+informix.v_testing_station.stat_id,   
+informix.v_testing_station.stat_name,   
+informix.v_contract.cont_start_date,   
+informix.v_contract.cont_end_date,   
+informix.v_contract.cont_term_ind,   
+informix.v_contract.cont_term_date,   
+informix.v_contract.cont_signed_ind,   
+informix.v_contract.cont_signed_date  
+FROM informix.v_contract,   
+informix.v_testing_station  
+WHERE ( informix.v_testing_station.stat_id = informix.v_contract.cont_stat_id ) AND
+(informix.v_contract.cont_oper_id = :ra_oper_id )
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code
+
+SELECT v_contract.cont_id,   
+v_contract.cont_oper_id,   
+v_contract.cont_stat_id,   
+v_testing_station.stat_id,   
+v_testing_station.stat_name,   
+v_contract.cont_start_date,   
+v_contract.cont_end_date,   
+v_contract.cont_term_ind,   
+v_contract.cont_term_date,   
+v_contract.cont_signed_ind,   
+v_contract.cont_signed_date  
+FROM v_contract,   
+v_testing_station  
+WHERE ( v_testing_station.stat_id = v_contract.cont_stat_id ) AND
+(v_contract.cont_oper_id = :ra_oper_id )
+				
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_oper_cont_dets_rep
+
+SELECT informix.v_operator.oper_auth_no,   
+informix.v_operator.oper_file_no,   
+informix.v_operator.oper_reg_no,   
+informix.v_operator.oper_org_name,   
+informix.v_operator.oper_org_ind,   
+informix.v_operator.oper_per_id,
+informix.v_operator.oper_id   
+FROM informix.v_operator
+WHERE ( informix.v_operator.oper_id = :ra_oper_id )   
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code 
+
+SELECT v_contract.cont_id,   
+v_contract.cont_oper_id,   
+v_contract.cont_stat_id,   
+v_testing_station.stat_id,   
+v_testing_station.stat_name,   
+v_contract.cont_start_date,   
+v_contract.cont_end_date,   
+v_contract.cont_term_ind,   
+v_contract.cont_term_date,   
+v_contract.cont_signed_ind,   
+v_contract.cont_signed_date  
+FROM v_contract,   
+v_testing_station  
+WHERE ( v_testing_station.stat_id = v_contract.cont_stat_id ) AND
+(v_contract.cont_oper_id = :ra_oper_id )
+
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_oper_dets
+
+SELECT informix.v_operator.oper_auth_no,   
+informix.v_operator.oper_file_no,   
+informix.v_operator.oper_reg_no,   
+informix.v_operator.oper_org_name,   
+informix.v_operator.oper_org_ind,   
+informix.v_operator.oper_per_id,
+informix.v_operator.oper_id 
+FROM informix.v_operator
+WHERE ( informix.v_operator.oper_id = :ra_oper_id )
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code
+
+SELECT v_operator.oper_auth_no,   
+v_operator.oper_file_no,   
+v_operator.oper_reg_no,   
+v_operator.oper_org_name,   
+v_operator.oper_org_ind,   
+v_operator.oper_per_id,
+v_operator.oper_id   
+FROM v_operator
+WHERE ( v_operator.oper_id = :ra_oper_id )    
+
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_operator_dets
+
+SELECT informix.v_operator.oper_auth_no,   
+informix.v_operator.oper_file_no,   
+informix.v_operator.oper_reg_no,   
+informix.v_operator.oper_org_name,   
+informix.v_operator.oper_org_ind,   
+informix.v_operator.oper_per_id,
+informix.v_operator.oper_id 
+FROM informix.v_operator
+WHERE ( informix.v_operator.oper_id = :ra_oper_id )
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code
+
+SELECT v_operator.oper_auth_no,   
+v_operator.oper_file_no,   
+v_operator.oper_reg_no,   
+v_operator.oper_org_name,   
+v_operator.oper_org_ind,   
+v_operator.oper_per_id,
+v_operator.oper_id 
+FROM v_operator
+WHERE ( v_operator.oper_id = :ra_oper_id )
+
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_tester
+
+SELECT informix.v_tester.tst_id,   
+informix.v_tester.tst_name,   
+informix.v_tester.tst_surname,   
+informix.v_tester.tst_id_no,   
+informix.v_tester.tst_dob,   
+informix.v_tester.tst_file_no,   
+informix.v_tester.tst_lic_no,   
+informix.v_tester.tst_tel_no, 
+informix.v_tester.tst_loc_id, 
+v_tester.tst_gender_ind, 
+v_tester.tst_remarks 
+FROM informix.v_tester 
+WHERE	tst_id = :ra_tst_id
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code
+
+SELECT v_tester.tst_id,   
+v_tester.tst_name,   
+v_tester.tst_surname,   
+v_tester.tst_id_no,   
+v_tester.tst_dob,   
+v_tester.tst_file_no,   
+v_tester.tst_lic_no,   
+v_tester.tst_tel_no, 
+v_tester.tst_loc_id, 
+v_tester.tst_gender_ind, 
+v_tester.tst_remarks 
+FROM v_tester 
+WHERE	tst_id = :ra_tst_id
+
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_tester_application
+
+SELECT informix.v_tester_licence.tstcl_class_id,   
+informix.v_tester_licence.tstcl_tst_id,   
+informix.v_tester_licence.tstcl_id,   
+informix.v_tester_licence.tstcl_app_dte,   
+informix.v_tester_licence.tstcl_app_accptd,   
+informix.v_tester_licence.tstcl_dte_app_accp,
+(informix.v_tester_licence.tstcl_wdrw_ind) tstcl_wdrw_ind
+FROM informix.v_tester_licence   
+WHERE informix.v_tester_licence.tstcl_tst_id = :ra_tst_id;
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code
+
+SELECT v_tester_licence.tstcl_class_id,   
+v_tester_licence.tstcl_tst_id,   
+v_tester_licence.tstcl_id,   
+v_tester_licence.tstcl_app_dte,   
+v_tester_licence.tstcl_app_accptd,   
+v_tester_licence.tstcl_dte_app_accp,
+(v_tester_licence.tstcl_wdrw_ind) tstcl_wdrw_ind
+FROM v_tester_licence   
+WHERE v_tester_licence.tstcl_tst_id = :ra_tst_id;
+
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_tester_breaches
+
+SELECT informix.v_breaches.brch_id,   
+informix.v_breaches.brch_tst_id,   
+informix.v_breaches.brch_ind,   
+TRIM(informix.v_breaches.brch_remarks) brch_remarks,   
+informix.v_breaches.brch_date  
+FROM informix.v_breaches   
+WHERE brch_ind = 'T' AND
+brch_tst_id = :ra_tst_id
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code
+
+SELECT v_breaches.brch_id,   
+v_breaches.brch_tst_id,   
+v_breaches.brch_ind,   
+TRIM(v_breaches.brch_remarks) brch_remarks,   
+v_breaches.brch_date  
+FROM v_breaches   
+WHERE brch_ind = 'T' AND
+brch_tst_id = :ra_tst_id
+			
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_tester_dets
+
+SELECT informix.v_tester.tst_id,   
+informix.v_tester.tst_name,   
+informix.v_tester.tst_surname,   
+informix.v_tester.tst_id_no,   
+informix.v_tester.tst_dob,   
+informix.v_tester.tst_file_no,   
+informix.v_tester.tst_tel_no,   
+informix.v_tester.tst_loc_id 
+FROM informix.v_tester 
+WHERE v_tester.tst_id = :ra_tst_id 
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code
+
+SELECT v_tester.tst_id,   
+v_tester.tst_name,   
+v_tester.tst_surname,   
+v_tester.tst_id_no,   
+v_tester.tst_dob,   
+v_tester.tst_file_no,   
+v_tester.tst_tel_no,   
+v_tester.tst_loc_id 
+FROM v_tester 
+WHERE v_tester.tst_id = :ra_tst_id 
+ 
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_tester_emphist
+
+SELECT informix.v_employ_hist.emphis_id,   
+informix.v_employ_hist.emphis_tst_id,   
+informix.v_employ_hist.emphis_stat_id,   
+informix.v_employ_hist.emphis_start_dt,   
+informix.v_employ_hist.emphis_end_dt,   
+informix.v_employ_hist.emphis_actve_ind  
+FROM informix.v_employ_hist   
+WHERE informix.v_employ_hist.emphis_tst_id = :ra_tst_id
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code
+
+SELECT v_employ_hist.emphis_id,   
+v_employ_hist.emphis_tst_id,   
+v_employ_hist.emphis_stat_id,   
+v_employ_hist.emphis_start_dt,   
+v_employ_hist.emphis_end_dt,   
+v_employ_hist.emphis_actve_ind  
+FROM v_employ_hist   
+WHERE v_employ_hist.emphis_tst_id = :ra_tst_id
+	
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_tester_licence
+
+SELECT informix.v_tester_licence.tstcl_id,   
+informix.v_tester_licence.tstcl_class_id,   
+informix.v_tester_licence.tstcl_tst_id,   
+informix.v_tester_licence.tstcl_lic_issd,   
+informix.v_tester_licence.tstcl_dt_lic_iss,   
+informix.v_tester_licence.tstcl_dt_lic_term,   
+informix.v_tester_licence.tstcl_lic_term_ind  
+FROM informix.v_tester_licence
+WHERE tstcl_lic_issd = "Y" AND
+tstcl_tst_id = :ra_tst_id
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code
+
+SELECT v_tester_licence.tstcl_id,   
+v_tester_licence.tstcl_class_id,   
+v_tester_licence.tstcl_tst_id,   
+v_tester_licence.tstcl_lic_issd,   
+v_tester_licence.tstcl_dt_lic_iss,   
+v_tester_licence.tstcl_dt_lic_term,   
+v_tester_licence.tstcl_lic_term_ind  
+FROM v_tester_licence
+WHERE tstcl_lic_issd = 'Y' AND
+tstcl_tst_id = :ra_tst_id
+		
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_training
+
+SELECT	tstcl_tstmark,
+tstcl_resitmrk,
+tstcl_passed_ind, 
+tstcl_days_att, 
+tstcl_id, 
+crse_type_name, 
+sess_start_date, 
+sess_end_date,
+tstcl_wdrw_ind 
+FROM	informix.v_course_type, 
+informix.v_session, 
+informix.v_course, 
+informix.v_tester_licence 
+WHERE	(tstcl_tst_id = :ra_tst_id) AND
+tstcl_sess_id = sess_id AND
+crse_id = sess_crse_id AND
+crse_type_id = crse_crse_type_id
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code
+
+SELECT	tstcl_tstmark,
+tstcl_resitmrk,
+tstcl_passed_ind, 
+tstcl_days_att, 
+tstcl_id, 
+crse_type_name, 
+sess_start_date, 
+sess_end_date,
+tstcl_wdrw_ind 
+FROM v_course_type, 
+v_session, 
+v_course, 
+v_tester_licence 
+WHERE	(tstcl_tst_id = :ra_tst_id) AND
+tstcl_sess_id = sess_id AND
+crse_id = sess_crse_id AND
+crse_type_id = crse_crse_type_id
+
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_inf_training_rep
+
+SELECT	tstcl_tstmark,
+tstcl_resitmrk,
+tstcl_passed_ind, 
+tstcl_days_att, 
+tstcl_id, 
+crse_type_name, 
+sess_start_date, 
+sess_end_date,
+tstcl_wdrw_ind  
+FROM v_course_type, 
+v_session, 
+v_course, 
+v_tester_licence 
+WHERE	(v_tester_licence.tstcl_tst_id = :ra_tst_id) AND
+tstcl_sess_id = sess_id AND
+crse_id = sess_crse_id AND
+crse_type_id = crse_crse_type_id
+
+			
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_info_oper_breaches
+
+SELECT informix.v_breaches.brch_remarks,   
+informix.v_breaches.brch_date,   
+informix.v_breaches.brch_ind,   
+informix.v_breaches.brch_oper_id 
+FROM informix.v_breaches, informix.v_operator  
+WHERE ( informix.v_operator.oper_id = informix.v_breaches.brch_oper_id )   AND
+( informix.v_operator.oper_id = :ra_oper_id )  and
+( informix.v_breaches.brch_ind = "O")
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code
+
+SELECT v_breaches.brch_remarks,   
+v_breaches.brch_date,   
+v_breaches.brch_ind,   
+v_breaches.brch_oper_id 
+FROM v_breaches, v_operator  
+WHERE ( v_operator.oper_id = v_breaches.brch_oper_id )   AND
+( v_operator.oper_id = :ra_oper_id )  and
+( v_breaches.brch_ind = 'O')
+
+			 
+---------------------------------------------------------------------------------------------
+vt_info.pbl - > dw_info_oper_breaches_rep
+
+SELECT informix.v_breaches.brch_remarks,   
+informix.v_breaches.brch_date,   
+informix.v_breaches.brch_ind,   
+informix.v_breaches.brch_oper_id 
+FROM informix.v_breaches, informix.v_operator  
+WHERE ( informix.v_operator.oper_id = informix.v_breaches.brch_oper_id )   AND
+( informix.v_operator.oper_id = :ra_oper_id )  and
+( informix.v_breaches.brch_ind = "O")
+
+///////////////////////////////////////////////////////////////////////////////////////////// 19.01.2020 new sql code
+
+SELECT v_breaches.brch_remarks,   
+v_breaches.brch_date,   
+v_breaches.brch_ind,   
+v_breaches.brch_oper_id 
+FROM v_breaches, v_operator  
+WHERE ( v_operator.oper_id = v_breaches.brch_oper_id )   AND
+( v_operator.oper_id = :ra_oper_id )  and
+( v_breaches.brch_ind = 'O')
+
+
+
+
+
+
+
+

@@ -1,0 +1,41 @@
+Lsufri5.pbl ->  fg_align_key_sequences      line 0018
+
+SELECT "key_sequences"."table_name", 
+"key_sequences"."next_key_value"  
+FROM "key_sequences"  ;
+
+---------------------------------------------------------------------------------
+Lsufri5.pbl ->  fg_align_key_sequences      line 0033
+
+ls_SQL = "SELECT COUNT(*) FROM " + ls_TabName
+	
+---------------------------------------------------------------------------------
+Lsufri5.pbl ->  fg_align_key_sequences      line 0055
+
+ SELECT "sys"."syscolumn"."column_name"  
+INTO :ls_KeyColumn  
+FROM "sys"."syscolumn",   
+"sys"."systable"  
+WHERE ( "sys"."systable"."table_id" = "sys"."syscolumn"."table_id" ) and  
+( ( "sys"."systable"."table_name" = :ls_TabName ) 
+AND ( "sys"."syscolumn"."pkey" = 'Y' ) )   ;
+			 
+---------------------------------------------------------------------------------
+Lsufri5.pbl ->  fg_align_key_sequences      line 0072
+
+ls_SQL = "SELECT MAX( " + ls_KeyColumn + " ) FROM " + ls_TabName
+
+---------------------------------------------------------------------------------
+Lsufri5.pbl ->  fg_align_key_sequences      line 0094
+
+UPDATE "key_sequences"
+SET "next_key_value" = :ll_KeyValue
+WHERE "table_name" = :ls_TabName ;
+
+---------------------------------------------------------------------------------
+Lsufri5.pbl ->  fg_context_help
+
+SELECT "window_table"."window_ref"  
+INTO :li_AccessNo  
+FROM "window_table"  
+WHERE "window_table"."window_name" = :ls_Topic   ;

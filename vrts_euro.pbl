@@ -1,0 +1,27 @@
+vrts_euro.pbl ->  fg_convertedamount
+
+DECLARE p_e_getmonitoryvalue PROCEDURE FOR p_e_getmonitoryvalue(:ad_amount);		
+
+--------------------------------------------------------------------------------
+vrts_euro.pbl ->  fg_currencyinforce
+
+DECLARE p_e_getcurrencyinforce PROCEDURE FOR p_e_getcurrencyinforce();		
+
+-------------------------------------------------------------------------------
+vrts_euro.pbl ->  fg_getexcangerate
+
+DECLARE p_e_geteuroxchn PROCEDURE FOR p_e_geteuroxchn();		
+
+-------------------------------------------------------------------------------
+vrts_euro.pbl ->  fg_getratenote
+
+DECLARE p_ratenote PROCEDURE FOR p_e_getratenote('N',:as_Lang); //, 'L');		
+
+-------------------------------------------------------------------------------
+vrts_euro.pbl ->  fg_pick_maltese_wording
+
+SELECT description_m
+INTO :ls_description_m
+FROM type_no_to_malt
+WHERE code_code = :ls_code_code
+USING SQLCA;

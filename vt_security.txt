@@ -1,0 +1,53 @@
+vt_security.pbl  ->  d_access
+
+SELECT  window_access.usergroup_ref,
+window_access.window_ref,
+window_access.read_yn,
+window_access.update_yn,
+window_access.delete_yn,
+window_table.app_name     
+FROM informix.window_access,
+informix.window_table     
+WHERE ( informix.window_access.window_ref = informix.window_table.window_ref ) AND
+( informix.window_access.usergroup_ref=:al_usergroup_ref)
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan 
+				  
+SELECT  window_access.usergroup_ref,
+window_access.window_ref,
+window_access.read_yn,
+window_access.update_yn,
+window_access.delete_yn,
+window_table.app_name     
+FROM window_access,
+window_table     
+WHERE ( window_access.window_ref = window_table.window_ref ) AND
+( window_access.usergroup_ref=:al_usergroup_ref)
+				  
+---------------------------------------------------------------------------------------------------
+vt_security.pbl  ->  d_dddw_windowapp
+
+SELECT window_table.window_ref,   
+window_table.app_name,   
+window_table.description  
+FROM window_table  
+
+---------------------------------------------------------------------------------------------------
+vt_security.pbl  ->  d_tab_user
+
+SELECT users.user_id , users.first_name , users.last_name , users.usergroup_ref , users.status 
+FROM users WHERE ( users.usergroup_ref = :ai_usergroupref ) ;	
+
+---------------------------------------------------------------------------------------------------
+vt_security.pbl  ->  d_user_list 
+
+SELECT user_id, first_name, last_name, usergroup_ref, status FROM users 
+	
+---------------------------------------------------------------------------------------------------
+vt_security.pbl  ->  d_usergroup
+
+SELECT usergroup.usergroup_name, usergroup.usergroup_ref FROM 
+usergroup 
+ORDER BY usergroup.usergroup_name ASC 
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29.01.2020 Miljan 

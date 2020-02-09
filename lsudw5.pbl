@@ -1,0 +1,71 @@
+lsudw5.pbl -> dw_personal_card_maint 
+
+SELECT  informix.personal_card.pc_id ,
+informix.personal_card.pc_pers_id_card ,
+informix.personal_card.pc_firearms ,
+informix.personal_card.pc_firearms_22 ,
+informix.personal_card.pc_weapons ,
+informix.personal_card.pc_weapons_22 ,
+informix.personal_card.pc_batch_id
+FROM informix.personal_card    
+
+////////////////////////////////////////////////////////////////////////////////////////// 29.01.2020 New sql Miljan05.02.2020 nema ove tabele na new_vera
+
+SELECT  personal_card.pc_id ,
+personal_card.pc_pers_id_card ,
+personal_card.pc_firearms ,
+personal_card.pc_firearms_22 ,
+personal_card.pc_weapons ,
+personal_card.pc_weapons_22 ,
+personal_card.pc_batch_id
+FROM personal_card  
+  
+-----------------------------------------------------------------------------------------------------
+lsudw5.pbl -> tab_user_pw
+
+SELECT "users"."user_id" ,
+ "users"."first_name" , 
+ "users"."last_name" , 
+ "users"."usergroup_ref" ,
+ "users"."status" , 
+ "users"."pass_word" 
+ FROM "users" 
+ WHERE ( "users"."usergroup_ref" = :ai_usergroupref ) 
+
+---------------------------------------------------------------------------------------------------------
+lsudw5.pbl -> dw_usergroup_pw
+
+SELECT usergroup.usergroup_name, usergroup.usergroup_ref 
+FROM usergroup 
+ORDER BY usergroup.usergroup_name ASC 
+
+-------------------------------------------------------------------------------------------------------
+lsudw5.pbl -> w_sec_logon ->  cb_ok (clicked)   line 0079
+
+SELECT status 
+INTO :ls_status 
+FROM users
+WHERE user_id = :ls_UserId ;
+
+-------------------------------------------------------------------------------------------------------
+lsudw5.pbl -> w_sec_logon ->  cb_ok (clicked)   line 0091
+
+SELECT usergroup_ref 
+INTO :gi_UserGroupRef 
+FROM users
+WHERE user_id = :ls_UserId ;
+
+------------------------------------------------------------------------------------------------------
+lsudw5.pbl -> w_usergroup_pw ->  ue_pre_update()
+
+SELECT COUNT(*)
+INTO :li_Tmp
+FROM "SYSUSERPERM"
+WHERE "user_name" = :gs_userid
+AND "dbaauth" = 'Y';
+ 
+
+
+
+
+

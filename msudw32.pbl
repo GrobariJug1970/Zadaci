@@ -1,0 +1,70 @@
+msudw32.pbl ->  d_dddw_number
+
+SELECT  dddw_int_code.display_column ,           dddw_int_code.data_column     FROM dddw_int_code   
+
+--------------------------------------------------------------------------------------------------- 
+msudw32.pbl ->  d_dddw_string
+
+SELECT  dddw_str_code.display_column ,           dddw_str_code.data_column     FROM dddw_str_code    
+
+--------------------------------------------------------------------------------------------------- 
+msudw32.pbl ->  d_dddw_string
+
+SELECT  dddw_str_code.display_column ,           dddw_str_code.data_column     FROM dddw_str_code  
+
+---------------------------------------------------------------------------------------------------
+msudw32.pbl ->  d_quick_column_list
+
+SELECT pbcatcol.pbc_cnam,   
+pbcatcol.pbc_labl,   
+pbcatcol.pbc_cmnt  
+FROM pbcatcol  
+WHERE pbcatcol.pbc_tnam = :aTableName   
+ORDER BY pbcatcol.pbc_hdr ASC  
+
+---------------------------------------------------------------------------------------------------
+msudw32.pbl ->  d_search_dddw_number
+
+SELECT  dddw_int_code.display_column ,           dddw_int_code.data_column     FROM dddw_int_code       
+  
+---------------------------------------------------------------------------------------------------
+msudw32.pbl ->  d_search_dddw_string
+
+SELECT  dddw_str_code.display_column ,           dddw_str_code.data_column     FROM dddw_str_code   
+
+---------------------------------------------------------------------------------------------------
+msudw32.pbl  ->  d_table_list
+
+SELECT DISTINCT pbcattbl.pbt_tnam,   
+pbcattbl.pbt_cmnt  
+FROM pbcattbl  
+ORDER BY pbcattbl.pbt_tnam ASC   
+
+---------------------------------------------------------------------------------------------------
+msudw32.pbl  ->  w_function_buttons 
+
+SELECT description
+INTO :ls_Description
+FROM function_access, function
+WHERE	(description = :ls_Text) AND
+(usergroup_ref = :gi_UsergroupRef) AND
+(function.app_name = :gs_AppName) AND
+(function.function_ref = function_access.function_ref) ;
+
+---------------------------------------------------------------------------------------------------
+msudw32.pbl  ->  w_logon_std -> cb_ok.clicked()   line 0042
+
+SELECT status INTO :ls_status FROM users
+WHERE user_id = :ls_UserId ;
+
+---------------------------------------------------------------------------------------------------
+msudw32.pbl  ->  w_logon_std -> cb_ok.clicked()   line 0054
+
+SELECT usergroup_ref INTO :gi_UserGroupRef FROM users
+WHERE user_id = :ls_UserId ;
+
+---------------------------------------------------------------------------------------------------
+msudw32.pbl  ->  w_quick_select -> dw_tables.clicked()   line 0044
+
+ls_sql_syntax = 'SELECT * FROM ' + ls_tname
+

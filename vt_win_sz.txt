@@ -1,0 +1,677 @@
+vt_win_sz.pbl -> w_spot_check_edit -> open()
+
+SELECT sc_remarks,sc_date, sc_passed_ind,sc_breach,sc_type_desc
+INTO :ls_remarks, :ld_date,:ls_passed_ind,:ls_breach, :ls_sc_type_desc
+FROM v_spot_check,v_spot_check_type
+WHERE (sc_id = :ll_sc_id) AND (sc_sc_type_id = sc_type_id);
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_station_new_app -> dw_station_details.ue_pre_update()		line 0019
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_testing_station
+Where informix.v_testing_station.stat_name=:ls_stat_name;
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020 
+
+Select Count(*) 
+Into   :ll_rc
+From  v_testing_station
+Where v_testing_station.stat_name=:ls_stat_name;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_station_new_app -> dw_station_details.ue_pre_update()		line 0045
+
+Select Count(*) 
+Into   :ll_rc
+From  informix.v_testing_station
+Where informix.v_testing_station.stat_file_no=:ls_stat_file_no;
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020 
+
+Select Count(*) 
+Into   :ll_rc
+From  v_testing_station
+Where v_testing_station.stat_file_no=:ls_stat_file_no;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_station_new_app -> dw_addr_det.ue_update()		line 0040
+
+Insert into v_location (loc_id,address_1, address_2, loc_town_id, post_code)
+Values (0,:ls_address_1,:ls_address_2,:ll_loc_town_id,:ls_post_code);
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020
+
+Insert into v_location (address_1, address_2, loc_town_id, post_code)
+Values (:ls_address_1,:ls_address_2,:ll_loc_town_id,:ls_post_code);
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_station_new_app -> dw_addr_details.ue_update()		line 0029
+
+Insert Into v_testing_station (stat_loc_id, stat_name, stat_auth_no, stat_file_no, stat_email,stat_cnt_name,stat_cnt_surname)
+Values(:il_loc_id,:ls_stat_name,:ls_auth_no,:ls_file_no,:ls_email,:ls_cnt_name,:ls_cnt_srn);
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_station_new_app -> dw_addr_det.ue_delete_row()		line 0012
+
+Delete From informix.v_location 
+Where informix.v_location.loc_id=:ll_loc_id;
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020
+
+Delete From v_location 
+Where v_location.loc_id=:ll_loc_id;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station -> dw_test_station_tel.ue_del_par_tel()		line 0016
+
+ls_sql = "SELECT COUNT(*) FROM " + is_table_name + &
+" WHERE " + is_tprimary_keyname + " = " + String(ll_primary_id) 
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station -> ue_delete_row()		line 0011
+
+Select count(*) 
+Into :ll_addr_count
+From v_location
+Where loc_stat_id  = :ll_stat_id;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station -> dw_station_details.ue_pre_update()		line 0050
+
+SELECT count(*)
+INTO :ll_count
+FROM v_testing_station
+WHERE stat_file_no = :ls_stat_file_no AND
+stat_id <> :il_stat_id;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station -> dw_station_details.ue_pre_update()		line 0072
+
+SELECT count(*)
+INTO :ll_count
+FROM v_tester
+WHERE tst_file_no = :ls_stat_file_no;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station -> dw_station_details.ue_pre_update()		line 0091
+
+SELECT count(*)
+INTO :ll_count
+FROM v_operator
+WHERE oper_file_no = :ls_stat_file_no;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station -> dw_station_details.ue_pre_update()		line 0114
+
+SELECT count(*)
+INTO :ll_count
+FROM v_testing_station
+WHERE stat_auth_no = :ls_stat_auth_no AND
+stat_id <> :il_stat_id;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station -> dw_station_details.ue_pre_update()		line 0134
+
+SELECT count(*)
+INTO :ll_count
+FROM v_operator
+WHERE oper_auth_no = :ls_stat_auth_no;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station -> dw_address.ue_update()		line 0023
+
+Select loc_id
+Into :ll_prev_loc_id
+From v_location
+Where loc_stat_id = :il_stat_id AND
+loc_active_ind = "Y";
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020
+
+Select loc_id
+Into :ll_prev_loc_id
+From v_location
+Where loc_stat_id = :il_stat_id AND
+loc_active_ind = 'Y';
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station -> dw_address.ue_delete_row()		line 0015
+
+Select loc_active_ind
+Into :lc_loc_active_ind
+From v_location
+Where loc_id = :ll_primary_id;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station -> dw_list.ue_update()		line 0013
+
+Update v_testing_station
+Set stat_loc_id =:ll_stat_loc_id
+Where stat_id =:ll_stat_id;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station -> dw_address.ue_update()		line 0032
+
+Update v_location
+Set loc_active_ind = "N"
+Where loc_id = :ll_prev_loc_id;	
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020
+
+Update v_location
+Set loc_active_ind = 'N'
+Where loc_id = :ll_prev_loc_id;	
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station -> dw_address.ue_update()		line 0060
+
+Update v_location
+Set (address_1, address_2, loc_town_id, post_code) = (:ls_address_1,:ls_address_2,:ll_loc_town_id,:ls_post_code)
+Where loc_id = :ll_loc_id;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station -> dw_address.ue_delete_row()		line 0026
+
+Update v_location
+Set loc_active_ind ="Y"
+Where loc_id = :ll_prev_loc_id;
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan
+
+Update v_location
+Set loc_active_ind ='Y'
+Where loc_id = :ll_prev_loc_id;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station -> ue_insert_row()		line 0015
+
+Insert into v_testing_station (stat_id,stat_name,stat_file_no)
+Values (0,:as_arg3,:as_arg1);
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan
+
+Insert into v_testing_station (stat_name,stat_file_no)
+Values (:as_arg3,:as_arg1);
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station -> dw_address.ue_update()		line 0048
+
+Insert into v_location (loc_id,address_1, address_2, loc_town_id, post_code,loc_stat_id,loc_prev_id,loc_active_ind)
+Values (0,:ls_address_1,:ls_address_2,:ll_loc_town_id,:ls_post_code,:il_stat_id,:ll_prev_loc_id,"Y");
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020
+
+Insert into v_location (address_1, address_2, loc_town_id, post_code,loc_stat_id,loc_prev_id,loc_active_ind)
+Values (:ls_address_1,:ls_address_2,:ll_loc_town_id,:ls_post_code,:il_stat_id,:ll_prev_loc_id,'Y');
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station_add -> ue_file_no_chk()		line 0005
+
+SELECT count(*)
+INTO :ll_count
+FROM v_testing_station
+WHERE stat_file_no = :as_param_1 ;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station_add -> ue_file_no_chk()		line 0024
+
+SELECT count(*)
+INTO :ll_count
+FROM v_tester
+WHERE tst_file_no = :as_param_1;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_test_station_add -> ue_file_no_chk()		line 0043
+
+SELECT count(*)
+INTO :ll_count
+FROM v_operator
+WHERE oper_file_no = :as_param_1;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_tester_select_course -> wf_ddlb_load()		line 0037
+
+ls_sql = "SELECT crse_id,provider_name,crse_type_name FROM v_course,v_provider,v_course_type " + &
+"WHERE v_course.crse_provider_id = v_provider.provider_id AND " + &
+"v_course.crse_crse_type_id = v_course_type.crse_type_id AND " + &
+"v_course.crse_duration <> 0 AND v_course.crse_duration Is Not Null AND " +&
+"v_course.crse_pass_att <> 0 AND v_course.crse_pass_att Is Not Null AND " +&
+"v_course.crse_pass_exam <> 0 AND v_course.crse_pass_exam Is Not Null AND " +&
+"v_course_type.crse_class_id = " + TRIM(STRING(il_class_id))
+			
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_tester_training -> ue_refresh_course()		line 0007
+
+Select 	v_course_type.crse_type_name,
+v_course.crse_duration,
+v_course.crse_pass_att,
+v_course.crse_pass_exam,
+v_session.sess_start_date,
+v_session.sess_end_date
+INTO :ls_crse_name, :ll_crse_duration, :ll_crse_pass_att, :ll_crse_pass_exam,
+:ld_start_date, :ld_end_date
+From v_course,v_session,v_tester_licence,v_course_type	
+Where v_tester_licence.tstcl_id = :il_tstcl_id AND
+v_tester_licence.tstcl_sess_id = v_session.sess_id AND
+v_session.sess_crse_id = v_course.crse_id AND
+v_course.crse_crse_type_id = v_course_type.crse_type_id ;
+			
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_tester_training -> ue_refresh_course()		line 0034
+
+Select tstcl_days_att 
+Into :ll_days_attended
+From v_tester_licence
+Where tstcl_id = :il_tstcl_id ;
+	
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_tester_training -> wf_check_empty()		line 0004
+
+SELECT tstcl_tstmark, tstcl_resitmrk
+INTO :ll_tstmark, :ll_resitmrk
+FROM v_tester_licence
+WHERE tstcl_id = :il_tstcl_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_tester_training -> open()		line 0007
+
+SELECT tstcl_lic_issd 
+INTO :ls_lic_issd
+FROM v_tester_licence
+WHERE tstcl_id = :il_tstcl_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_tester_training -> cb_course.clicked()		line 0007
+
+SELECT tstcl_class_id
+INTO :ll_class_id
+FROM v_tester_licence
+WHERE tstcl_id = :il_tstcl_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_tester_training -> cb_clear.clicked()		line 0014
+
+UPDATE v_tester_licence
+SET tstcl_tstmark = NULL,
+tstcl_resitmrk = NULL,
+tstcl_passed_ind = "N",
+tstcl_days_att = NULL,
+tstcl_crse_comp = "N"
+WHERE tstcl_id = :il_tstcl_id ;
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020
+
+UPDATE v_tester_licence
+SET tstcl_tstmark = NULL,
+tstcl_resitmrk = NULL,
+tstcl_passed_ind = 'N',
+tstcl_days_att = NULL,
+tstcl_crse_comp = 'N'
+WHERE tstcl_id = :il_tstcl_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_tester_training -> cb_course.clicked()		line 0024
+
+Update v_tester_licence
+Set tstcl_sess_id = :ll_sess_id
+Where tstcl_id = :il_tstcl_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_tester_add -> cb_add.clicked()		
+
+SELECT Count(*) 
+INTO :ll_count
+FROM v_tester
+WHERE tst_id_no = :ls_param1;
+	  
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> ue_insert_row()		line 0025
+
+SELECT Count(*) 
+INTO :ll_count
+FROM v_tester
+WHERE tst_id_no = :as_arg1 ;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> ue_insert_row()		line 0112
+
+SELECT COUNT(*) 
+INTO :ll_count
+FROM v_tester_licence
+WHERE tstcl_tst_id = :ll_tst_id AND
+tstcl_class_id = :ll_class_id AND
+tstcl_lic_issd = "Y" AND
+tstcl_lic_term_ind = "N" AND
+tstcl_wdrw_ind = "N";
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020
+
+SELECT COUNT(*) 
+INTO :ll_count
+FROM v_tester_licence
+WHERE tstcl_tst_id = :ll_tst_id AND
+tstcl_class_id = :ll_class_id AND
+tstcl_lic_issd = 'Y' AND
+tstcl_lic_term_ind = "N" AND
+tstcl_wdrw_ind = 'N';
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> ue_insert_row()		line 0152
+
+Select Count(*)
+Into	 :li_hist_count
+From   v_employ_hist
+Where  emphis_tst_id = :ll_tst_id AND
+emphis_actve_ind = "Y";
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubaceno 04.02.2020
+
+Select Count(*)
+Into	 :li_hist_count
+From   v_employ_hist
+Where  emphis_tst_id = :ll_tst_id AND
+emphis_actve_ind = 'Y';
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> wf_test_status()		line 0007
+
+Select tstcl_tstmark,tstcl_passed_ind, tstcl_lic_issd, tstcl_resitmrk, Trim(tstcl_lic_term_ind)
+Into :ll_tstcl_tstmark, :lc_passed_ind, :lc_lic_issd, :ll_resitmrk, :ls_terminated_ind
+From v_tester_licence
+Where	tstcl_id = :ra_tstcl_id ;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> cb_print_cert.clicked()		line 0012
+
+SELECT tstcl_wdrw_ind
+INTO :ls_tstcl_app_withdrwn
+FROM v_tester_licence
+WHERE tstcl_id = :ll_tstcl_id;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> cb_withdraw.clicked()		line 0021
+
+lb_ok = fg_lock("Select tstcl_id from v_tester_licence where tstcl_id =" + String(ll_tstcl_id),1)
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> cb_accept_reject.clicked()		line 0023
+
+lb_ok = fg_lock("Select tstcl_id from v_tester_licence where tstcl_id =" + String(ll_tstcl_id),1)
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> dw_application.ue_delete_row()		line 0028
+
+SELECT COUNT(*) 
+INTO :li_count
+FROM v_tester_licence
+WHERE tstcl_id = :ll_primary_id ;
+	
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> cb_training.clicked()		line 0032
+
+ lb_ok = fg_lock("Select tstcl_id from v_tester_licence where tstcl_id =" + String(ll_tstcl_id),1)
+ 
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> cb_issue_receipt.clicked()		line 0059
+
+Select tstcl_tstmark,tstcl_resitmrk,crse_pass_exam, tstcl_lic_issd
+Into :ll_tstcl_tstmark, :ll_tstcl_resitmrk, :ll_crse_pass_exam, :ls_tstcl_lic_issd
+From v_tester_licence, v_session, v_course
+Where	tstcl_id = :ll_tstcl_id AND
+v_tester_licence.tstcl_sess_id = v_session.sess_id AND
+v_session.sess_crse_id = v_course.crse_id ;
+
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> cb_issue_receipt.clicked()		line 0106
+
+lb_ok = fg_lock("Select tstcl_id from v_tester_licence where tstcl_id =" + String(ll_tstcl_id),1)
+	
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> cb_issue_receipt.clicked()		line 0170
+
+SELECT  tst_id_no
+INTO :ls_tst_id_no
+FROM v_tester
+WHERE tst_id = :il_tst_id;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> dw_emphist.ue_delete_row()		line 0018
+
+SELECT COUNT(*) 
+INTO :li_count
+FROM v_employ_hist
+WHERE emphis_id = :ll_primary_id ;
+
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> dw_emphist.ue_pre_update()		line 0046
+
+Select Count(*)
+Into :li_hist_count
+From v_employ_hist
+Where  emphis_tst_id = :ll_tst_id AND
+emphis_actve_ind = "Y" AND
+emphis_id <> :ll_emphis_id;
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020
+
+Select Count(*)
+Into :li_hist_count
+From v_employ_hist
+Where  emphis_tst_id = :ll_tst_id AND
+emphis_actve_ind = 'Y' AND
+emphis_id <> :ll_emphis_id;
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> dw_emphist.ue_pre_update()		line 0065
+
+SELECT min(tstcl_dt_lic_iss) 
+INTO :ld_date_lic_issd
+FROM V_TESTER_LICENCE
+WHERE tstcl_tst_id = :ll_tst_id;
+
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> dw_emphist.ue_pre_update()		line 0089
+
+SELECT COUNT(*) 
+INTO :ll_count
+FROM v_tester_licence
+WHERE tstcl_tst_id = :ll_tst_id AND
+tstcl_class_id = :ll_class_id AND
+tstcl_lic_issd = "Y" AND
+tstcl_lic_term_ind = "N" AND
+tstcl_wdrw_ind = "N";
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020
+
+SELECT COUNT(*) 
+INTO :ll_count
+FROM v_tester_licence
+WHERE tstcl_tst_id = :ll_tst_id AND
+tstcl_class_id = :ll_class_id AND
+tstcl_lic_issd = 'Y' AND
+tstcl_lic_term_ind = 'N' AND
+tstcl_wdrw_ind = 'N';
+
+------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> dw_breaches.ue_delete_row()		line 0022
+
+SELECT COUNT(*) 
+INTO :li_count
+FROM v_breaches
+WHERE brch_id = :ll_primary_id ;
+	
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> dw_person.ue_delete_row()		line 0016
+
+ls_sql = "SELECT COUNT(*) FROM v_tester" + &
+" WHERE tst_id = " + String(ll_primary_id) 
+
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> dw_person.ue_pre_update()		line 0051
+
+SELECT Count(*) 
+INTO :ll_count
+FROM v_tester
+WHERE tst_id_no = :ls_idno AND tst_id <> :ll_tst_id;
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> dw_person.ue_pre_update()		line 0090
+
+SELECT Count(*)
+INTO :ll_count
+FROM v_tester
+WHERE tst_file_no = :ls_file_no AND tst_id <> :ll_tst_id;
+	
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> ue_insert_row()		line 0076
+
+INSERT INTO v_tester_licence(tstcl_class_id, tstcl_tst_id, tstcl_app_dte, tstcl_lic_term_ind,tstcl_wdrw_ind)
+VALUES (:ll_class_id, :ll_tst_id, :ld_appl_date,"N","N") ;
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020
+
+INSERT INTO v_tester_licence(tstcl_class_id, tstcl_tst_id, tstcl_app_dte, tstcl_lic_term_ind,tstcl_wdrw_ind)
+VALUES (:ll_class_id, :ll_tst_id, :ld_appl_date,'N','N') ;
+
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> ue_insert_row()		line 0167
+
+INSERT INTO v_employ_hist(emphis_stat_id,emphis_start_dt,emphis_tst_id,emphis_class_id,emphis_actve_ind)
+VALUES (:ll_stat_id,:ld_start_dt,:ll_tst_id,:ll_class_id,"Y") ;
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020
+
+INSERT INTO v_employ_hist(emphis_stat_id,emphis_start_dt,emphis_tst_id,emphis_class_id,emphis_actve_ind)
+VALUES (:ll_stat_id,:ld_start_dt,:ll_tst_id,:ll_class_id,'Y') ;
+
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> cb_issue_receipt.clicked()		line 0135
+
+Insert Into v_receipt (rec_bank_id,rec_pmthd_id,rec_tstcl_id, rec_amount, 
+rec_dt_issd, rec_canc_ind, rec_payer_ind, rec_cq_no, rec_no, rec_create_user, rec_verified_ind,rec_manual_rec_no)
+VALUES (:ll_bank_id,:ll_pmthd_id,:ll_tstcl_id,
+:ld_amount,:ld_date,'N','T',:ls_cq_no,:ls_rec_no, :gs_userid, "N",:ls_manual_rec_no) ;
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020
+
+Insert Into v_receipt (rec_bank_id,rec_pmthd_id,rec_tstcl_id, rec_amount, 
+rec_dt_issd, rec_canc_ind, rec_payer_ind, rec_cq_no, rec_no, rec_create_user, rec_verified_ind,rec_manual_rec_no)
+VALUES (:ll_bank_id,:ll_pmthd_id,:ll_tstcl_id,
+:ld_amount,:ld_date,'N','T',:ls_cq_no,:ls_rec_no, :gs_userid, 'N',:ls_manual_rec_no) ;
+
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> cb_term_lic.clicked()		line 0023
+
+UPDATE v_tester_licence
+SET 	tstcl_lic_term_ind = "Y",
+tstcl_dt_lic_term = :ld_term_date 
+WHERE tstcl_id = :ll_tstcl_id	;
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020
+
+UPDATE v_tester_licence
+SET 	tstcl_lic_term_ind = 'Y',
+tstcl_dt_lic_term = :ld_term_date 
+WHERE tstcl_id = :ll_tstcl_id	;
+
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> cb_withdraw.clicked()		line 0039
+
+UPDATE v_tester_licence
+SET tstcl_wdrw_ind = "Y",
+tstcl_wdrw_date = :ld_date 
+WHERE tstcl_id = :ll_tstcl_id	;
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020
+
+UPDATE v_tester_licence
+SET tstcl_wdrw_ind = 'Y',
+tstcl_wdrw_date = :ld_date 
+WHERE tstcl_id = :ll_tstcl_id	;
+
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> cb_accept_reject.clicked()		line 0046
+
+Update v_tester_licence
+SET tstcl_app_accptd = "A",
+tstcl_dte_app_accp = :ld_dte_app_accp 
+WHERE tstcl_id = :ll_tstcl_id	 AND tstcl_app_accptd = "P";
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020
+
+Update v_tester_licence
+SET tstcl_app_accptd = 'A',
+tstcl_dte_app_accp = :ld_dte_app_accp 
+WHERE tstcl_id = :ll_tstcl_id	 AND tstcl_app_accptd = 'P';
+
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> cb_accept_reject.clicked()		line 0064
+
+Update v_tester_licence
+SET tstcl_app_accptd = "R",
+tstcl_dte_app_accp = :ld_dte_app_accp,
+tstcl_tst_rjres_id = :ll_rejreas 
+WHERE tstcl_id = :ll_tstcl_id	AND tstcl_app_accptd = "P" ;
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020
+
+Update v_tester_licence
+SET tstcl_app_accptd = 'R',
+tstcl_dte_app_accp = :ld_dte_app_accp,
+tstcl_tst_rjres_id = :ll_rejreas 
+WHERE tstcl_id = :ll_tstcl_id	AND tstcl_app_accptd = 'P' ;
+
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> cb_issue_receipt.clicked()		line 0150
+
+UPDATE v_tester_licence
+SET	 tstcl_lic_issd="Y"
+WHERE tstcl_id = :ll_tstcl_id ;
+
+////////////////////////////////////////////////////////////////////////////////// New sql 29..01.2020 Miljan ubacen 04.02.2020
+
+UPDATE v_tester_licence
+SET	 tstcl_lic_issd='Y'
+WHERE tstcl_id = :ll_tstcl_id ;
+
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> cb_issue_receipt.clicked()		line 0154
+
+Update 	v_tester_licence
+Set tstcl_lic_issd = 'Y', 
+tstcl_dt_lic_iss = :ld_date,
+tstcl_lic_term_ind = 'N'
+Where	tstcl_id = :ll_tstcl_id ;
+
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> cb_issue_receipt.clicked()		line 0181
+
+UPDATE v_tester
+SET tst_lic_no = :ls_tst_id_no
+WHERE tst_id = :il_tst_id;
+
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 -> cb_issue_receipt.clicked()		line 0206
+
+Update	v_system_par
+Set rec_no_tst = :ll_rec_no;
+
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 ->dw_address.ue_update()		line 0020
+
+UPDATE v_tester
+SET tst_loc_id = :ll_loc_id
+WHERE tst_id = :ll_tst_id;
+
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 ->dw_address.ue_delete_row()		line 0034
+
+UPDATE v_tester
+SET tst_loc_id = null
+WHERE tst_id = :ll_tst_id;
+
+ ------------------------------------------------------------------------------------------
+vt_win_sz.pbl -> w_testers3 ->	dw_person.ue_delete_row()		line 0036
+
+ls_sql = "DELETE FROM v_tester WHERE tst_id = " + String(ll_primary_id) 

@@ -1,0 +1,43 @@
+vt_rppar.pbl -> dw_lic_tester_criteria
+
+Nema sql upita
+
+------------------------------------------------------------------------
+vt_rppar.pbl -> dw_spot_check_criteria
+
+Nema sql upita
+
+------------------------------------------------------------------------
+vt_rppar.pbl -> dw_stationary_sales_criteria 
+
+Nema sql upita
+
+------------------------------------------------------------------------
+vt_rppar.pbl -> dw_test_station_status_par
+
+Nema sql upita 
+
+------------------------------------------------------------------------
+vt_rppar.pbl -> dw_test_station_crit_detail
+
+Nema sql upita
+
+------------------------------------------------------------------------
+vt_rppar.pbl -> dw_test_station_crit_detail_summary
+
+Nema sql upita 
+
+------------------------------------------------------------------------
+vt_rppar.pbl -> dw_tester_criteria
+
+Nema sql upita 
+
+------------------------------------------------------------------------
+vt_rppar.pbl -> dw_tester_history_criteria
+
+neam sql upita 
+
+------------------------------------------------------------------------
+vt_rppar.pbl -> dw_user_datefrom_dateto
+
+Nema sql upita 
